@@ -5,14 +5,13 @@ import App from "./App";
 import "./index.css";
 import "@rainbow-me/rainbowkit/styles.css";
 
-
 import { bscTestnet } from "wagmi/chains";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { WagmiConfig, createConfig, configureChains, mainnet } from "wagmi";
-
+import { BrowserRouter } from "react-router-dom";
 import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet";
 import { InjectedConnector } from "wagmi/connectors/injected";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
@@ -43,9 +42,12 @@ const config = createConfig({
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <WagmiConfig config={config}>
-      <App />
-    </WagmiConfig>
+    <BrowserRouter>
+      <WagmiConfig config={config}>
+        <App />
+      </WagmiConfig>
+    </BrowserRouter>
+
     <ToastContainer />
   </React.StrictMode>
 );
