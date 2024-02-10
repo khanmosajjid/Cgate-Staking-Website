@@ -25,7 +25,7 @@ function App() {
 	
 	return (
     <>
-      <Router>
+      
         <ClickToComponent />
         <div className="fixed -z-10 overflow-hidden ">
           <img className=" w-full h-screen md:h-auto" src={bg} alt="" />
@@ -45,7 +45,7 @@ function App() {
             <Route path="/" element={<Home />} />
           </Routes>
         </div>
-      </Router>
+    
     </>
   );
 }
