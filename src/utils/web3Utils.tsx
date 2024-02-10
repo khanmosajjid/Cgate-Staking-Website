@@ -617,7 +617,7 @@ export const withdraw = async (poolId) => {
     }
     console.log("after transactin finished", res);
     emitter.emit("loading", false);
-    // window.location.reload();
+    window.location.reload();
     return res;
   } catch (e) {
     console.log("error is---->", e, typeof e.message);
@@ -628,6 +628,7 @@ export const withdraw = async (poolId) => {
     toast.error(detailsPart);
 
     emitter.emit("loading", false);
+    
   }
 };
 
