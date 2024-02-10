@@ -650,11 +650,11 @@ export const withdrawPerStake = async (poolId, amount, stakeId) => {
       toast.success("Transaction Successful");
 
       emitter.emit("loading", true);
-      // window.location.reload();
+      window.location.reload();
     } else {
       toast.error("Transaction Failed");
       emitter.emit("loading", true);
-      // window.location.reload();
+      window.location.reload();
     }
     console.log("after transactin finished", res);
     emitter.emit("loading", false);
