@@ -650,7 +650,7 @@ const Swap: FunctionComponent = () => {
 
             <div className="md:flex text-sm font-light md:gap-60 my-3">
               <div className="text-left">
-                <p>1.00 CG8 = ${cg8Price} USDC</p>
+                <p>1.00 CG8 = {cg8Price} USDC</p>
               </div>
               {/* <div className="flex gap-1 md:align-center  ">
                 <img src={gas} alt="" />

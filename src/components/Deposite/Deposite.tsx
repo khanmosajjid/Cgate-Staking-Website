@@ -28,6 +28,7 @@ import {
   withdraw,
   getMinAmountOut,
   getMinAmountIn,
+  addCommasToNumbers
 } from "../../utils/web3Utils.js";
 import { useAccount } from "wagmi";
 import { STAKING_CONTRACT, TOKEN_CONTRACT } from "../../constants/contracts";
@@ -513,12 +514,17 @@ const Deposite: React.FC = () => {
 
                             {Number(convertToEther(value[6])) &&
                             cg8Price > 0 ? (
-                              <div className="text  text-right">
+                              <div className="text-xs  text-right">
                                 ~$
                                 <span className="md:hidden">(</span>
-                                {(
-                                  Number(convertToEther(value[6])) * cg8Price
-                                ).toFixed(2)}
+                                {parseFloat(
+                                  (
+                                    Number(convertToEther(value[6])) * cg8Price
+                                  ).toFixed(2)
+                                ).toLocaleString(undefined, {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2,
+                                })}
                                 <span className="md:hidden"> )</span>{" "}
                                 {/* USDC */}
                               </div>
@@ -578,7 +584,7 @@ const Deposite: React.FC = () => {
                             )}
 
                             {value[7] ? (
-                              <div className="text text-right">
+                              <div className="text-xs text-right">
                                 ~$
                                 <span className="md:hidden">(</span>
                                 {(value[7] * cg8Price).toFixed(2)}
@@ -596,8 +602,10 @@ const Deposite: React.FC = () => {
                             <span className="text-black block text-right">
                               {value[8]?.toFixed(2)} USDC
                             </span>
-                            ~$
-                            {value[8]?.toFixed(2)}
+                            <div className="text-xs">
+                              ~$
+                              {value[8]?.toFixed(2)}
+                            </div>
                           </div>{" "}
                         </div>
                         <div className="text-gray-600 flex justify-between">
@@ -611,7 +619,7 @@ const Deposite: React.FC = () => {
                               "0.00"
                             )}
                             {value[9] ? (
-                              <div className="text text-right">
+                              <div className="text-xs text-right">
                                 ~$<span className="md:hidden">(</span>
                                 {(value[9] * cg8Price).toFixed(2)}
                                 <span className="md:hidden">)</span>{" "}
@@ -777,7 +785,7 @@ const Deposite: React.FC = () => {
                 </svg>
               }
               heading="Enable Pool"
-              subHeading={`CG8 locked ${ poolTime } day`}
+              subHeading={`CG8 locked ${poolTime} day`}
               time={poolTime}
               p="Why is this required?"
               btntext="Proceed to your Wallet"

@@ -14,9 +14,9 @@ const WithdrawalHistory = ({
 	setOpenWithdrawHistory,
 }: WithdrawalHistoryProps) => {
 	const withdrawalHistory = [
-		{ amount: "10.00 CG8", date: "12 Sep 2023, 10:16" },
-		{ amount: "10.00 CG8", date: "12 Sep 2023, 10:16" },
-		{ amount: "10.00 CG8", date: "12 Sep 2023, 10:16" },
+		// { amount: "10.00 CG8", date: "12 Sep 2023, 10:16" },
+		// { amount: "10.00 CG8", date: "12 Sep 2023, 10:16" },
+		// { amount: "10.00 CG8", date: "12 Sep 2023, 10:16" },
 		// ... more history items
 	];
 

@@ -628,7 +628,7 @@ export const withdraw = async (poolId) => {
     toast.error(detailsPart);
 
     emitter.emit("loading", false);
-    
+
   }
 };
 
@@ -759,4 +759,14 @@ export async function estimateSlippage(tokenA, tokenB, amount) {
   } catch (e) {
     console.log("errror is---->", e);
   }
+}
+export async function addCommasToNumbers(number) {
+  // Check if numbers is an array
+   const parsedNumber = parseFloat(number);
+   // Check if the parsed number is NaN (not a number)
+   if (isNaN(parsedNumber)) {
+     return "NaN";
+   }
+   // Format the number with commas for thousands separators
+   return parsedNumber.toLocaleString();
 }
