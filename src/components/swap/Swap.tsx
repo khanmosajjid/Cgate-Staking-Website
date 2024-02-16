@@ -25,7 +25,7 @@ import {
   getMinAmountOut,
   buyUsdc,
   estimateSlippage,
-  getMinAmountIn
+  getMinAmountIn,
 } from "../../utils/web3Utils.js";
 import { addSwapHistory } from "../../utils/apiServices.js";
 import {
@@ -113,8 +113,8 @@ const Swap: FunctionComponent = () => {
           TOKEN_CONTRACT,
           USDC_CONTRACT
         );
-        const data3=await getMinAmountIn(value);
-        console.log("amount in max value is---->",data3);
+        const data3 = await getMinAmountIn(value);
+        console.log("amount in max value is---->", data3);
         const data2 = await getAmountIn(value, TOKEN_CONTRACT, USDC_CONTRACT);
         console.log("out amount data1 is----->", data1);
         console.log("in amount data2 is----->", data2);
@@ -137,8 +137,8 @@ const Swap: FunctionComponent = () => {
           TOKEN_CONTRACT,
           USDC_CONTRACT
         );
-        const data2=await getMinAmountOut(value);
-        console.log("data 2 is----->",data2);
+        const data2 = await getMinAmountOut(value);
+        console.log("data 2 is----->", data2);
         console.log("out amount data is----->", data1);
         setUsdcValue(Number(data1));
         if (data1 > usdcBalance) {
@@ -177,8 +177,8 @@ const Swap: FunctionComponent = () => {
           USDC_CONTRACT
         );
         console.log("out amount data is----->", data1);
-        const data2=await getMinAmountOut(value);
-        console.log("Value minimum amount out data is",data2);
+        const data2 = await getMinAmountOut(value);
+        console.log("Value minimum amount out data is", data2);
 
         setCg8Value(data2);
         if (value > usdcBalance) {
@@ -200,8 +200,8 @@ const Swap: FunctionComponent = () => {
         );
         console.log("out amount data is----->", data1);
 
-        const data2=await getMinAmountOut(value);
-        console.log("data 2 is agian is ------>",data2);
+        const data2 = await getMinAmountOut(value);
+        console.log("data 2 is agian is ------>", data2);
 
         setCg8Value(data1);
         if (value > usdcBalance) {
@@ -241,7 +241,7 @@ const Swap: FunctionComponent = () => {
       if (res.status == "success") {
         toast.success("Transaction Successfull");
         const swap = await addSwapHistory(address, cg8Value, usdcValue);
-     
+
         setCg8Value(0);
         setUsdcValue(0);
         setLoader(false);
@@ -405,7 +405,9 @@ const Swap: FunctionComponent = () => {
                 <button
                   className="my-3 block"
                   onClick={() => {
-                    setopenSettings(true);
+                    window.open(
+                      "https://pancakeswap.finance/swap?chain=bscTestnet"
+                    );
                   }}
                 >
                   Settings
@@ -471,7 +473,15 @@ const Swap: FunctionComponent = () => {
                       </select>
                       <p className="text-xs md:text-left  md:flex ml-1 md:ml-1 block  ">
                         Balance:
-                        <span className="flex ">{cg8Balance?.toFixed(2)}</span>
+                        <span className="flex ">
+                          {parseFloat(
+                            Number(cg8Balance).toFixed(2)
+                          ).toLocaleString(undefined, {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          })}
+                         
+                        </span>
                       </p>
                     </div>
                   </div>
@@ -592,7 +602,12 @@ const Swap: FunctionComponent = () => {
                       <p className="text-xs md:text-left md:flex ml-1 block ">
                         Balance:
                         <span className="flex overflow-scroll">
-                          {usdcBalance?.toFixed(2)}
+                          {parseFloat(
+                            Number(usdcBalance).toFixed(2)
+                          ).toLocaleString(undefined, {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          })}
                         </span>
                       </p>
                     </div>
@@ -640,7 +655,14 @@ const Swap: FunctionComponent = () => {
                       </select>
                       <p className="text-xs md:text-left  md:flex ml-1 md:ml-1 block  ">
                         Balance:
-                        <span className="flex ">{cg8Balance?.toFixed(2)}</span>
+                        <span className="flex ">
+                          {parseFloat(
+                            Number(cg8Balance).toFixed(2)
+                          ).toLocaleString(undefined, {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          })}
+                        </span>
                       </p>
                     </div>
                   </div>

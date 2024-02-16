@@ -240,6 +240,7 @@ export const getPair = async (tokenA, tokenB) => {
       functionName: "getPair",
       args: [tokenA, tokenB],
     });
+    console.log("data of get pair is------->",data)
 
     return data;
   } catch (e) {
@@ -256,6 +257,7 @@ export const getReserve = async (tokenA, tokenB) => {
       abi: PairABI,
       functionName: "getReserves",
     });
+    console.log("data of get reserve is------>",data)
 
     return data;
   } catch (e) {
@@ -326,14 +328,13 @@ export const getMinAmountIn = async (amountOut) => {
   try {
     const reserve: any = await getReserve(USDC_CONTRACT, TOKEN_CONTRACT);
     amountOut = convertToWei(amountOut);
-
     let data = await readContract({
       address: PANCAKE_TEST_ROUTER_CONTRACT,
       abi: RouterABI,
       functionName: "getAmountIn",
       args: [amountOut, reserve[0], reserve[1]],
     });
-    console.log("data is----->", data);
+    console.log("get minm amount in data is----->", data);
     data = data.toString();
     data = convertToEther(data);
 

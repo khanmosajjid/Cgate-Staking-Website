@@ -4,18 +4,20 @@ import { useState, useEffect } from "react";
 import X from "./assets/X.svg";
 import arrow from "./assets/arrow-up-line.svg";
 import graph from "./assets/Line Graph.png";
-import { getAmountOut } from "../../utils/web3Utils";
+import { getAmountOut, getMinAmountIn } from "../../utils/web3Utils";
 import { TOKEN_CONTRACT,USDC_CONTRACT } from "../../constants/contracts";
 
 interface HistoryCardProp {
-	setopenHistoryPrice: (value: boolean) => void;
-	setSetting: (value: boolean) => void;
-	openCG8Details: boolean;
-	// setOpenCG8Details:string;
+  setopenHistoryPrice: (value: boolean) => void;
+  setOpenCG8Details:(value:boolean)=>void;
+  setSetting: (value: boolean) => void;
+  openCG8Details: boolean;
+  // setOpenCG8Details:string;
 }
 
 const HistoricalPrice = ({
 	setopenHistoryPrice,
+	setOpenCG8Details,
 	setSetting,
 	openCG8Details,
 }: HistoryCardProp) => {
@@ -31,11 +33,7 @@ const HistoricalPrice = ({
 
 	useEffect(() => {
 		const getCG8Balance = async () => {
-			let price: any = await getAmountOut(
-				"1",
-				TOKEN_CONTRACT,
-				USDC_CONTRACT
-			);
+			let price: any = await getMinAmountIn("1");
 			price = parseFloat(price).toFixed(2);
 			setCg8Price(price);
 		};
@@ -77,6 +75,7 @@ const HistoricalPrice = ({
 								} flex-1  rounded-l-2xl flex flex-row items-center justify-center py-2.5 px-4 gap-[8px]`}>
 								<button
 									className='relative leading-[16px] font-light '
+									onClick={()=>{setOpenCG8Details(false)}}
 									>
 									Historical price
 								</button>

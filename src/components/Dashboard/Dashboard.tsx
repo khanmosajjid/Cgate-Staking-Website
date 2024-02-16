@@ -178,7 +178,12 @@ const Frame: FunctionComponent = () => {
                     </div>
                     {isConnected ? (
                       <b className=" text-3xl py-1 font-roboto text-gray-50 ">
-                        {cG8Balance}
+                        {parseFloat(
+                          Number(cG8Balance).toFixed(2)
+                        ).toLocaleString(undefined, {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
                       </b>
                     ) : (
                       <b className=" text-3xl py-1 font-roboto text-gray-50 ">
@@ -187,7 +192,13 @@ const Frame: FunctionComponent = () => {
                     )}
                     {isConnected ? (
                       <div className=" text-sm text-gray-100 font-medium">
-                        ~${cG8Balance}
+                        ~$
+                        {parseFloat(
+                          Number(cG8Balance * cg8Price).toFixed(2)
+                        ).toLocaleString(undefined, {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
                       </div>
                     ) : (
                       <div className=" text-sm text-gray-100 font-medium">
@@ -328,8 +339,11 @@ const Frame: FunctionComponent = () => {
               <div className="self-stretch flex flex-row items-center justify-end gap-[24px] leading-6">
                 <div className="flex-1  ">My deposited CG8</div>
                 <div className="flex flex-row items-start justify-start text-right ">
-					{isConnected?<div className="relativ  ">{totalDeposit}</div>:"0.00"}
-                  
+                  {isConnected ? (
+                    <div className="relativ  ">{totalDeposit}</div>
+                  ) : (
+                    "0.00"
+                  )}
                 </div>
               </div>
               <div className="self-stretch flex flex-row items-center justify-end gap-[24px] leading-6">
@@ -457,6 +471,7 @@ const Frame: FunctionComponent = () => {
             setopenHistoryPrice={setopenHistoryPrice}
             setSetting={setSetting}
             openCG8Details={openCG8Details}
+            setOpenCG8Details={setOpenCG8Details}
           />
         </div>
       ) : (
