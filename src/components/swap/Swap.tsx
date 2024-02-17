@@ -273,7 +273,7 @@ const Swap: FunctionComponent = () => {
       if (res.status == "success") {
         toast.success("Transaction Successfull");
         // const swap = await addSwapHistory(address, usdcValue, cg8Value);
-        console.log("swap api response", swap);
+        // console.log("swap api response", swap);
         setCg8Value(0);
         setUsdcValue(0);
         setLoader(false);
