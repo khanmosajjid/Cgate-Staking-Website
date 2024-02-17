@@ -161,13 +161,13 @@ const DepositeCG8: React.FC<DepositCardProps> = ({
       // return;
       if (res.status == "success") {
         setTransactionId(res?.transactionHash);
-        const deposit = await addDepositHistory(
-          address,
-          stakeAmount,
-          poolId,
-          res?.transactionHash,
-          referrer
-        );
+        // const deposit = await addDepositHistory(
+        //   address,
+        //   stakeAmount,
+        //   poolId,
+        //   res?.transactionHash,
+        //   referrer
+        // );
 
         toast.success("Transaction Successfull");
         setStakeAmount(0);
