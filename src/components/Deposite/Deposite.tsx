@@ -535,7 +535,13 @@ const Deposite: React.FC = () => {
                                 {/* USDC */}
                               </div>
                             ) : (
-                              "~$0.00"
+                              <div className="text-xs  text-right">
+                                ~$
+                                <span className="md:hidden">(</span>
+                                0.00
+                                <span className="md:hidden"> )</span>{" "}
+                                {/* USDC */}
+                              </div>
                             )}
                           </div>
                         </div>
@@ -603,7 +609,13 @@ const Deposite: React.FC = () => {
                                 {/* USDC */}
                               </div>
                             ) : (
-                              " ~$0.00"
+                              <div className="text-xs  text-right">
+                                ~$
+                                <span className="md:hidden">(</span>
+                                0.00
+                                <span className="md:hidden"> )</span>{" "}
+                                {/* USDC */}
+                              </div>
                             )}
                           </div>{" "}
                         </div>
@@ -980,16 +992,16 @@ const Deposite: React.FC = () => {
 
                   setLoader(false);
                   setTransaction(true);
-                  window.location.reload()
+                  window.location.reload();
                 } else {
                   toast.error("Transaction Failed");
                   setLoader(false);
                   setTransaction(false);
-                   window.location.reload();
+                  window.location.reload();
                 }
                 setTransaction(true);
                 setOpenClaimCard(false);
-                 window.location.reload();
+                window.location.reload();
               }}
             />
           </div>
