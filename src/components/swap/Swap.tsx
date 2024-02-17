@@ -240,7 +240,7 @@ const Swap: FunctionComponent = () => {
 
       if (res.status == "success") {
         toast.success("Transaction Successfull");
-        const swap = await addSwapHistory(address, cg8Value, usdcValue);
+        // const swap = await addSwapHistory(address, cg8Value, usdcValue);
 
         setCg8Value(0);
         setUsdcValue(0);
@@ -257,6 +257,7 @@ const Swap: FunctionComponent = () => {
       setLoader(false);
       setCg8Value(0);
       setUsdcValue(0);
+      window.location.reload();
     }
   };
   const buyUSDC = async () => {
@@ -271,7 +272,7 @@ const Swap: FunctionComponent = () => {
 
       if (res.status == "success") {
         toast.success("Transaction Successfull");
-        const swap = await addSwapHistory(address, usdcValue, cg8Value);
+        // const swap = await addSwapHistory(address, usdcValue, cg8Value);
         console.log("swap api response", swap);
         setCg8Value(0);
         setUsdcValue(0);
@@ -288,6 +289,7 @@ const Swap: FunctionComponent = () => {
       setLoader(false);
       setCg8Value(0);
       setUsdcValue(0);
+      window.location.reload();
     }
   };
 
@@ -480,7 +482,6 @@ const Swap: FunctionComponent = () => {
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2,
                           })}
-                         
                         </span>
                       </p>
                     </div>
