@@ -969,24 +969,27 @@ const Deposite: React.FC = () => {
                 const res: any = await claimRewardForPool(poolId);
                 setTransactionHash(res.transactionHash);
                 if (res.status == "success") {
-                  const claim = await addClaimHistory(
-                    address,
-                    claimAmount,
-                    poolId,
-                    res?.transactionHash
-                  );
+                  // const claim = await addClaimHistory(
+                  //   address,
+                  //   claimAmount,
+                  //   poolId,
+                  //   res?.transactionHash
+                  // );
 
                   toast.success("Transaction Successfull");
 
                   setLoader(false);
                   setTransaction(true);
+                  window.location.reload()
                 } else {
                   toast.error("Transaction Failed");
                   setLoader(false);
                   setTransaction(false);
+                   window.location.reload();
                 }
                 setTransaction(true);
                 setOpenClaimCard(false);
+                 window.location.reload();
               }}
             />
           </div>
