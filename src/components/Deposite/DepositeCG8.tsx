@@ -179,13 +179,13 @@ const DepositeCG8: React.FC<DepositCardProps> = ({
         toast.error("Transaction Failed");
         setLoader(false);
         setStakeAmount(0);
-        window.location.reload();
+        // window.location.reload();
       }
     } catch (e) {
       console.log("error is---->", e);
       setLoader(false);
       setStakeAmount(0);
-      window.location.reload();
+      // window.location.reload();
     }
   };
 

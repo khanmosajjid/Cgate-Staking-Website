@@ -338,7 +338,7 @@ export const getMinAmountIn = async (amountOut) => {
     data = data.toString();
 
     data = convertToEther(data);
-    console.log("data for get min amount ----->",data);
+    console.log("data for get min amount ----->",data,typeof data);
 
     return data;
   } catch (e) {
