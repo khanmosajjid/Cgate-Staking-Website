@@ -56,7 +56,15 @@ const WithdrawItem = ({
               {parseFloat(amount).toFixed(2)} CG8
             </p>
             <p className="md:text-xs text-lg md:text-gray-500">
-              {`~$${(amount * cg8Price).toFixed(2)}`}
+              ~$
+              {parseFloat((amount * cg8Price).toFixed(2)).toLocaleString(
+                undefined,
+                {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                }
+              )}
+            
             </p>
           </div>
           <div>
@@ -73,7 +81,7 @@ const WithdrawItem = ({
                 let res = await withdrawPerStake(poolId, amount, stakeId);
                 console.log("res is----->", res);
                 if (res.status == "success") {
-                  setOpenWithdrawCG8(false)
+                  setOpenWithdrawCG8(false);
                 }
                 // window.location.reload();
                 navigate("/deposit");
@@ -171,9 +179,8 @@ const WithdrawModal = ({
             <>
               <div className="p-6">
                 <div className="overflow-y-auto" style={{ maxHeight: "300px" }}>
-                  {console.log("transsaction is----->",transactions)}
+                  {console.log("transsaction is----->", transactions)}
                   {transactions.map((transaction, index) => (
-                   
                     <WithdrawItem
                       key={index}
                       amount={convertToEther(transaction[0])}
@@ -193,11 +200,20 @@ const WithdrawModal = ({
                     </span>
                   </div>
                   <div className="flex md:block my-2 md:text-gray-900 font-light md:font-normal text-right">
-                    
-                    <span className="md:text-sm text-[14px] md:block">{`${(total).toFixed(2)} CG8 `}</span>
+                    <span className="md:text-sm text-[14px] md:block">{`${total.toFixed(
+                      2
+                    )} CG8 `}</span>
                     <span className="md:text-xs text-[12px] text-gray-600">
                       <span className="md:hidden"> (</span>
-                      {`~$${(total * cg8Price).toFixed(2)}`}
+                      ~$
+                      {parseFloat((total * cg8Price).toFixed(2)).toLocaleString(
+                        undefined,
+                        {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        }
+                      )}
+                    
                       <span className="md:hidden">)</span>
                     </span>
                   </div>

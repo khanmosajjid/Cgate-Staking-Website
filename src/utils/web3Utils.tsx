@@ -114,7 +114,7 @@ export const getUsdcBalance = async (account) => {
       functionName: "balanceOf",
       args: [account],
     });
-    console.log("data is------>", convertToEther(data));
+    
 
     return convertToEther(data);
   } catch (e) {
@@ -240,7 +240,7 @@ export const getPair = async (tokenA, tokenB) => {
       functionName: "getPair",
       args: [tokenA, tokenB],
     });
-    console.log("data of get pair is------->",data)
+    
 
     return data;
   } catch (e) {
@@ -257,7 +257,7 @@ export const getReserve = async (tokenA, tokenB) => {
       abi: PairABI,
       functionName: "getReserves",
     });
-    console.log("data of get reserve is------>",data)
+   
 
     return data;
   } catch (e) {
@@ -277,7 +277,7 @@ export const getAmountOut = async (amountIn, tokenA, tokenB) => {
     });
 
     data = convertToEther(data[1]);
-    console.log("amount out data is----->", data);
+    
     return parseFloat(data)?.toFixed(2);
   } catch (e) {
     console.log("error in---->", e);
@@ -295,7 +295,7 @@ export const getAmountIn = async (amountIn, tokenA, tokenB) => {
       args: [amountIn, [tokenA, tokenB]],
     });
     data = convertToEther(data[0]);
-    console.log("input amount is----->", parseFloat(data));
+    
 
     return parseFloat(data)?.toFixed(2);
   } catch (e) {
@@ -334,9 +334,11 @@ export const getMinAmountIn = async (amountOut) => {
       functionName: "getAmountIn",
       args: [amountOut, reserve[0], reserve[1]],
     });
-    console.log("get minm amount in data is----->", data);
+
     data = data.toString();
+
     data = convertToEther(data);
+    console.log("data for get min amount ----->",data);
 
     return data;
   } catch (e) {

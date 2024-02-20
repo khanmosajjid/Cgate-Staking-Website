@@ -114,10 +114,9 @@ const Swap: FunctionComponent = () => {
           USDC_CONTRACT
         );
         const data3 = await getMinAmountIn(value);
-        console.log("amount in max value is---->", data3);
+       
         const data2 = await getAmountIn(value, TOKEN_CONTRACT, USDC_CONTRACT);
-        console.log("out amount data1 is----->", data1);
-        console.log("in amount data2 is----->", data2);
+       
         setUsdcValue(Number(data3));
         if (data1 > usdcBalance) {
           toast.error("You dont Have Enough USDC");
@@ -228,7 +227,7 @@ const Swap: FunctionComponent = () => {
         TOKEN_CONTRACT,
         usdcValue
       );
-      console.log("Slippage value is", slippage);
+    
 
       setLoader(true);
       const res: any = await buyCG8(
@@ -499,7 +498,7 @@ const Swap: FunctionComponent = () => {
                         className="md:w-[100px] w-20 bg-gray-50"
                         placeholder="USDC"
                         type="number"
-                        value={usdcValue}
+                        value={usdcValue.toFixed(2)}
                         onChange={handleUsdcValueChange}
                       ></input>
                     </div>
@@ -574,7 +573,7 @@ const Swap: FunctionComponent = () => {
                         className="md:w-[100px] w-20 bg-gray-50"
                         placeholder="USDC"
                         type="number"
-                        value={usdcValue}
+                        value={usdcValue.toFixed(2)}
                         onChange={handleUsdcValueChange}
                       ></input>
                     </div>

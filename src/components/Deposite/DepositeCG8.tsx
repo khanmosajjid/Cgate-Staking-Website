@@ -281,7 +281,14 @@ const DepositeCG8: React.FC<DepositCardProps> = ({
           <div className="block">
             <span className="block">{cg8Balance?.toFixed(2)} CG8</span>
             <div className="text-xs text-right">
-              ~${(cg8Price*cg8Balance)?.toFixed(2)}{" "}
+              ~$
+              {parseFloat((cg8Balance * cg8Price).toFixed(2)).toLocaleString(
+                undefined,
+                {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                }
+              )}
             </div>
           </div>
         </div>
@@ -295,7 +302,7 @@ const DepositeCG8: React.FC<DepositCardProps> = ({
         </div> */}
         <div className="mb-3  text-sm flex justify-between">
           <label className="block  mb-2">Pool APR</label>
-          <div className="text-gray-600">{Number(data[3])/100}%</div>
+          <div className="text-gray-600">{Number(data[3]) / 100}%</div>
         </div>
         <div className="mb-3  text-sm flex justify-between">
           <label className="block  mb-2">Pool type</label>
