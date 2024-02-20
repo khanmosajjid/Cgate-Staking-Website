@@ -498,7 +498,7 @@ const Swap: FunctionComponent = () => {
                         className="md:w-[100px] w-20 bg-gray-50"
                         placeholder="USDC"
                         type="number"
-                        value={usdcValue.toFixed(2)}
+                        value={usdcValue?.toFixed(2)}
                         onChange={handleUsdcValueChange}
                       ></input>
                     </div>
@@ -573,7 +573,7 @@ const Swap: FunctionComponent = () => {
                         className="md:w-[100px] w-20 bg-gray-50"
                         placeholder="USDC"
                         type="number"
-                        value={usdcValue.toFixed(2)}
+                        value={usdcValue?.toFixed(2)}
                         onChange={handleUsdcValueChange}
                       ></input>
                     </div>
