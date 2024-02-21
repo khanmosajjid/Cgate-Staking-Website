@@ -84,6 +84,11 @@ const connectorImages = {
   // default: DefaultConnectorImage,
 };
 
+function isMobileDevice() {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
+
 const Modal = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
   return (
@@ -177,9 +182,14 @@ export function ConnectWallet() {
 
   const handleConnectWallet = async (connector: any) => {
     try {
-      connect({ connector });
+      // If on mobile and the connector supports WalletConnect, use it
+      if (isMobileDevice() && connector.name === 'WalletConnect') {
+        // Here, you might want to set up WalletConnect-specific logic
+      }
+      // Proceed with the connection
+      await connect({ connector });
     } catch (e) {
-      console.log("error in disconnect is--->", e);
+      console.log("Error in connecting wallet: ", e);
     }
   };
 
