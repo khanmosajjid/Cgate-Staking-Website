@@ -748,7 +748,7 @@ const Home: React.FC = () => {
 							</span>
 						</li>
 						{isOpen1 && (
-							<li className='pl-6 text-[16px] leading-6 font-light'>
+							<li className=' text-[16px] leading-6 font-light'>
 								<span>
 									Yield farming is a way for cryptocurrency
 									holders to earn rewards by providing
@@ -805,9 +805,9 @@ const Home: React.FC = () => {
 							</span>
 						</li>
 						{isOpen2 && (
-							<ul className='pl-6 text-[16px] leading-6 font-light '>
+							<ul className=' text-[16px] leading-6 font-light '>
 								<span>
-                  <span className="-ml-6">
+                  <span className="">
 									Yield farming can be both lucrative and
 									risky, and its safety depends on various
 									factors.
@@ -927,7 +927,7 @@ const Home: React.FC = () => {
 							</span>
 						</li>
 						{isOpen3 && (
-							<li className='pl-6 text-[16px] leading-6 font-light '>
+							<li className=' text-[16px] leading-6 font-light '>
 								Yes, native token of CGate platform, CG8 has the
 								maximum supply of 1 billion (1,000,000,000)
 								across all current and future blockchains.
@@ -972,8 +972,8 @@ const Home: React.FC = () => {
 						</li>
 
 						{isOpen4 && (
-							<li className='pl-6 text-[16px] leading-6 font-light w-[90%]'>
-                <span className="-ml-6">
+							<li className=' text-[16px] leading-6 font-light w-[90%]'>
+                <span className="">
 
 								There are two main use cases of CG8 token:{" "}
                 </span>
@@ -1041,7 +1041,7 @@ const Home: React.FC = () => {
 							</span>
 						</li>
 						{isOpen5 && (
-							<li className='pl-6 text-[16px] leading-6 font-light'>
+							<li className='text-[16px] leading-6 font-light'>
 								Most staking and yield farming platforms specify
 								a defined period during which the deposited
 								assets are locked. On the other hand, to
@@ -1104,7 +1104,7 @@ const Home: React.FC = () => {
 							</span>
 						</li>
 						{isOpen6 && (
-							<li className='pl-6 text-[16px] leading-6 font-light '>
+							<li className=' text-[16px] leading-6 font-light '>
 								Yes. For users who recommend CGate platform to
 								their acquaintances, an attractive referral
 								scheme is proposed. By sharing its referral link

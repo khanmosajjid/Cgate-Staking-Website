@@ -86,7 +86,7 @@ const Referral: FunctionComponent = () => {
           openRefCard ? "pointer-events-none blur-lg" : ""
         }`}
       >
-        <div className="lg:absolute lg:top-[100px] -z-10  mt-10 md:mt-0 rounded-xl bg-white shadow-xl lg:w-[720px] flex flex-col items-start justify-start p-8  border gap-[12px] text-sm">
+        <div className="lg:absolute lg:top-[100px] -z-10  mt-10 md:mt-0 rounded-xl  bg-white shadow-xl lg:w-[720px] flex flex-col items-start justify-start p-8  border gap-[6px] text-sm">
           <div className="self-stretch flex flex-row items-center justify-start ">
             <div className="flex-1 flex flex-row items-center justify-end gap-[5px]">
               <div className="flex-1 relative leading-[24px] font-semibold text-[16px]">
@@ -109,12 +109,12 @@ const Referral: FunctionComponent = () => {
               contacts need to use your referral link when depositing CG8.
             </p>
           </div>
-          <div className=" text-xl leading-[20px] font-md w-[310px]  ">
-            <h1>{referralLink}</h1>
-          </div>
-          <div className="flex flex-row items-center justify-start gap-[12px] text-sm text-white">
+          <div className="w-full  mx-auto text-base md:text-lg lg:text-xl leading-tight font-medium ">
+  <h1 className="break-words">{referralLink}</h1>
+</div>
+          <div className="flex flex-row items-center justify-start gap-[8px] text-sm text-white -ml-10">
             <div className="rounded-round-buttons w-[120px] flex flex-row items-center justify-center">
-              <div className="rounded-3xl bg-blue-600 flex flex-row items-center justify-center py-3 px-4 gap-[8px]">
+              <div className="rounded-3xl bg-blue-600 flex flex-row items-center justify-center py-3  gap-[8px]">
                 <button
                   className="relative leading-[10px] font-medium w-20 text-xs"
                   onClick={copyToClipboard}
@@ -125,8 +125,8 @@ const Referral: FunctionComponent = () => {
             </div>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="32"
-              height="32"
+              width="24"
+              height="24"
               viewBox="0 0 32 32"
               fill="none"
             >
@@ -160,7 +160,7 @@ const Referral: FunctionComponent = () => {
                 fill="#0EA5E9"
               />
             </svg>
-            <img className="relative w-8  object-cover" alt="" src={insta} />
+            <img className="relative w-6  object-cover" alt="" src={insta} />
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="34"
@@ -210,7 +210,7 @@ const Referral: FunctionComponent = () => {
           {openRefsetting ? (
             <div
               ref={settingsRef}
-              className="p-3 px-8 rounded-3xl absolute bg-white ml-[65%] border-gray-50 shadow-xl shadow-gray-300"
+              className="p-3 px-8  rounded-3xl absolute bg-white sm:ml-[80%] ml-[40%] border-gray-50 shadow-xl shadow-gray-300"
             >
               <button
                 className="text-teal-600"

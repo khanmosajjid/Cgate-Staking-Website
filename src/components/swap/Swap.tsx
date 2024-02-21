@@ -364,7 +364,7 @@ const Swap: FunctionComponent = () => {
         <img className="fixed w-full h-[1500px] md:h-auto" src={bg} alt="" />
       </div>
       <div
-        className={`relative w-full  text-left text-base text-sub-heading font-xl ml-4 md:ml-[250px] ${
+        className={`relative  text-left text-base text-sub-heading font-xl ml-6 md:ml-[250px] ${
           openSettings || openHistory
             ? " bg-gray-400 pointer-events-none blur-lg"
             : ""
@@ -413,7 +413,7 @@ const Swap: FunctionComponent = () => {
             {setting ? (
               <div
                 ref={settingsRef}
-                className="block bg-white border md:p-5 p-2  rounded-2xl absolute lg:left-[534px] left-[200px] md:mt-10 mt-5 md:w-52 shadow-xl text-teal-600 "
+                className="block bg-white border md:p-5 p-2 z-50  rounded-xl absolute lg:left-[534px] left-[150px] md:mt-10 mt-12  md:w-52  shadow-xl text-teal-600 "
               >
                 <button
                   className="pt-4 "
@@ -468,7 +468,7 @@ const Swap: FunctionComponent = () => {
                       ></input>
                     </div>
                     <button
-                      className="relativ text-base  font-medium text-teal-600"
+                      className="relative text-base  font-medium text-teal-600"
                       onClick={async () => {
                         setCg8Value(cg8Balance);
                         const r1 = await getMinAmountOut(cg8Balance.toString());
@@ -494,7 +494,7 @@ const Swap: FunctionComponent = () => {
                       </select>
                       <p className="text-xs md:text-left  md:flex ml-1 md:ml-1 block  ">
                         Balance:
-                        <span className="flex px-1 ">
+                        <span className="flex sm:px-1 px-0 ">
                           {parseFloat(
                             Number(cg8Balance).toFixed(2)
                           ).toLocaleString(undefined, {
@@ -560,7 +560,7 @@ const Swap: FunctionComponent = () => {
                       </select>
                       <p className="text-xs md:text-left md:flex ml-1 block ">
                         Balance:
-                        <span className="flex overflow-scroll px-1">
+                        <span className="flex overflow-scroll sm:px-1 px-0">
                           {usdcBalance?.toFixed(2)}
                         </span>
                       </p>
