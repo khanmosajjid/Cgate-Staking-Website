@@ -18,7 +18,6 @@ import ConnectorImage3 from "../../assets/4pic.svg";
 import ConnectorImage4 from "../../assets/3pic.svg";
 import BNBLogo from "../../assets/BNBSmart.png";
 
-
 const modalStyle: CSSProperties = {
   // position: "fixed",
   // background: "white",
@@ -140,6 +139,8 @@ export function ConnectWallet() {
 
   const { address, connector, isConnected } = useAccount();
 
+
+  
   const { connect, connectors, error, isLoading, pendingConnector } =
     useConnect();
   const { data, isError } = useBalance({
@@ -156,28 +157,31 @@ export function ConnectWallet() {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (settingsRef.current && !settingsRef.current.contains(event.target)) {
-        setModalOpen(false);
+        closeSettings();
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
 
   const handleDisconnectWallet = async () => {
     try {
+      console.log("here");
+      localStorage.removeItem("refAddress");
       disconnect();
       navigate("/dashboard");
     } catch (e) {
-      console.error("Error in disconnecting wallet:", e);
+      console.log("error in disconnect is--->", e);
     }
   };
 
-  const handleConnectWallet = async (connector) => {
+  const handleConnectWallet = async (connector: any) => {
     try {
-      await connect({ connector });
+      connect({ connector });
     } catch (e) {
-      console.error("Error in connecting wallet:", e);
+      console.log("error in disconnect is--->", e);
     }
   };
 

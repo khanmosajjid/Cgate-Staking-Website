@@ -24,9 +24,10 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
 
 const config = createConfig({
   autoConnect: true,
+  
   connectors: [
     new MetaMaskConnector({ chains }),
-
+    new InjectedConnector({ chains, options: { name: 'Injected' } }),
     new WalletConnectConnector({
       chains,
       options: {
@@ -36,6 +37,7 @@ const config = createConfig({
   ],
   publicClient,
   webSocketPublicClient,
+  
 });
 
 
