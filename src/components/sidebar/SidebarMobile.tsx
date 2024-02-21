@@ -250,7 +250,7 @@ const SidebarMobile = () => {
             />
           </svg>
         </div>
-        <nav className="space-y-2 mt-4 text-center mb-32 text-sm font-light w-[80%] mx-auto ">
+        <nav className="space-y-2 mt-4 text-center sm:mb-32 mb-12 text-sm font-light w-[80%] mx-auto ">
           {sidebarNavItems.map((item, index) => (
             <Link
               // onClick={handleClick}
@@ -264,13 +264,13 @@ const SidebarMobile = () => {
               onClick={handleClick}
             >
               <span className="">{item.icon}</span>
-              <span className="ml-3 ">{item.display}</span>{" "}
+              <span className="ml-3  ">{item.display}</span>{" "}
               {/* Add a span for the text */}
             </Link>
           ))}
         </nav>
 
-        <div className="self-stretch flex-1 rounded-xl overflow-hidden flex flex-col items-start py-2.5 px-0 gap-[2px] text-left ml-10 font-light -mt-4">
+        <div className="self-stretch flex-1 rounded-xl overflow-hidden grid grid-col items-start py-2.5 px-0 gap-[2px] text-left ml-10 font-light -mt-6">
           <div className="self-stretch rounded bg-basic-white flex flex-row items-center justify-start gap-[10px] text-sm ">
             <img
               className="relative w-6 h-6 overflow-hidden shrink-0"
