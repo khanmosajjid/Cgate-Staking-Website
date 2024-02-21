@@ -375,7 +375,7 @@ const Swap: FunctionComponent = () => {
             <Header heading="Swap CG8-USDC" />
           </div>
 
-          <div className="border  md:left-0 p-4 -mt-5 md:mt-0 rounded-xl  bg-[#F5F6FE] shadow-xl w-[96%]   md:w-[600px] flex flex-col items-center justify-start md:p-4 gap-[24px] text-black">
+          <div className="border md:left-0 p-4 -mt-5 md:mt-0 rounded-xl bg-[#F5F6FE] shadow-xl w-[96%] md:w-[600px] flex flex-col items-center justify-start md:p-4 gap-[24px] text-black overflow-y-auto max-h-[90vh] md:max-h-full">
             <div className="self-stretch flex flex-row items-center justify-start ">
               <div className="flex-1 flex flex-row items-center justify-end ">
                 <div className="flex-1 relative  font-medium text-[16px] ">
@@ -454,13 +454,13 @@ const Swap: FunctionComponent = () => {
                 {isCg8Buy ? (
                   <div className="self-stretch rounded-2xl bg-gray-50 flex flex-row items-center justify-start py-2 px-5 gap-[20px] text-5xl border-[1px] border-gray-200">
                     <img
-                      className=" w-[40.11px] h-[40.11px]"
-                      alt=""
-                      src={CG8}
-                    />
+  className="hidden md:block w-[40.11px] h-[40.11px]"
+  alt=""
+  src={CG8}
+/>
                     <div className="block md:mr-28  text-xl">
                       <input
-                        className="md:w-[100px] w-20 bg-gray-50"
+                        className="md:w-[100px] w-20 bg-gray-50 pl-2"
                         placeholder="CG8"
                         type="number"
                         value={cg8Value}
@@ -468,7 +468,7 @@ const Swap: FunctionComponent = () => {
                       ></input>
                     </div>
                     <button
-                      className="relative text-base  font-medium text-teal-600"
+                      className="relative text-base font-medium text-teal-600"
                       onClick={async () => {
                         setCg8Value(cg8Balance);
                         const r1 = await getMinAmountOut(cg8Balance.toString());
@@ -598,14 +598,14 @@ const Swap: FunctionComponent = () => {
                   <>
                     <div className="self-stretch rounded-2xl bg-gray-50 flex flex-row items-center justify-start py-2 px-5 gap-[20px] text-5xl border-[1px] border-solid ">
                       <img
-                        className=" w-[40.11px] h-[40.11px]"
+                        className="hidden md:inline-block w-[40.11px] h-[40.11px]"
                         alt=""
                         src={logo}
                       />
 
                       <div className=" md:mr-28 text-xl block">
                         <input
-                          className="md:w-[100px] w-20 bg-gray-50"
+                          className="md:w-[100px] w-20 bg-gray-50 pl-2"
                           placeholder="USDC"
                           type="number"
                           value={usdcValue}
