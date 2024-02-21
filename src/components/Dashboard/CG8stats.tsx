@@ -126,7 +126,7 @@ const CG8stats = ({ setOpenCG8Details, setSetting }: HistoryCardProp) => {
 						<div className='relative'>
 							<p className='m-0 '>8.1M</p>
 							<p className='m-0 text-xs  text-neutral-600'>
-								(~$ 8.1M)
+								~$ 8.1M
 							</p>
 						</div>
 					</div>
@@ -163,7 +163,7 @@ const CG8stats = ({ setOpenCG8Details, setSetting }: HistoryCardProp) => {
 								<span>
 									<span className='font-body-b1-regular'>{` `}</span>
 								</span>
-								<span className=''>(~$5.325.121)</span>
+								<span className=''>~$5.325.121</span>
 							</p>
 						</div>
 					</div>
@@ -176,7 +176,7 @@ const CG8stats = ({ setOpenCG8Details, setSetting }: HistoryCardProp) => {
 						<div className='relative leading-[24px]'>
 							<p className='m-0 '>1.00 USDC</p>
 							<p className='m-0 text-xs  text-slategray'>
-								(~$ 1.00)
+								~$ 1.00
 							</p>
 						</div>
 					</div>

@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
 import X from "./assets/X.svg";
-import Bitcoin from "./assets/bitcoin.svg";
+import Bitcoin from "./assets/CG8.svg";
 
 const WalletDetails: FunctionComponent = () => {
 	return (

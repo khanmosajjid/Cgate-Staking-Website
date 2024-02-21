@@ -494,7 +494,7 @@ const Swap: FunctionComponent = () => {
                       </select>
                       <p className="text-xs md:text-left  md:flex ml-1 md:ml-1 block  ">
                         Balance:
-                        <span className="flex ">
+                        <span className="flex px-1 ">
                           {parseFloat(
                             Number(cg8Balance).toFixed(2)
                           ).toLocaleString(undefined, {
@@ -560,7 +560,7 @@ const Swap: FunctionComponent = () => {
                       </select>
                       <p className="text-xs md:text-left md:flex ml-1 block ">
                         Balance:
-                        <span className="flex overflow-scroll">
+                        <span className="flex overflow-scroll px-1">
                           {usdcBalance?.toFixed(2)}
                         </span>
                       </p>
@@ -639,7 +639,7 @@ const Swap: FunctionComponent = () => {
                         </select>
                         <p className="text-xs md:text-left md:flex ml-1 block ">
                           Balance:
-                          <span className="flex overflow-scroll">
+                          <span className="flex overflow-scroll px-1">
                             {parseFloat(
                               Number(usdcBalance).toFixed(2)
                             ).toLocaleString(undefined, {

@@ -311,8 +311,8 @@ const HistoricalPrice = ({
 						<div className='flex flex-row items-start justify-start text-right text-sub-heading'>
 							<div className='relative'>
 								<p className='m-0 '>8.1M</p>
-								<p className='m-0 text-xs  text-neutral-600'>
-									(~$8.1M)
+								<p className='m-0 text-xs '>
+									~$8.1M
 								</p>
 							</div>
 						</div>
@@ -335,14 +335,14 @@ const HistoricalPrice = ({
 							<div className='relative leading-[24px]'>
 								<p className='m-0'>
 									<span>
-										<span className=''>5.325.121 CG8</span>
+										<span className=''>5.32 CG8</span>
 									</span>
 								</p>
-								<p className='m-0 text-xs text-slategray'>
+								<p className='m-0 text-xs '>
 									<span>
-										<span className='font-body-b1-regular'>{` `}</span>
+										
 									</span>
-									<span className=''>(~$5.325.121)</span>
+									<span className=''>~$5.32</span>
 								</p>
 							</div>
 						</div>
@@ -355,7 +355,7 @@ const HistoricalPrice = ({
 							<div className='relative leading-[24px]'>
 								<p className='m-0 '>1.00 USDC</p>
 								<p className='m-0 text-xs  text-slategray'>
-									(~$1.00)
+									~$1.00
 								</p>
 							</div>
 						</div>
