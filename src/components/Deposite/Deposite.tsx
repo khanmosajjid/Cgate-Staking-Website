@@ -28,7 +28,7 @@ import {
   withdraw,
   getMinAmountOut,
   getMinAmountIn,
-  addCommasToNumbers
+  addCommasToNumbers,
 } from "../../utils/web3Utils.js";
 import { useAccount } from "wagmi";
 import { STAKING_CONTRACT, TOKEN_CONTRACT } from "../../constants/contracts";
@@ -127,6 +127,7 @@ const Deposite: React.FC = () => {
       }
 
       setPools(pool);
+      console.log("pools value is---->", pool);
     };
     getPoolsCount();
   }, [address, depositbtn]);
@@ -338,7 +339,7 @@ const Deposite: React.FC = () => {
               <div className="flex justify-between py-3 px-7 ">
                 <div className="text-[20px] ">Pools</div>
                 <div>
-                  <div
+                  {/* <div
                     onClick={handleToggle}
                     className={`relative  inline-block w-12 align-middle select-none transition duration-200 ease-in `}
                   >
@@ -353,8 +354,8 @@ const Deposite: React.FC = () => {
                         isActive ? "translate-x-6" : ""
                       }`}
                     ></span>
-                  </div>
-                  <span className="font-light">Used only</span>
+                  </div> */}
+                  {/* <span className="font-light">Used only</span> */}
                 </div>
               </div>
 
@@ -754,10 +755,10 @@ const Deposite: React.FC = () => {
                                   </button>
                                 </>
                               )}
-
+                          
                               {value[8] ? (
                                 <button
-                                  className="  p-2 rounded-3xl flex-grow w-20 text-white border text-[12px] bg-teal-600 "
+                                  className=" p-2 rounded-3xl flex-grow w-20 text-white border text-[12px] bg-teal-600 "
                                   onClick={async () => {
                                     if (value[8] == "0" || value[8] == 0) {
                                       toast.error("Claim Amount is 0");

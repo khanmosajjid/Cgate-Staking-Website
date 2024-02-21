@@ -49,7 +49,9 @@ const Swap: FunctionComponent = () => {
   const [isApprove, setIsApprove] = useState(true);
   const [cg8Price, setCg8Price] = useState<any>();
   const [isCg8Buy, setIsCg8cBuy] = useState(true);
+  const [insufficientUSDC, setInsufficientUSDC] = useState(false);
   const [deadlineTime, setDeadlineTime] = useState<any>(0);
+  const [insufficientLiquidity,setInsufficientLiquidity]=useState(false);
 
   const settingsRef: any = useRef(null);
 
@@ -114,15 +116,25 @@ const Swap: FunctionComponent = () => {
           USDC_CONTRACT
         );
         const data3 = await getMinAmountIn(value);
-       
+        console.log("data 3 is--->",data3,typeof data3)
+        if(data3==0){
+          console.log("here--->")
+          setInsufficientLiquidity(true)
+        }else{
+          setInsufficientLiquidity(false)
+        }
+
         const data2 = await getAmountIn(value, TOKEN_CONTRACT, USDC_CONTRACT);
-       
+
         setUsdcValue(Number(data3));
         if (data1 > usdcBalance) {
-          toast.error("You dont Have Enough USDC");
+          // toast.error("You dont Have Enough USDC");
+          setInsufficientUSDC(true);
           setCg8Value(0);
           setUsdcValue(0);
           return;
+        }else{
+          setInsufficientUSDC(false);
         }
         if (parseFloat(allowance) < parseFloat(data1)) {
           setIsApprove(false);
@@ -142,9 +154,12 @@ const Swap: FunctionComponent = () => {
         setUsdcValue(Number(data1));
         if (data1 > usdcBalance) {
           toast.error("You dont Have Enough USDC");
+          setInsufficientUSDC(true);
           setCg8Value(0);
           setUsdcValue(0);
           return;
+        }else{
+           setInsufficientUSDC(false);
         }
         if (parseFloat(allowance) < parseFloat(data1)) {
           setIsApprove(false);
@@ -182,10 +197,13 @@ const Swap: FunctionComponent = () => {
         setCg8Value(data2);
         if (value > usdcBalance) {
           toast.error("You dont Have Enough USDC");
+          setInsufficientUSDC(true);
           setCg8Value(0.0);
           setUsdcValue(0.0);
           return;
-        }
+      }else{
+        setInsufficientUSDC(false);
+      }
         if (allowance < value) {
           setIsApprove(false);
         } else {
@@ -205,9 +223,12 @@ const Swap: FunctionComponent = () => {
         setCg8Value(data1);
         if (value > usdcBalance) {
           toast.error("You dont Have Enough USDC");
+          setInsufficientUSDC(true);
           setCg8Value(0.0);
           setUsdcValue(0.0);
           return;
+        }else{
+          setInsufficientUSDC(false);
         }
         if (allowance < value) {
           setIsApprove(false);
@@ -227,7 +248,6 @@ const Swap: FunctionComponent = () => {
         TOKEN_CONTRACT,
         usdcValue
       );
-    
 
       setLoader(true);
       const res: any = await buyCG8(
@@ -501,6 +521,20 @@ const Swap: FunctionComponent = () => {
                         value={usdcValue?.toFixed(2)}
                         onChange={handleUsdcValueChange}
                       ></input>
+                      {insufficientUSDC ? (
+                        <h1 className="text-red-600 text-[16px] -mt-4 mb-3">
+                          Insufficient USDC balance
+                        </h1>
+                      ) : (
+                        ""
+                      )}
+                      {insufficientLiquidity ? (
+                        <h1 className="text-red-600 text-[16px] -mt-4 mb-3">
+                          Insufficient Liquidity
+                        </h1>
+                      ) : (
+                        ""
+                      )}
                     </div>
                     <button
                       className="relativ text-base leading-[24px] font-medium text-teal-600"
@@ -561,57 +595,76 @@ const Swap: FunctionComponent = () => {
                   </div>
                 </div>
                 {isCg8Buy ? (
-                  <div className="self-stretch rounded-2xl bg-gray-50 flex flex-row items-center justify-start py-2 px-5 gap-[20px] text-5xl border-[1px] border-solid ">
-                    <img
-                      className=" w-[40.11px] h-[40.11px]"
-                      alt=""
-                      src={logo}
-                    />
+                  <>
+                    <div className="self-stretch rounded-2xl bg-gray-50 flex flex-row items-center justify-start py-2 px-5 gap-[20px] text-5xl border-[1px] border-solid ">
+                      <img
+                        className=" w-[40.11px] h-[40.11px]"
+                        alt=""
+                        src={logo}
+                      />
 
-                    <div className=" md:mr-28 text-xl block">
-                      <input
-                        className="md:w-[100px] w-20 bg-gray-50"
-                        placeholder="USDC"
-                        type="number"
-                        value={usdcValue?.toFixed(2)}
-                        onChange={handleUsdcValueChange}
-                      ></input>
-                    </div>
-                    <button
-                      className="relativ text-base leading-[24px] font-medium text-teal-600"
-                      onClick={() => {
-                        setUsdcValue(usdcBalance);
-                      }}
-                    >
-                      MAX
-                    </button>
-                    <img
-                      className="self-stretch relativ max-h-full w-1px "
-                      alt=""
-                      src={hr}
-                    />
-                    <div className="block  text-left overflow-auto ">
-                      <select
-                        name=""
-                        id=""
-                        className="bg-gray-50 text-xl md:px- text-left  md:pr-20 "
+                      <div className=" md:mr-28 text-xl block">
+                        <input
+                          className="md:w-[100px] w-20 bg-gray-50"
+                          placeholder="USDC"
+                          type="number"
+                          value={usdcValue}
+                          onChange={handleUsdcValueChange}
+                        ></input>
+                      </div>
+
+                      <button
+                        className="relativ text-base leading-[24px] font-medium text-teal-600"
+                        onClick={() => {
+                          setUsdcValue(usdcBalance);
+                        }}
                       >
-                        {/* <option value=""></option> */}
-                        <option value="USDC">USDC</option>
-                      </select>
-                      <p className="text-xs md:text-left md:flex ml-1 block ">
-                        Balance:
-                        <span className="flex overflow-scroll">
-                          {parseFloat(
-                            Number(usdcBalance).toFixed(2)
-                          ).toLocaleString(undefined, {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2,
-                          })}
-                        </span>
-                      </p>
+                        MAX
+                      </button>
+
+                      <img
+                        className="self-stretch relativ max-h-full w-1px "
+                        alt=""
+                        src={hr}
+                      />
+
+                      <div className="block  text-left overflow-auto ">
+                        <select
+                          name=""
+                          id=""
+                          className="bg-gray-50 text-xl md:px- text-left  md:pr-20 "
+                        >
+                          {/* <option value=""></option> */}
+                          <option value="USDC">USDC</option>
+                        </select>
+                        <p className="text-xs md:text-left md:flex ml-1 block ">
+                          Balance:
+                          <span className="flex overflow-scroll">
+                            {parseFloat(
+                              Number(usdcBalance).toFixed(2)
+                            ).toLocaleString(undefined, {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            })}
+                          </span>
+                        </p>
+                      </div>
                     </div>
-                  </div>
+                    {insufficientUSDC ? (
+                      <h1 className="text-red-600 text-[16px] -mt-4 mb-3 ml-1 mt-1">
+                        Insufficient USDC balance
+                      </h1>
+                    ) : (
+                      ""
+                    )}
+                    {insufficientLiquidity ? (
+                      <h1 className="text-red-600 text-[16px] -mt-4 mb-3">
+                        Insufficient Liquidity
+                      </h1>
+                    ) : (
+                      ""
+                    )}
+                  </>
                 ) : (
                   <div className="self-stretch rounded-2xl bg-gray-50 flex flex-row items-center justify-start py-2 px-5 gap-[20px] text-5xl border-[1px] border-gray-200">
                     <img
