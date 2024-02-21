@@ -18,6 +18,7 @@ import ConnectorImage3 from "../../assets/4pic.svg";
 import ConnectorImage4 from "../../assets/3pic.svg";
 import BNBLogo from "../../assets/BNBSmart.png";
 
+
 const modalStyle: CSSProperties = {
   // position: "fixed",
   // background: "white",
@@ -83,11 +84,6 @@ const connectorImages = {
 
   // default: DefaultConnectorImage,
 };
-
-function isMobileDevice() {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-}
-
 
 const Modal = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
@@ -160,40 +156,30 @@ export function ConnectWallet() {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (settingsRef.current && !settingsRef.current.contains(event.target)) {
-        closeSettings();
+        setModalOpen(false);
       }
     };
+
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const handleDisconnectWallet = async () => {
     try {
-      console.log("here");
-      localStorage.removeItem("refAddress");
       disconnect();
       navigate("/dashboard");
     } catch (e) {
-      console.log("error in disconnect is--->", e);
+      console.error("Error in disconnecting wallet:", e);
     }
   };
 
   const handleConnectWallet = async (connector) => {
     try {
-      // Check if the connector is not supported on mobile
-      if (isMobileDevice() && !connector.ready) {
-        // Implement fallback logic here, e.g., display a message or use an alternative connector
-        console.error("This connector is not supported on mobile devices.");
-        return;
-      }
       await connect({ connector });
     } catch (e) {
-      console.log("Error in connecting wallet: ", e);
+      console.error("Error in connecting wallet:", e);
     }
   };
-  
 
   const formatAddress = (address) => {
     if (address && address.length > 8) {
@@ -304,23 +290,21 @@ export function ConnectWallet() {
         <div style={connectorListStyle}>
           {connectors.map((connector, index) => (
             <button
-            style={connectorButtonStyle}
-            disabled={!connector.ready} // Disable button if connector is not ready
-            key={connector.id}
-            onClick={() => {
-              if (connector.ready) {
+              style={connectorButtonStyle}
+              disabled={!connector?.ready}
+              key={connector.id}
+              onClick={() => {
                 handleConnectWallet(connector);
                 handleCloseModal();
-              } else {
-                // Optionally, inform the user why the connector is disabled
-                console.error("This connector is currently unsupported.");
-              }
-            }}
-          >
-            <img src={connectorImages[index] || connectorImages[index]} alt={`Connect with ${connector.name}`} />
-            {connector.name}{!connector.ready && " (unsupported)"}
-            {isLoading && connector.id === pendingConnector?.id && " (connecting)"}
-          </button>
+              }}
+            >
+              <img src={connectorImages[index]} className="" />
+
+              {!connector?.ready && " (unsupported)"}
+              {isLoading &&
+                connector?.id === pendingConnector?.id &&
+                " (connecting)"}
+            </button>
           ))}
         </div>
         {error && <div>{error?.message}</div>}
