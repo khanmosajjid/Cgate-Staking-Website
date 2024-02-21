@@ -150,7 +150,8 @@ const DepositeCG8: React.FC<DepositCardProps> = ({
         TOKEN_CONTRACT,
         TOKEN_ABI
       );
-      if (allowance < stakeAmount) {
+      
+      if (parseInt(allowance) < parseInt(stakeAmount)) {
         await approve();
       }
       setLoader(true);
