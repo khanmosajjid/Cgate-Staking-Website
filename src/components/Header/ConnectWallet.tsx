@@ -180,18 +180,20 @@ export function ConnectWallet() {
     }
   };
 
-  const handleConnectWallet = async (connector: any) => {
+  const handleConnectWallet = async (connector) => {
     try {
-      // If on mobile and the connector supports WalletConnect, use it
-      if (isMobileDevice() && connector.name === 'WalletConnect') {
-        // Here, you might want to set up WalletConnect-specific logic
+      // Check if the connector is not supported on mobile
+      if (isMobileDevice() && !connector.ready) {
+        // Implement fallback logic here, e.g., display a message or use an alternative connector
+        console.error("This connector is not supported on mobile devices.");
+        return;
       }
-      // Proceed with the connection
       await connect({ connector });
     } catch (e) {
       console.log("Error in connecting wallet: ", e);
     }
   };
+  
 
   const formatAddress = (address) => {
     if (address && address.length > 8) {
@@ -302,21 +304,23 @@ export function ConnectWallet() {
         <div style={connectorListStyle}>
           {connectors.map((connector, index) => (
             <button
-              style={connectorButtonStyle}
-              disabled={!connector?.ready}
-              key={connector.id}
-              onClick={() => {
+            style={connectorButtonStyle}
+            disabled={!connector.ready} // Disable button if connector is not ready
+            key={connector.id}
+            onClick={() => {
+              if (connector.ready) {
                 handleConnectWallet(connector);
                 handleCloseModal();
-              }}
-            >
-              <img src={connectorImages[index]} className="" />
-
-              {!connector?.ready && " (unsupported)"}
-              {isLoading &&
-                connector?.id === pendingConnector?.id &&
-                " (connecting)"}
-            </button>
+              } else {
+                // Optionally, inform the user why the connector is disabled
+                console.error("This connector is currently unsupported.");
+              }
+            }}
+          >
+            <img src={connectorImages[index] || connectorImages[index]} alt={`Connect with ${connector.name}`} />
+            {connector.name}{!connector.ready && " (unsupported)"}
+            {isLoading && connector.id === pendingConnector?.id && " (connecting)"}
+          </button>
           ))}
         </div>
         {error && <div>{error?.message}</div>}
