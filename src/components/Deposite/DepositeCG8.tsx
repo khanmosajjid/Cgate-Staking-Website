@@ -174,7 +174,7 @@ const DepositeCG8: React.FC<DepositCardProps> = ({
 
         setLoader(false);
         setTransaction(true);
-        window.location.reload();
+        // window.location.reload();
       } else {
         toast.error("Transaction Failed");
         setLoader(false);
