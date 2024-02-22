@@ -1,13 +1,15 @@
+
 import { Link, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // import React from "react";
 import logo from "../../assets/BNB.jpg";
-import globe from "../../assets/globe.svg"; // Import your icon
+// import globe from "../../assets/globe.svg"; // Import your icon
 import twt from "../../assets/twt.svg"; // Import your icon
 import vertor2 from "../../assets/Vector2.svg"; // Import
 import { ConnectWallet } from "../Header/ConnectWallet";
 import cg8 from "../../assets/CG8.svg";
-
+import { getAmountOut } from "../../utils/web3Utils";
+import { TOKEN_CONTRACT, USDC_CONTRACT } from "../../constants/contracts"
 
 const SidebarMobile = () => {
   const [state, setState] = useState(false);
@@ -15,6 +17,28 @@ const SidebarMobile = () => {
   const handleClick = () => {
     setState(!state);
   };
+
+ 
+
+  const [cg8Price, setCg8Price] = useState<string>(); // Change unknown to string
+
+   
+
+    
+  
+    useEffect(() => {
+      const getCG8Balance = async () => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        let price: any = await getAmountOut(
+          "1",
+          TOKEN_CONTRACT,
+          USDC_CONTRACT
+        );
+        price = parseFloat(price).toFixed(2);
+        setCg8Price(price);
+      };
+      getCG8Balance();
+    }, []);
 
   let colorhome = "#475568";
   let colordashboard = "#475568";
@@ -236,7 +260,7 @@ const SidebarMobile = () => {
         </div>
         <div className="flex mx-8 gap-3 mt-16 md:mt-0">
         <img className="w-6 h-auto" src={cg8}></img>
-          <h1 className="text-sm">$10.00</h1>
+          <h1 className="text-sm">${parseFloat(cg8Price).toFixed(2)}</h1>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -270,13 +294,13 @@ const SidebarMobile = () => {
           ))}
         </nav>
 
-        <div className="self-stretch flex-1 rounded-xl overflow-hidden grid grid-col items-start py-2.5 px-0 gap-[2px] text-left ml-10 font-light -mt-6">
+        <div className="self-stretch flex-1 rounded-xl overflow-hidden grid grid-col items-start py-2.5 pl-14 gap-[2px] text-left ml-10 font-light -mt-6">
           <div className="self-stretch rounded bg-basic-white flex flex-row items-center justify-start gap-[10px] text-sm ">
-            <img
+            {/* <img
               className="relative w-6 h-6 overflow-hidden shrink-0"
               alt=""
               src={globe}
-            />
+            /> */}
             <Link to="/home" className="relative leading-[20px] font-medium">
               Language
             </Link>

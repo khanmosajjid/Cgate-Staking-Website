@@ -814,7 +814,7 @@ const Home: React.FC = () => {
                   </span>
                    <br /> <br />
 									<span className='-ml-3'>
-										<span className='font-semibold'>•</span>{" "}
+										<span className='pl-3 font-semibold'>•</span>{" "}
 										Smart contract risk
 									</span>{" "}
 									<br />
@@ -829,9 +829,9 @@ const Home: React.FC = () => {
 										well-audited platforms.
 									</span>
 									<br />
-									<span className='-ml-3'>
+									<span className=''>
 										{" "}
-										<span className='font-semibold'>
+										<span className=' font-semibold'>
 											•
 										</span>{" "}
 										Volatility{" "}
@@ -846,9 +846,9 @@ const Home: React.FC = () => {
 										gains or losses.
 									</span>
 									<br />
-									<span className='-ml-3'>
+									<span className=''>
 										{" "}
-										<span className='font-semibold'>
+										<span className=' font-semibold'>
 											•
 										</span>{" "}
 										Impermanent loss
@@ -864,9 +864,9 @@ const Home: React.FC = () => {
 										user has fewer assets than when it was
 										initially provided as liquidity. <br />
 									</span>
-									<span className='-ml-3'>
+									<span className=''>
 										{" "}
-										<span className='font-semibold'>
+										<span className=' font-semibold'>
 											•{" "}
 										</span>
 										Regulatory risks
@@ -978,7 +978,7 @@ const Home: React.FC = () => {
 								There are two main use cases of CG8 token:{" "}
                 </span>
 								<br />
-								<span className='font-semibold -ml-3'>
+								<span className='font-semibold '>
 									•
 								</span>{" "}
 								Deposit pools <br />
@@ -986,7 +986,7 @@ const Home: React.FC = () => {
 								tokens can be deposited in unlocked and locked
 								CG8 pools to receive rewards in stablecoins.{" "}
 								<br />{" "}
-								<span className='font-semibold -ml-3'>
+								<span className=' font-semibold -'>
 									•
 								</span>{" "}
 								Tokenization <br />
