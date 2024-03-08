@@ -30,7 +30,7 @@ const Frame: FunctionComponent = () => {
   const { isConnected, address } = useAccount();
   const [cG8Balance, setCg8Balance] = useState(0);
   const [amountToClaim, setAmountToClaim] = useState(0);
-  const [totalDeposit, setTotalDeposit] = useState(0);
+  const [totalDeposit, setTotalDeposit] = useState<any>();
   const [cg8Price, setCg8Price] = useState<any>();
 
   const settingsRef = useRef(null);
@@ -56,7 +56,7 @@ const Frame: FunctionComponent = () => {
           setAmountToClaim(amount);
           const user: any = await userDetails(address);
           const res: any = convertToEther(Number(user[1]));
-          setTotalDeposit(res);
+          setTotalDeposit(parseFloat(res).toFixed(2));
 
           const login = await loginUser(address, cg8Balance, res, amount);
           console.log("login res is", login);

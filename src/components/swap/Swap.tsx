@@ -90,8 +90,14 @@ const Swap: FunctionComponent = () => {
   }, [isConnected, address]);
 
   const handleCg8ValueChange = async (e) => {
-    const value = e.target.value;
-
+    let value = e.target.value;
+    value = value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+    if (value.includes('.')) {
+      const parts = value.split('.');
+      if (parts[1] && parts[1].length > 2) {
+        value = parts[0] + '.' + parts[1].slice(0, 2);
+      }
+    }
     setCg8Value(value);
     try {
       // console.log("data for checkin allowance is----->", data1);
@@ -130,8 +136,8 @@ const Swap: FunctionComponent = () => {
         if (data1 > usdcBalance) {
           // toast.error("You dont Have Enough USDC");
           setInsufficientUSDC(true);
-          setCg8Value(0);
-          setUsdcValue(0);
+          setCg8Value(0.00);
+          setUsdcValue(0.00);
           return;
         }else{
           setInsufficientUSDC(false);
@@ -155,8 +161,8 @@ const Swap: FunctionComponent = () => {
         if (data1 > usdcBalance) {
           toast.error("You dont Have Enough USDC");
           setInsufficientUSDC(true);
-          setCg8Value(0);
-          setUsdcValue(0);
+          setCg8Value(0.00);
+          setUsdcValue(0.00);
           return;
         }else{
            setInsufficientUSDC(false);
@@ -172,8 +178,15 @@ const Swap: FunctionComponent = () => {
     }
   };
   const handleUsdcValueChange = async (e) => {
-    const value = e.target.value;
+    let value = e.target.value;
     console.log("value and event is---->", value);
+    value = value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+    if (value.includes('.')) {
+      const parts = value.split('.');
+      if (parts[1] && parts[1].length > 2) {
+        value = parts[0] + '.' + parts[1].slice(0, 2);
+      }
+    }
     setUsdcValue(value);
 
     try {
@@ -198,8 +211,8 @@ const Swap: FunctionComponent = () => {
         if (value > usdcBalance) {
           toast.error("You dont Have Enough USDC");
           setInsufficientUSDC(true);
-          setCg8Value(0.0);
-          setUsdcValue(0.0);
+          setCg8Value(0.00);
+          setUsdcValue(0.00);
           return;
       }else{
         setInsufficientUSDC(false);
@@ -224,8 +237,8 @@ const Swap: FunctionComponent = () => {
         if (value > usdcBalance) {
           toast.error("You dont Have Enough USDC");
           setInsufficientUSDC(true);
-          setCg8Value(0.0);
-          setUsdcValue(0.0);
+          setCg8Value(0.00);
+          setUsdcValue(0.00);
           return;
         }else{
           setInsufficientUSDC(false);
@@ -241,6 +254,7 @@ const Swap: FunctionComponent = () => {
     }
   };
 
+  
   const buyCgate = async () => {
     try {
       const slippage = await estimateSlippage(
@@ -526,7 +540,7 @@ const Swap: FunctionComponent = () => {
       <p className="mb-2" style={{ paddingLeft: '0.5rem' }}>Insufficient USDC balance</p>
     )}
     {insufficientLiquidity && (
-      <p style={{ paddingLeft: '0.5rem' }}>Insufficient Liquidity</p>
+     <p className="mb-2" style={{ paddingLeft: '0.5rem', paddingTop: '0.5rem' }}>Insufficient Liquidity</p>
     )}
   </div>
 </div>
@@ -646,14 +660,14 @@ const Swap: FunctionComponent = () => {
                       </div>
                     </div>
                     {insufficientUSDC ? (
-                      <h1 className="text-red-600 text-[16px] -mt-4 mb-3 ml-1 mt-1">
+                      <h1 className="text-red-600 text-[16px] -mt-4 mb-3 ml-1 mt-1" style={{ paddingLeft: '0.5rem', paddingTop: '0.5rem' }}>
                         Insufficient USDC balance
                       </h1>
                     ) : (
                       ""
                     )}
                     {insufficientLiquidity ? (
-                      <h1 className="text-red-600 text-[16px] -mt-4 mb-3">
+                      <h1 className="text-red-600 text-[16px] -mt-4 mb-3" style={{ paddingLeft: '0.5rem', paddingTop: '0.5rem' }}>
                         Insufficient Liquidity
                       </h1>
                     ) : (
