@@ -513,29 +513,24 @@ const Swap: FunctionComponent = () => {
                       src={logo}
                     />
 
-                    <div className=" md:mr-28 text-xl block">
-                      <input
-                        className="md:w-[100px] w-20 bg-gray-50"
-                        placeholder="USDC"
-                        type="number"
-                        value={usdcValue?.toFixed(2)}
-                        onChange={handleUsdcValueChange}
-                      ></input>
-                      {insufficientUSDC ? (
-                        <h1 className="text-red-600 text-[16px] -mt-4 mb-3">
-                          Insufficient USDC balance
-                        </h1>
-                      ) : (
-                        ""
-                      )}
-                      {insufficientLiquidity ? (
-                        <h1 className="text-red-600 text-[16px] -mt-4 mb-3">
-                          Insufficient Liquidity
-                        </h1>
-                      ) : (
-                        ""
-                      )}
-                    </div>
+<div className="md:mr-28 text-xl block relative">
+  <input
+    className="md:w-[100px] w-20 bg-gray-50 block mb-3"
+    placeholder="USDC"
+    type="number"
+    value={usdcValue?.toFixed(2)}
+    onChange={handleUsdcValueChange}
+  />
+  <div className="text-red-600 text-[16px] absolute left-0">
+    {insufficientUSDC && (
+      <p className="mb-2" style={{ paddingLeft: '0.5rem' }}>Insufficient USDC balance</p>
+    )}
+    {insufficientLiquidity && (
+      <p style={{ paddingLeft: '0.5rem' }}>Insufficient Liquidity</p>
+    )}
+  </div>
+</div>
+
                     <button
                       className="relativ text-base leading-[24px] font-medium text-teal-600"
                       onClick={() => {

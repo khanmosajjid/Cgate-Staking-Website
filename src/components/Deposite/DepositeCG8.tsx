@@ -280,7 +280,13 @@ const DepositeCG8: React.FC<DepositCardProps> = ({
         <div className="flex justify-between">
           <div>{subheading}</div>
           <div className="block">
-            <span className="block">{cg8Balance?.toFixed(2)} CG8</span>
+            <span className="block"> {parseFloat((cg8Balance).toFixed(2)).toLocaleString(
+                undefined,
+                {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                }
+              )} CG8</span>
             <div className="text-xs text-right">
               ~$
               {parseFloat((cg8Balance * cg8Price).toFixed(2)).toLocaleString(
@@ -307,7 +313,7 @@ const DepositeCG8: React.FC<DepositCardProps> = ({
         </div>
         <div className="mb-3  text-sm flex justify-between">
           <label className="block  mb-2">Pool type</label>
-          <div className="text-gray-600">Locked {poolTime} day</div>
+          <div className="text-gray-600">{poolTime === 0 ? "Unlocked" : `Locked ${poolTime} day`}</div>
         </div>
         <div className="mb-3  text-sm flex justify-between">
           <label className="block  mb-2">Your reference</label>

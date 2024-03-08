@@ -95,7 +95,7 @@ const ClaimHistory = ({ setOpenClaimHistory }: ClaimHistoryProps) => {
                   {entry?.claimAmount.toFixed(2)}
                   {" CG8"}
                   <p className="md:text-xs text-[16px] font-semibold">
-                    ~({(entry?.claimAmount * cg8Price).toFixed(4)}) {" USDC"}
+                    ~({(entry?.claimAmount * cg8Price).toFixed(2)}) {" USDC"}
                   </p>
                 </div>
 

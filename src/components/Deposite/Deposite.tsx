@@ -320,7 +320,7 @@ const Deposite: React.FC = () => {
                 </div>
 
                 <div className="flex flex-col items-left md:space-y-2 py-4 md:py-0">
-                  <div className="text-lg font-light">Earnings YTD</div>
+                  <div className="text-lg font-light">Earnings till now</div>
                   {isConnected ? "" : <div className="text-3xl ">0.00</div>}
                   {withdrawnTillNow ? (
                     <div className="text-3xl ">{withdrawnTillNow}</div>
@@ -412,8 +412,8 @@ const Deposite: React.FC = () => {
                               <span className="text-xl block">CG8</span>
                               {Number(value[0]) / (24 * 60 * 60) > 0 ? (
                                 <span className="text-gray-600 text-sm">
-                                  locked for {""}
-                                  {Number(value[0]) / (24 * 60 * 60)} Day
+                                  Locked for {""}
+                                  {Number(value[0]) / (24 * 60 * 60)} day
                                 </span>
                               ) : (
                                 <span className="text-gray-600 text-sm">

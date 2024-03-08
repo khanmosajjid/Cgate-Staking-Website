@@ -77,7 +77,7 @@ const SwapHistory = ({ setOpenHistory, setSetting }: swapHistoryProps) => {
             <span>USDC-CG8</span>
             <div className="block">
               <span className="block">{swap?.outAmount}</span>
-              {/* <span className="text-xs">~${(swap?.inAmount)?.toFixed(4)}</span> */}
+              {/* <span className="text-xs">~${(swap?.inAmount)?.toFixed(2)}</span> */}
             </div>
             <span>{swap?.dateTime}</span>
           </div>
