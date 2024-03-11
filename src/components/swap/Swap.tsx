@@ -537,7 +537,7 @@ const Swap: FunctionComponent = () => {
   />
   <div className="text-red-600 text-[16px] absolute left-0">
     {insufficientUSDC && (
-      <p className="mb-2" style={{ paddingLeft: '0.5rem' }}>Insufficient USDC balance</p>
+      <p className="mb-2 " style={{ paddingLeft: '0.5rem' }}>Insufficient USDC balance</p>
     )}
     {insufficientLiquidity && (
      <p className="mb-2" style={{ paddingLeft: '0.5rem', paddingTop: '0.5rem' }}>Insufficient Liquidity</p>
@@ -660,7 +660,7 @@ const Swap: FunctionComponent = () => {
                       </div>
                     </div>
                     {insufficientUSDC ? (
-                      <h1 className="text-red-600 text-[16px] -mt-4 mb-3 ml-1 mt-1" style={{ paddingLeft: '0.5rem', paddingTop: '0.5rem' }}>
+                      <h1 className="text-red-600 text-[16px] -mt-4 mb-3  mt-1" style={{ paddingLeft: '0.5rem', paddingTop: '0.5rem' }}>
                         Insufficient USDC balance
                       </h1>
                     ) : (
