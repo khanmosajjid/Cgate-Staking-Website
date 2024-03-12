@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, useEffect } from "react";
-import { useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { } from "react";
 import Header from "../Header/Header";
 import coin from "./assets/coin.svg";
 import CardSwap from "../CardSwap/CardSwap";
@@ -12,6 +12,7 @@ import { ConnectWallet } from "../Header/ConnectWallet.js";
 import SuccessCard from "../TransactionCard/TransactionCard";
 import bg from "../../assets/Master-bg.svg";
 import { toast } from "react-toastify";
+import bnb from "../../assets/BNB.jpg";
 
 import {
   getTotalPoolsCount,
@@ -71,6 +72,8 @@ const Deposite: React.FC = () => {
   const [withdrawnTillNow, setWithdrawnTillNow] = useState();
   const [cg8Price, setCg8Price] = useState<any>();
   const [isLoading, setIsLoading] = useState(true); 
+
+  
 
   const closeSettings = () => {
     setOpenSettings(false);
@@ -210,7 +213,7 @@ const Deposite: React.FC = () => {
       ) : (
         ""
       )}
-      <div className="fixed -z-10 overflow-hidden lg:h-screen">
+      <div className="fixed -z-20 overflow-hidden lg:h-screen ">
         <img className="fixed w-full " src={bg} alt="" />
       </div>
 
@@ -227,13 +230,13 @@ const Deposite: React.FC = () => {
             openWithdrawHistory
               ? "pointer-events-none blur-lg"
               : ""
-          } transition-all duration-300  w-[95%] mx-auto md:w-auto `}
+          } transition-all duration-300  w-[95%] mx-auto md:w-auto p-1 `}
         >
-          <div className=" pt-20 lg:pt-0 mb-3 md:mb-0 -z-10">
+          <div className=" pt-20 lg:pt-0 mb-3 md:mb-0  ">
             <Header heading={"Deposit CG8 to earn USDC"} />
           </div>
 
-          <div className={` space-y-6 lg:mt-20  md:w-auto  z-10  `}>
+          <div className={` space-y-6 lg:mt-20  md:w-auto h-[720px] overflow-scroll  rounded-xl`}>
             <div className="md:px-12 md:pl-7 px-6  py-3 bg-white rounded-xl shadow-md  border">
               <div className="flex justify-between">
                 <h1 className="text-[20px] ">My deposit summary</h1>
@@ -340,7 +343,7 @@ const Deposite: React.FC = () => {
 
               </div>
             </div>
-            <div className="space-y-4  border shadow-lg rounded-2xl bg-white">
+            <div className="space-y-4  border shadow-lg rounded-2xl bg-white ">
               <div className="flex justify-between py-3 px-7 ">
                 <div className="text-[20px] ">Pools</div>
                 <div>

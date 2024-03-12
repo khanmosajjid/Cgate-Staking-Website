@@ -185,173 +185,181 @@ const SidebarMobile = () => {
           />
         </svg>
       ),
-      display: "Referral",
+      display: "Refer CGate",
       to: "/referral",
     },
   ];
   return (
-    <div className="w-[100%] fixed z-10 ">
-      <div>
-        <div
-          className={`border-b  flex p-3  justify-between  items-center w-full bg-white`}
-        >
-          <div className="flex items-center">
-            <svg
-              onClick={handleClick}
-              xmlns="http://www.w3.org/2000/svg"
-              width="30"
-              height="20"
-              viewBox="0 0 22 16"
-              fill="none"
-            >
-              <path
-                d="M0 16H22V13.3333H0V16ZM0 9.33333H22V6.66667H0V9.33333ZM0 0V2.66667H22V0H0Z"
-                fill="black"
-              />
-            </svg>
-            <div className="flex mx-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="30"
-                height="30"
-                viewBox="0 0 30 30"
-                fill="none"
-              >
-                <rect width="30" height="30" rx="15" fill="#1E40AF" />
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M21.472 12.3662L21.5479 12.5917H23.9141L23.836 12.188C23.7013 11.4915 23.4551 10.8543 23.0964 10.2794C22.7396 9.70309 22.2934 9.20861 21.7595 8.79701C21.2297 8.38074 20.628 8.06235 19.957 7.84023C19.2868 7.61244 18.568 7.5 17.8029 7.5C16.8713 7.5 16.0098 7.66789 15.2224 8.00849C14.4367 8.34836 13.7543 8.8385 13.1781 9.47775C12.6007 10.1184 12.1569 10.8908 11.8441 11.7891L11.8437 11.7901C11.5342 12.6879 11.3823 13.6907 11.3823 14.7941C11.3823 16.2649 11.6487 17.5548 12.1944 18.6526L12.1949 18.6537C12.7435 19.7478 13.5112 20.5982 14.4964 21.196C15.4869 21.7941 16.6292 22.0883 17.9118 22.0883C19.0614 22.0883 20.0932 21.8542 20.9979 21.3772C21.9063 20.8961 22.6232 20.215 23.141 19.3358C23.6669 18.4505 23.924 17.4173 23.924 16.249V14.4571H19.0816V16.5861H21.626C21.5755 17.1759 21.422 17.6901 21.1716 18.1352C20.8628 18.6874 20.4315 19.1159 19.8716 19.4222C19.3169 19.7239 18.6666 19.8799 17.9118 19.8799C17.1016 19.8799 16.3823 19.6858 15.7458 19.3033C15.1147 18.9239 14.6092 18.3632 14.231 17.6075C13.8573 16.8607 13.662 15.9278 13.662 14.7941C13.662 13.66 13.8552 12.7265 14.2249 11.9794C14.5993 11.2227 15.0966 10.6622 15.7142 10.2835C16.3379 9.90119 17.0316 9.70839 17.8029 9.70839C18.2794 9.70839 18.7103 9.77096 19.0981 9.89252C19.4878 10.0147 19.831 10.1903 20.1306 10.4176L20.1323 10.4189C20.4381 10.6478 20.7006 10.9249 20.9204 11.2514L20.9232 11.2554C21.1484 11.5796 21.3318 11.9491 21.472 12.3662Z"
-                  fill="#F0B90B"
-                />
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M7.69549 12.5917H5.35764L5.43059 12.1917C5.56459 11.4569 5.81011 10.7962 6.17037 10.2141C6.52734 9.63291 6.97204 9.13952 7.50332 8.73572C8.03289 8.32883 8.62598 8.02136 9.28029 7.81246C9.93067 7.60337 10.623 7.5 11.3555 7.5C12.5951 7.5 13.7096 7.79487 14.6898 8.39258C15.6699 8.9902 16.4391 9.83992 16.9965 10.9324C17.5569 12.031 17.8305 13.3221 17.8305 14.7941C17.8305 16.2662 17.5569 17.5573 16.9965 18.6558C16.4391 19.7484 15.6699 20.5981 14.6898 21.1957C13.7096 21.7934 12.5951 22.0883 11.3555 22.0883C10.6229 22.0883 9.93053 21.9849 9.28009 21.7757C8.62625 21.567 8.03347 21.262 7.50404 20.8597L7.5026 20.8586C6.97159 20.4505 6.527 19.9549 6.17005 19.3737C5.81032 18.7879 5.56475 18.1276 5.43066 17.3969L5.35718 16.9965H7.69496L7.7513 17.2603C7.84232 17.6865 8.00004 18.0582 8.22213 18.38L8.22268 18.3808C8.44469 18.7044 8.71573 18.978 9.03749 19.2025C9.35676 19.4241 9.71298 19.5926 10.1082 19.707C10.5052 19.8219 10.9207 19.8799 11.3555 19.8799C12.1461 19.8799 12.8538 19.6865 13.4863 19.304C14.1083 18.925 14.6097 18.3645 14.9883 17.6082C15.3578 16.8612 15.5508 15.928 15.5508 14.7941C15.5508 13.6603 15.3578 12.7271 14.9883 11.9801C14.6097 11.2238 14.1082 10.6632 13.4862 10.2843C12.8538 9.90178 12.1461 9.70839 11.3555 9.70839C10.9207 9.70839 10.5052 9.76635 10.1082 9.88128C9.71387 9.99542 9.35831 10.1657 9.03942 10.391L9.03556 10.3937C8.71478 10.6135 8.44437 10.8844 8.22269 11.2075L8.22103 11.2099C8.00014 11.526 7.84254 11.8967 7.75144 12.3273L7.69549 12.5917Z"
-                  fill="white"
-                />
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M21.472 12.3662L21.5479 12.5917H23.9141L23.836 12.188C23.7013 11.4914 23.4551 10.8541 23.0962 10.2791C22.7394 9.70292 22.2933 9.20852 21.7594 8.79699C21.2297 8.38073 20.628 8.06235 19.957 7.84023C19.2868 7.61244 18.568 7.5 17.8029 7.5C16.8713 7.5 16.0098 7.66789 15.2224 8.00849C14.4367 8.34836 13.7543 8.8385 13.1781 9.47775C12.6007 10.1184 12.1569 10.8908 11.8441 11.7891L11.8437 11.7901C11.5342 12.6879 11.3823 13.6907 11.3823 14.7941V15.1312H13.662V14.7941C13.662 13.66 13.8552 12.7265 14.2249 11.9794C14.5993 11.2227 15.0966 10.6622 15.7142 10.2835C16.3379 9.90119 17.0316 9.70839 17.8029 9.70839C18.2794 9.70839 18.7103 9.77096 19.0981 9.89252C19.4878 10.0147 19.831 10.1903 20.1306 10.4176L20.1323 10.4189C20.4381 10.6478 20.7006 10.9249 20.9204 11.2514L20.9232 11.2554C21.1484 11.5796 21.3318 11.9491 21.472 12.3662Z"
-                  fill="#F0B90B"
-                />
-              </svg>
-              <h1 className="text-2xl font-semibold ml-1">CGate</h1>
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <img src={logo} alt="" className="h-6 w-6" />
-          </div>
-          <button>
-            <ConnectWallet/>
-          </button>
-        </div>
-      </div>
-      <div
-        className={`bg-gray-50 md:w-60 w-[80%] h-screen border text-center lg:left-0 shadow-lg absolute z-10 ${
-          state ? "block" : "hidden"
-        }`}
-      >
-        <div className="">
-          <h1 className="text-2xl font-semibold text-left m-8 mb-4 hidden md:block ">
-            CGate
-          </h1>
-        </div>
-        <div className="flex mx-8 gap-3 mt-16 md:mt-0">
-        <img className="w-6 h-auto" src={cg8}></img>
-          <h1 className="text-sm">${parseFloat(cg8Price).toFixed(2)}</h1>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="18"
-            viewBox="0 0 16 14"
-            fill="none"
-          >
-            <path
-              d="M0 12.9249C0 13.5723 0.401985 14 0.999529 14H14.4822C14.8516 14 15.1667 13.6763 15.1667 13.2717C15.1667 12.8787 14.8516 12.5434 14.4822 12.5434H1.4341C1.37978 12.5434 1.37978 12.5318 1.37978 12.4855V0.728321C1.37978 0.335257 1.06471 0 0.684453 0C0.315065 0 0 0.335257 0 0.728321V12.9249ZM1.11904 9.45662L4.11761 6.27748C4.22626 6.16182 4.3023 6.16182 4.40009 6.27748L6.98578 9.05199C7.31174 9.38725 7.63771 9.5492 8.00707 9.5492C8.38733 9.5492 8.73499 9.38725 9.02836 9.05199L11.8313 6.02308L12.9069 7.17919C13.222 7.50285 13.6783 7.32954 13.7978 6.84394L14.7539 2.60116C14.8734 2.16185 14.5039 1.79191 14.0803 1.90751L10.1039 2.90174C9.65849 3.01734 9.47381 3.53758 9.78887 3.84972L10.8535 4.98262L8.14836 7.90748C8.06136 8.02314 7.98537 8.02314 7.87668 7.91908L5.28007 5.10988C4.97591 4.77462 4.63915 4.61268 4.25884 4.61268C3.86773 4.61268 3.5418 4.77462 3.23759 5.10988L0.162961 8.41617L1.11904 9.45662Z"
-              fill="#2563EB"
-            />
-          </svg>
-        </div>
-        <nav className="space-y-2 mt-4 text-center sm:mb-32 mb-12 text-sm font-light w-[80%] mx-auto ">
-          {sidebarNavItems.map((item, index) => (
-            <Link
-              // onClick={handleClick}
-              to={item.to}
-              key={index}
-              className={`flex items-center px-5 py-2 transition-colors duration-200 rounded-xl ${
-                location.pathname === item.to
-                  ? "bg-blue-100 text-teal-600" // Active link style
-                  : "hover:bg-gray-200 bg-gray-100" // Inactive link style
-              }`}
-              onClick={handleClick}
-            >
-              <span className="">{item.icon}</span>
-              <span className="ml-3  ">{item.display}</span>{" "}
-              {/* Add a span for the text */}
-            </Link>
-          ))}
-        </nav>
+		<div className='w-full fixed z-10 '>
+			<div>
+				<div
+					className={`border-b  flex p-3 justify-between items-center w-full bg-white `}>
+					<div className='flex items-center'>
+						<svg
+							onClick={handleClick}
+							xmlns='http://www.w3.org/2000/svg'
+							width='30'
+							height='20'
+							viewBox='0 0 22 16'
+							fill='none'>
+							<path
+								d='M0 16H22V13.3333H0V16ZM0 9.33333H22V6.66667H0V9.33333ZM0 0V2.66667H22V0H0Z'
+								fill='black'
+							/>
+						</svg>
+						<div className='flex mx-2'>
+							<svg
+								xmlns='http://www.w3.org/2000/svg'
+								width='30'
+								height='30'
+								viewBox='0 0 30 30'
+								fill='none'>
+								<rect
+									width='30'
+									height='30'
+									rx='15'
+									fill='#1E40AF'
+								/>
+								<path
+									fillRule='evenodd'
+									clipRule='evenodd'
+									d='M21.472 12.3662L21.5479 12.5917H23.9141L23.836 12.188C23.7013 11.4915 23.4551 10.8543 23.0964 10.2794C22.7396 9.70309 22.2934 9.20861 21.7595 8.79701C21.2297 8.38074 20.628 8.06235 19.957 7.84023C19.2868 7.61244 18.568 7.5 17.8029 7.5C16.8713 7.5 16.0098 7.66789 15.2224 8.00849C14.4367 8.34836 13.7543 8.8385 13.1781 9.47775C12.6007 10.1184 12.1569 10.8908 11.8441 11.7891L11.8437 11.7901C11.5342 12.6879 11.3823 13.6907 11.3823 14.7941C11.3823 16.2649 11.6487 17.5548 12.1944 18.6526L12.1949 18.6537C12.7435 19.7478 13.5112 20.5982 14.4964 21.196C15.4869 21.7941 16.6292 22.0883 17.9118 22.0883C19.0614 22.0883 20.0932 21.8542 20.9979 21.3772C21.9063 20.8961 22.6232 20.215 23.141 19.3358C23.6669 18.4505 23.924 17.4173 23.924 16.249V14.4571H19.0816V16.5861H21.626C21.5755 17.1759 21.422 17.6901 21.1716 18.1352C20.8628 18.6874 20.4315 19.1159 19.8716 19.4222C19.3169 19.7239 18.6666 19.8799 17.9118 19.8799C17.1016 19.8799 16.3823 19.6858 15.7458 19.3033C15.1147 18.9239 14.6092 18.3632 14.231 17.6075C13.8573 16.8607 13.662 15.9278 13.662 14.7941C13.662 13.66 13.8552 12.7265 14.2249 11.9794C14.5993 11.2227 15.0966 10.6622 15.7142 10.2835C16.3379 9.90119 17.0316 9.70839 17.8029 9.70839C18.2794 9.70839 18.7103 9.77096 19.0981 9.89252C19.4878 10.0147 19.831 10.1903 20.1306 10.4176L20.1323 10.4189C20.4381 10.6478 20.7006 10.9249 20.9204 11.2514L20.9232 11.2554C21.1484 11.5796 21.3318 11.9491 21.472 12.3662Z'
+									fill='#F0B90B'
+								/>
+								<path
+									fillRule='evenodd'
+									clipRule='evenodd'
+									d='M7.69549 12.5917H5.35764L5.43059 12.1917C5.56459 11.4569 5.81011 10.7962 6.17037 10.2141C6.52734 9.63291 6.97204 9.13952 7.50332 8.73572C8.03289 8.32883 8.62598 8.02136 9.28029 7.81246C9.93067 7.60337 10.623 7.5 11.3555 7.5C12.5951 7.5 13.7096 7.79487 14.6898 8.39258C15.6699 8.9902 16.4391 9.83992 16.9965 10.9324C17.5569 12.031 17.8305 13.3221 17.8305 14.7941C17.8305 16.2662 17.5569 17.5573 16.9965 18.6558C16.4391 19.7484 15.6699 20.5981 14.6898 21.1957C13.7096 21.7934 12.5951 22.0883 11.3555 22.0883C10.6229 22.0883 9.93053 21.9849 9.28009 21.7757C8.62625 21.567 8.03347 21.262 7.50404 20.8597L7.5026 20.8586C6.97159 20.4505 6.527 19.9549 6.17005 19.3737C5.81032 18.7879 5.56475 18.1276 5.43066 17.3969L5.35718 16.9965H7.69496L7.7513 17.2603C7.84232 17.6865 8.00004 18.0582 8.22213 18.38L8.22268 18.3808C8.44469 18.7044 8.71573 18.978 9.03749 19.2025C9.35676 19.4241 9.71298 19.5926 10.1082 19.707C10.5052 19.8219 10.9207 19.8799 11.3555 19.8799C12.1461 19.8799 12.8538 19.6865 13.4863 19.304C14.1083 18.925 14.6097 18.3645 14.9883 17.6082C15.3578 16.8612 15.5508 15.928 15.5508 14.7941C15.5508 13.6603 15.3578 12.7271 14.9883 11.9801C14.6097 11.2238 14.1082 10.6632 13.4862 10.2843C12.8538 9.90178 12.1461 9.70839 11.3555 9.70839C10.9207 9.70839 10.5052 9.76635 10.1082 9.88128C9.71387 9.99542 9.35831 10.1657 9.03942 10.391L9.03556 10.3937C8.71478 10.6135 8.44437 10.8844 8.22269 11.2075L8.22103 11.2099C8.00014 11.526 7.84254 11.8967 7.75144 12.3273L7.69549 12.5917Z'
+									fill='white'
+								/>
+								<path
+									fillRule='evenodd'
+									clipRule='evenodd'
+									d='M21.472 12.3662L21.5479 12.5917H23.9141L23.836 12.188C23.7013 11.4914 23.4551 10.8541 23.0962 10.2791C22.7394 9.70292 22.2933 9.20852 21.7594 8.79699C21.2297 8.38073 20.628 8.06235 19.957 7.84023C19.2868 7.61244 18.568 7.5 17.8029 7.5C16.8713 7.5 16.0098 7.66789 15.2224 8.00849C14.4367 8.34836 13.7543 8.8385 13.1781 9.47775C12.6007 10.1184 12.1569 10.8908 11.8441 11.7891L11.8437 11.7901C11.5342 12.6879 11.3823 13.6907 11.3823 14.7941V15.1312H13.662V14.7941C13.662 13.66 13.8552 12.7265 14.2249 11.9794C14.5993 11.2227 15.0966 10.6622 15.7142 10.2835C16.3379 9.90119 17.0316 9.70839 17.8029 9.70839C18.2794 9.70839 18.7103 9.77096 19.0981 9.89252C19.4878 10.0147 19.831 10.1903 20.1306 10.4176L20.1323 10.4189C20.4381 10.6478 20.7006 10.9249 20.9204 11.2514L20.9232 11.2554C21.1484 11.5796 21.3318 11.9491 21.472 12.3662Z'
+									fill='#F0B90B'
+								/>
+							</svg>
+							<h1 className='text-2xl font-semibold ml-1'>
+								CGate
+							</h1>
+						</div>
+					</div>
+					<div className='flex items-center gap-2'>
+						<img src={logo} alt='' className='h-8 w-8' />
+					</div>
+					<button className=''>
+						<ConnectWallet />
+					</button>
+				</div>
+			</div>
+			<div
+				className={`bg-[#F5F6FE] md:w-60 w-[75%] h-screen border text-center lg:left-0 shadow-lg absolute z-10 ${
+					state ? "block" : "hidden"
+				}`}>
+				<div className=''>
+					<h1 className='text-2xl font-semibold text-left m-8 mb-4 hidden md:block '>
+						CGate
+					</h1>
+				</div>
+				<div className='flex mx-4 gap-3 mt-5 md:mt-0 items-center'>
+					<img className='w-8 h-auto' src={cg8}></img>
+					<h1 className=''>
+						${parseFloat(cg8Price).toFixed(2)}
+					</h1>
+					<svg
+						xmlns='http://www.w3.org/2000/svg'
+						width='20'
+						height='20'
+						viewBox='0 0 16 14'
+						fill='green'>
+						<path
+							d='M0 12.9249C0 13.5723 0.401985 14 0.999529 14H14.4822C14.8516 14 15.1667 13.6763 15.1667 13.2717C15.1667 12.8787 14.8516 12.5434 14.4822 12.5434H1.4341C1.37978 12.5434 1.37978 12.5318 1.37978 12.4855V0.728321C1.37978 0.335257 1.06471 0 0.684453 0C0.315065 0 0 0.335257 0 0.728321V12.9249ZM1.11904 9.45662L4.11761 6.27748C4.22626 6.16182 4.3023 6.16182 4.40009 6.27748L6.98578 9.05199C7.31174 9.38725 7.63771 9.5492 8.00707 9.5492C8.38733 9.5492 8.73499 9.38725 9.02836 9.05199L11.8313 6.02308L12.9069 7.17919C13.222 7.50285 13.6783 7.32954 13.7978 6.84394L14.7539 2.60116C14.8734 2.16185 14.5039 1.79191 14.0803 1.90751L10.1039 2.90174C9.65849 3.01734 9.47381 3.53758 9.78887 3.84972L10.8535 4.98262L8.14836 7.90748C8.06136 8.02314 7.98537 8.02314 7.87668 7.91908L5.28007 5.10988C4.97591 4.77462 4.63915 4.61268 4.25884 4.61268C3.86773 4.61268 3.5418 4.77462 3.23759 5.10988L0.162961 8.41617L1.11904 9.45662Z'
+							fill='green'
+						/>
+					</svg>
+				</div>
+				<nav className='space-y-2 mt-4  text-center mb-32 pl-4  text-sm text-gray-600 w-[90%]  '>
+					{sidebarNavItems.map((item, index) => (
+						<Link
+							// onClick={handleClick}
+							to={item.to}
+							key={index}
+							className={`flex items-center  py-2 px-2 transition-colors duration-200 rounded-xl ${
+								location.pathname === item.to
+									? "bg-white text-teal-600" // Active link style
+									: "hover:bg-gray-200 bg-gray-10" // Inactive link style
+							}`}
+							onClick={handleClick}>
+							<span className=''>{item.icon}</span>
+							<span className='ml-3  '>{item.display}</span>{" "}
+							{/* Add a span for the text */}
+						</Link>
+					))}
+				</nav>
 
-        <div className="self-stretch flex-1 rounded-xl overflow-hidden grid grid-col items-start py-2.5 pl-14 gap-[2px] text-left ml-10 font-light -mt-6">
-          <div className="self-stretch rounded bg-basic-white flex flex-row items-center justify-start gap-[10px] text-sm ">
-            {/* <img
+				<div className='self-stretch flex-1  rounded-xl overflow-hidden grid grid-col items-start py-2.5 pl-14 gap-[2px] text-left -ml-6 font-light mt-6'>
+					<div className='self-stretch rounded  flex flex-row items-center justify-start gap-[10px] text-sm '>
+						{/* <img
               className="relative w-6 h-6 overflow-hidden shrink-0"
               alt=""
               src={globe}
             /> */}
-            <Link to="/home" className="relative leading-[20px] font-medium">
-              Language
-            </Link>
-            <img
-              className="relative w-[10.5px] h-1.5"
-              alt=""
-              src="/vector2.svg"
-            />
-          </div>
-          <Link
-            to="/home"
-            className="self-stretch relative tracking-[-0.02em] leading-[24px]"
-          >
-            Whitepaper
-          </Link>
-          <Link
-            to="/home"
-            className="self-stretch relative tracking-[-0.02em] leading-[24px]"
-          >
-            Tutorials
-          </Link>
-          <Link
-            to="/home"
-            className="self-stretch relative tracking-[-0.02em] leading-[24px]"
-          >
-            Audit
-          </Link>
-          <Link
-            to="/"
-            className="self-stretch relative tracking-[-0.02em] leading-[24px]"
-          >
-            Contact us
-          </Link>
-          <Link
-            to="/home"
-            className="self-stretch relative tracking-[-0.02em] leading-[24px]"
-          >
-            We are hiring!
-          </Link>
+						<Link
+							to='/home'
+							className='relative leading-[20px] font-medium mb-3'>
+							Language
+						</Link>
+						<img
+							className='relative w-[10.5px] h-1.5 mb-3'
+							alt=''
+							src='/vector2.svg'
+						/>
+					</div>
+					<Link
+						to='/home'
+						className='self-stretch relative tracking-[-0.02em] leading-[24px] mb-3'>
+						Whitepaper
+					</Link>
+					<Link
+						to='/home'
+						className='self-stretch relative tracking-[-0.02em] leading-[24px] mb-3'>
+						Tutorials
+					</Link>
+					<Link
+						to='/home'
+						className='self-stretch relative tracking-[-0.02em] leading-[24px] mb-3'>
+						Audit
+					</Link>
+					<Link
+						to='/'
+						className='self-stretch relative tracking-[-0.02em] leading-[24px] mb-3'>
+						Contact us
+					</Link>
+					<Link
+						to='/home'
+						className='self-stretch relative tracking-[-0.02em] leading-[24px] mb-3'>
+						We are hiring!
+					</Link>
 
-          <div className="flex flex-row items-center justify-start gap-[10px] ">
-            <a href="/home">
-              <img className="relative w-6 h-6" alt="" src={vertor2} />
-            </a>
-            <a href="/home">
-              <img className="relative w-6 h-6" alt="" src={twt} />
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
+					<div className='flex flex-row items-center justify-start gap-[10px] '>
+						<a href='/home'>
+							<img
+								className='relative w-6 h-6'
+								alt=''
+								src={vertor2}
+							/>
+						</a>
+						<a href='/home'>
+							<img
+								className='relative w-6 h-6'
+								alt=''
+								src={twt}
+							/>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
   );
 };
 
