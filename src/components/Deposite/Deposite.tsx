@@ -230,7 +230,7 @@ const Deposite: React.FC = () => {
             openWithdrawHistory
               ? "pointer-events-none blur-lg"
               : ""
-          } transition-all duration-300  w-[95%] mx-auto md:w-auto  `}
+          } transition-all duration-300  w-[95%] mx-auto md:w-auto p-1 `}
         >
           <div className=" pt-20 lg:pt-0 mb-3 md:mb-0  ">
             <Header heading={"Deposit CG8 to earn USDC"} />
