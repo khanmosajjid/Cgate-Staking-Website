@@ -810,7 +810,7 @@ const Home: React.FC = () => {
                   <span className="">
 									Yield farming can be both lucrative and
 									risky, and its safety depends on various
-									factors.
+									factors:
                   </span>
                    <br /> <br />
 									<span className='-ml-3'>
@@ -890,7 +890,7 @@ const Home: React.FC = () => {
 									</div>
                 
 									<br />
-									<br />
+									
 									<span className="md:-ml-4">
 										It's crucial to thoroughly research and
 										understand the risks before
@@ -988,10 +988,13 @@ const Home: React.FC = () => {
 								There are two main use cases of CG8 token:{" "}
                 </span>
 								<br />
+								<br/>
 								<span className='font-semibold '>
 									•
 								</span>{" "}
+								
 								Deposit pools <br />
+								
 								<div className="ml-3">
 								Following principles of yield farming, CG8
 								tokens can be deposited in unlocked and locked
