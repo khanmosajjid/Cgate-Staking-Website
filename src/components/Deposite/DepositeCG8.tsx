@@ -313,7 +313,7 @@ const DepositeCG8: React.FC<DepositCardProps> = ({
         </div>
         <div className="mb-3  text-sm flex justify-between">
           <label className="block  mb-2">Pool type</label>
-          <div className="text-gray-600">{poolTime === 0 ? "Unlocked" : `Locked ${poolTime} days`}</div>
+          <div className="text-gray-600">{poolTime == 0 ? "Unlocked" : `Locked for ${poolTime} days`}</div>
         </div>
         <div className="mb-3  text-sm flex justify-between">
           <label className="block  mb-2">Your reference</label>

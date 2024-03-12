@@ -337,7 +337,10 @@ const Deposite: React.FC = () => {
     </>
     )
   ) : (
+    <>
     <div className="text-3xl">0.00</div>
+    <div className="text-gray-600">~$0.00</div>
+    </>
   )}
 </div>
 

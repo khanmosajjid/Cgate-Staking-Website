@@ -132,7 +132,7 @@ const Swap: FunctionComponent = () => {
 
         const data2 = await getAmountIn(value, TOKEN_CONTRACT, USDC_CONTRACT);
 
-        setUsdcValue(Number(data3));
+        setUsdcValue(Number(data3).toFixed(2));
         if (data1 > usdcBalance) {
           // toast.error("You dont Have Enough USDC");
           setInsufficientUSDC(true);
@@ -157,7 +157,7 @@ const Swap: FunctionComponent = () => {
         const data2 = await getMinAmountOut(value);
         console.log("data 2 is----->", data2);
         console.log("out amount data is----->", data1);
-        setUsdcValue(Number(data1));
+        setUsdcValue(Number(data1).toFixed(2));
         if (data1 > usdcBalance) {
           toast.error("You dont Have Enough USDC");
           setInsufficientUSDC(true);
@@ -204,10 +204,10 @@ const Swap: FunctionComponent = () => {
           USDC_CONTRACT
         );
         console.log("out amount data is----->", data1);
-        const data2 = await getMinAmountOut(value);
+        const data2 : any = await getMinAmountOut(value);
         console.log("Value minimum amount out data is", data2);
 
-        setCg8Value(data2);
+        setCg8Value(data2.toFixed(2));
         if (value > usdcBalance) {
           toast.error("You dont Have Enough USDC");
           setInsufficientUSDC(true);
@@ -233,7 +233,7 @@ const Swap: FunctionComponent = () => {
         const data2 = await getMinAmountOut(value);
         console.log("data 2 is agian is ------>", data2);
 
-        setCg8Value(data1);
+        setCg8Value(data1.toFixed(2));
         if (value > usdcBalance) {
           toast.error("You dont Have Enough USDC");
           setInsufficientUSDC(true);
@@ -484,10 +484,10 @@ const Swap: FunctionComponent = () => {
                     <button
                       className="relative text-base font-medium text-teal-600"
                       onClick={async () => {
-                        setCg8Value(cg8Balance);
-                        const r1 = await getMinAmountOut(cg8Balance.toString());
+                        setCg8Value(cg8Balance.toFixed(2));
+                        const r1 : any= await getMinAmountOut(cg8Balance.toString());
 
-                        setUsdcValue(r1);
+                        setUsdcValue(r1.toFixed(2));
                       }}
                     >
                       MAX
@@ -497,7 +497,7 @@ const Swap: FunctionComponent = () => {
                       alt=""
                       src={hr}
                     />
-                    <div className="block  text-left overflow-auto">
+                    <div className="block  text-left overflow-auto -mt-2">
                       <select
                         name=""
                         id=""
@@ -507,9 +507,9 @@ const Swap: FunctionComponent = () => {
                         <option value="CGate">CG8</option>
                       </select>
                       <p className="text-xs md:text-left  md:flex ml-1 md:ml-1 block  ">
-                        Balance:
+                        Balance: 
                         <span className="flex sm:px-1 px-0 ">
-                          {parseFloat(
+                        {parseFloat(
                             Number(cg8Balance).toFixed(2)
                           ).toLocaleString(undefined, {
                             minimumFractionDigits: 2,
@@ -529,7 +529,7 @@ const Swap: FunctionComponent = () => {
 
 <div className="md:mr-28 text-xl block relative">
   <input
-    className="md:w-[100px] w-20 bg-gray-50 block mb-3"
+    className="md:w-[100px] w-20 bg-gray-50 block px-2"
     placeholder="USDC"
     type="number"
     value={usdcValue?.toFixed(2)}
@@ -558,14 +558,14 @@ const Swap: FunctionComponent = () => {
                       alt=""
                       src={hr}
                     />
-                    <div className="block  text-left overflow-auto ">
+                    <div className="block  text-left overflow-auto -mt-2 items-center">
                       <select
                         name=""
                         id=""
-                        className="bg-gray-50 text-xl md:px- text-left  md:pr-20 "
+                        className="bg-gray-50 text-xl md:px- text-left  md:pr-20"
                       >
                         {/* <option value=""></option> */}
-                        <option value="USDC">USDC</option>
+                        <option className="" value="USDC">USDC</option>
                       </select>
                       <p className="text-xs md:text-left md:flex ml-1 block ">
                         Balance:
@@ -637,7 +637,7 @@ const Swap: FunctionComponent = () => {
                         src={hr}
                       />
 
-                      <div className="block  text-left overflow-auto ">
+                      <div className="block  text-left overflow-auto -mt-2 ">
                         <select
                           name=""
                           id=""
@@ -683,7 +683,7 @@ const Swap: FunctionComponent = () => {
                     />
                     <div className="block md:mr-28  text-xl">
                       <input
-                        className="md:w-[100px] w-20 bg-gray-50"
+                        className="md:w-[100px] w-20 bg-gray-50 pl-2"
                         placeholder="CG8"
                         type="number"
                         value={cg8Value}
@@ -693,10 +693,10 @@ const Swap: FunctionComponent = () => {
                     <button
                       className="relativ text-base  font-medium text-teal-600"
                       onClick={async () => {
-                        setCg8Value(cg8Balance);
-                        const r1 = await getMinAmountOut(cg8Balance.toString());
+                        setCg8Value(cg8Balance.toFixed(2));
+                        const r1:any = await getMinAmountOut(cg8Balance.toString());
 
-                        setUsdcValue(r1);
+                        setUsdcValue(r1.toFixed(2));
                       }}
                     >
                       MAX
@@ -706,19 +706,19 @@ const Swap: FunctionComponent = () => {
                       alt=""
                       src={hr}
                     />
-                    <div className="block  text-left overflow-auto">
+                    <div className="block  text-left overflow-auto -mt-2">
                       <select
                         name=""
                         id=""
-                        className="bg-gray-50 text-xl  md:pr-24   text-left"
+                        className="bg-gray-50 text-xl  md:pr-24   text-left "
                       >
                         {/* <option value=""></option> */}
                         <option value="CGate">CG8</option>
                       </select>
                       <p className="text-xs md:text-left  md:flex ml-1 md:ml-1 block  ">
-                        Balance:
+                        Balance:&nbsp;
                         <span className="flex ">
-                          {parseFloat(
+                         {parseFloat(
                             Number(cg8Balance).toFixed(2)
                           ).toLocaleString(undefined, {
                             minimumFractionDigits: 2,
