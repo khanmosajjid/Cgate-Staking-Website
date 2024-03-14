@@ -257,7 +257,7 @@ const DepositeCG8: React.FC<DepositCardProps> = ({
             type="number"
             value={stakeAmount}
             onChange={handleStakeAmountChange}
-            className="w-full p-2  rounded bg-white"
+            className="w-full p-2 mx-4  rounded bg-white"
             placeholder="10.00"
           />
           <button
