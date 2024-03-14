@@ -487,7 +487,15 @@ const Swap: FunctionComponent = () => {
                         setCg8Value(cg8Balance.toFixed(2));
                         const r1 : any= await getMinAmountOut(cg8Balance.toString());
 
-                        setUsdcValue(r1.toFixed(2));
+                        setUsdcValue(
+                          parseFloat((r1).toFixed(2)).toLocaleString(
+                            undefined,
+                            {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            }
+                          )
+                        );
                       }}
                     >
                       MAX
@@ -548,7 +556,15 @@ const Swap: FunctionComponent = () => {
                     <button
                       className="relativ text-base leading-[24px] font-medium text-teal-600"
                       onClick={() => {
-                        setUsdcValue(usdcBalance);
+                        setUsdcValue(
+                          parseFloat((usdcBalance).toFixed(2)).toLocaleString(
+                            undefined,
+                            {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            }
+                          )
+                        );
                       }}
                     >
                       MAX
@@ -621,11 +637,18 @@ const Swap: FunctionComponent = () => {
                           onChange={handleUsdcValueChange}
                         ></input>
                       </div>
-
                       <button
                         className="relativ text-base leading-[24px] font-medium text-teal-600"
                         onClick={() => {
-                          setUsdcValue(usdcBalance);
+                          setUsdcValue(
+                            parseFloat((usdcBalance).toFixed(2)).toLocaleString(
+                              undefined,
+                              {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              }
+                            )
+                            );
                         }}
                       >
                         MAX
@@ -696,7 +719,15 @@ const Swap: FunctionComponent = () => {
                         setCg8Value(cg8Balance.toFixed(2));
                         const r1:any = await getMinAmountOut(cg8Balance.toString());
 
-                        setUsdcValue(r1.toFixed(2));
+                        setUsdcValue(
+                          parseFloat((r1).toFixed(2)).toLocaleString(
+                            undefined,
+                            {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            }
+                          )
+                          );
                       }}
                     >
                       MAX
