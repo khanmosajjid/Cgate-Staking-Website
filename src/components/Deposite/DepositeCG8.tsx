@@ -255,7 +255,7 @@ const DepositeCG8: React.FC<DepositCardProps> = ({
           </svg>
           <input
             type="number"
-            value={stakeAmount}
+            value={new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(stakeAmount)}
             onChange={handleStakeAmountChange}
             className="w-full p-2 mx-4  rounded bg-white"
             placeholder="10.00"

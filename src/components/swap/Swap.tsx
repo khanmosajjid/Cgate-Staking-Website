@@ -474,7 +474,7 @@ const Swap: FunctionComponent = () => {
 />
                     <div className="block md:mr-28  text-xl">
                       <input
-                        className="md:w-[100px] w-20 bg-gray-50 pl-2"
+                        className="md:w-[130px] w-20 bg-gray-50 pl-2"
                         placeholder="CG8"
                         type="number"
                         value={cg8Value}
@@ -530,7 +530,7 @@ const Swap: FunctionComponent = () => {
 
 <div className="md:mr-28 text-xl block relative">
   <input
-    className="md:w-[100px] w-20 bg-gray-50 block px-2"
+    className="md:w-[130px] w-20 bg-gray-50 block px-2"
     placeholder="USDC"
     type="number"
     value={usdcValue?.toFixed(2)}
@@ -617,7 +617,7 @@ const Swap: FunctionComponent = () => {
 
                       <div className=" md:mr-28 text-xl block">
                         <input
-                          className="md:w-[100px] w-20 bg-gray-50 pl-2"
+                          className="md:w-[130px] w-20 bg-gray-50 pl-2"
                           placeholder="USDC"
                           type="number"
                           value={usdcValue}
@@ -687,7 +687,7 @@ const Swap: FunctionComponent = () => {
                     />
                     <div className="block md:mr-28  text-xl">
                       <input
-                        className="md:w-[100px] w-20 bg-gray-50 pl-2"
+                        className="md:w-[130px] w-20 bg-gray-50 pl-2"
                         placeholder="CG8"
                         type="number"
                         value={cg8Value}
