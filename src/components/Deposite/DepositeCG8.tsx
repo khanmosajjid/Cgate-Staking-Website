@@ -232,6 +232,7 @@ const DepositeCG8: React.FC<DepositCardProps> = ({
             height="40"
             viewBox="0 0 40 40"
             fill="none"
+            className="ml-2 md:ml-0"
           >
             <rect width="40" height="40" rx="20" fill="#1E40AF" />
             <path

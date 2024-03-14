@@ -398,7 +398,7 @@ const Swap: FunctionComponent = () => {
               </div>
               <button>
                 <svg
-                  className={`  px-2 ${
+                  className={` px-2 ${
                     setting ? "bg-blue-200  rounded-3xl" : ""
                   }`}
                   onClick={() => {
@@ -468,7 +468,7 @@ const Swap: FunctionComponent = () => {
                 {isCg8Buy ? (
                   <div className="self-stretch rounded-2xl bg-gray-50 flex flex-row items-center justify-start py-2 px-5 gap-[20px] text-5xl border-[1px] border-gray-200">
                     <img
-  className="hidden md:block w-[40.11px] h-[40.11px]"
+  className=" md:block w-[40.11px] h-[40.11px]"
   alt=""
   src={CG8}
 />
@@ -615,7 +615,7 @@ const Swap: FunctionComponent = () => {
                   <>
                     <div className="self-stretch rounded-2xl bg-gray-50 flex flex-row items-center justify-start py-2 px-5 gap-[20px] text-5xl border-[1px] border-solid ">
                       <img
-                        className="hidden md:inline-block w-[40.11px] h-[40.11px]"
+                        className=" md:inline-block w-[40.11px] h-[40.11px]"
                         alt=""
                         src={logo}
                       />
