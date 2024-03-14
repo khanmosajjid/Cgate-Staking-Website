@@ -695,7 +695,7 @@ const Swap: FunctionComponent = () => {
                       ></input>
                     </div>
                     <button
-                      className="relativ text-base  font-medium text-teal-600"
+                      className="relativ text-base  font-medium text-teal-600 my-auto"
                       onClick={async () => {
                         setCg8Value(cg8Balance.toFixed(2));
                         const r1:any = await getMinAmountOut(cg8Balance.toString());
