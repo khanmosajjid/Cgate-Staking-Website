@@ -487,7 +487,7 @@ const Swap: FunctionComponent = () => {
                         setCg8Value(cg8Balance.toFixed(2));
                         const r1 : any= await getMinAmountOut(cg8Balance.toString());
                         setUsdcValue(
-                         r1
+                         r1.toFixed(2)
                         );
                       }}
                     >
@@ -550,7 +550,7 @@ const Swap: FunctionComponent = () => {
                       className="relativ text-base leading-[24px] font-medium text-teal-600"
                       onClick={() => {
                         setUsdcValue(
-                         usdcBalance
+                         usdcBalance.toFixed(2)
                         );
                       }}
                     >
@@ -633,7 +633,7 @@ const Swap: FunctionComponent = () => {
                         className="relativ text-base leading-[24px] font-medium text-teal-600"
                         onClick={() => {
                           setUsdcValue(
-                            usdcBalance
+                            usdcBalance.toFixed(2)
                             );
                         }}
                       >
@@ -704,7 +704,7 @@ const Swap: FunctionComponent = () => {
                       onClick={async () => {
                         setCg8Value(cg8Balance.toFixed(2));
                         const r1:any = await getMinAmountOut(cg8Balance.toString());
-                        setUsdcValue( r1 );
+                        setUsdcValue( r1.toFixed(2) );
                           
                       }}
                     >
