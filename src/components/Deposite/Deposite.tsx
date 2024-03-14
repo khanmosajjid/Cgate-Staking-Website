@@ -534,7 +534,7 @@ const Deposite: React.FC = () => {
                             cg8Price > 0 ? (
                               <div className="text-xs  text-right">
                                 ~$
-                                <span className="md:hidden">(</span>
+                                {/* <span className="md:hidden">(</span> */}
                                 {parseFloat(
                                   (
                                     Number(convertToEther(value[6])) * cg8Price
@@ -543,16 +543,15 @@ const Deposite: React.FC = () => {
                                   minimumFractionDigits: 2,
                                   maximumFractionDigits: 2,
                                 })}
-                                <span className="md:hidden"> )</span>{" "}
-                                {/* USDC */}
+                                {/* <span className="md:hidden"> )</span>{" "} */}
+                               
                               </div>
                             ) : (
                               <div className="text-xs  text-right">
                                 ~$
-                                <span className="md:hidden">(</span>
+                                {/* <span className="md:hidden">(</span> */}
                                 0.00
-                                <span className="md:hidden"> )</span>{" "}
-                                {/* USDC */}
+                                {/* <span className="md:hidden">)</span>{" "} */}
                               </div>
                             )}
                           </div>
@@ -610,22 +609,22 @@ const Deposite: React.FC = () => {
                             {value[7] ? (
                               <div className="text-xs text-right">
                                 ~$
-                                <span className="md:hidden">(</span>
+                                {/* <span className="md:hidden">(</span> */}
                                 {parseFloat(
                                   (Number(value[7]) * cg8Price).toFixed(2)
                                 ).toLocaleString(undefined, {
                                   minimumFractionDigits: 2,
                                   maximumFractionDigits: 2,
                                 })}
-                                <span className="md:hidden">)</span>{" "}
+                                {/* <span className="md:hidden">)</span>{" "} */}
                                 {/* USDC */}
                               </div>
                             ) : (
                               <div className="text-xs  text-right">
                                 ~$
-                                <span className="md:hidden">(</span>
+                                {/* <span className="md:hidden">(</span> */}
                                 0.00
-                                <span className="md:hidden"> )</span>{" "}
+                                {/* <span className="md:hidden"> )</span>{" "} */}
                                 {/* USDC */}
                               </div>
                             )}
@@ -662,14 +661,15 @@ const Deposite: React.FC = () => {
                                 )}
                                 {value[9] ? (
                                   <div className="text-xs text-right">
-                                    ~$<span className="md:hidden">(</span>
+                                    ~$
+                                    {/* <span className="md:hidden">(</span> */}
                                     {parseFloat(
                                       (Number(value[9]) * cg8Price).toFixed(2)
                                     ).toLocaleString(undefined, {
                                       minimumFractionDigits: 2,
                                       maximumFractionDigits: 2,
                                     })}
-                                    <span className="md:hidden">)</span>{" "}
+                                    {/* <span className="md:hidden">)</span>{" "} */}
                                     {/* USDC */}
                                   </div>
                                 ) : (
@@ -682,9 +682,10 @@ const Deposite: React.FC = () => {
                                   0.00 CG8
                                 </span>
                                 <div className="text-xs text-right">
-                                  ~$<span className="md:hidden">(</span>
+                                  ~$
+                                  {/* <span className="md:hidden">(</span> */}
                                   0.00
-                                  <span className="md:hidden">)</span>{" "}
+                                  {/* <span className="md:hidden">)</span>{" "} */}
                                   {/* USDC */}
                                 </div>
                               </>
