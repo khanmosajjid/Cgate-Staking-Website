@@ -261,7 +261,7 @@ const DepositeCG8: React.FC<DepositCardProps> = ({
             placeholder="10.00"
           />
           <button
-            className="text-teal-600 mt-2"
+            className="text-teal-600 md:mt-0 mt-2"
             onClick={() => {
               setStakeAmount(
              cg8Balance
