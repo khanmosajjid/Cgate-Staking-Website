@@ -466,7 +466,7 @@ const Swap: FunctionComponent = () => {
               <div className="self-stretch flex flex-col items-start justify-start gap-[8px]">
                 <b className="self-stretch relative leading-[24px] ">Buy</b>
                 {isCg8Buy ? (
-                  <div className="self-stretch rounded-2xl bg-gray-50 flex flex-row items-center justify-start py-2 px-5 gap-[20px] text-5xl border-[1px] border-gray-200">
+                  <div className="self-stretch rounded-2xl bg-gray-50 flex flex-row items-center justify-start py-2 md:px-5 px-2 gap-[20px] text-5xl border-[1px] border-gray-200">
                     <img
   className=" md:block w-[40.11px] h-[40.11px]"
   alt=""
@@ -474,7 +474,7 @@ const Swap: FunctionComponent = () => {
 />
                     <div className="block md:mr-28  text-xl">
                       <input
-                        className="md:w-[130px] w-20 bg-gray-50 pl-2"
+                        className="md:w-[130px] w-[88px] bg-gray-50 pl-2"
                         placeholder="CG8"
                         type="number"
                         value={cg8Value}
@@ -521,7 +521,7 @@ const Swap: FunctionComponent = () => {
                     </div>
                   </div>
                 ) : (
-                  <div className="self-stretch rounded-2xl bg-gray-50 flex flex-row items-center justify-start py-2 px-5 gap-[20px] text-5xl border-[1px] border-solid ">
+                  <div className="self-stretch rounded-2xl bg-gray-50 flex flex-row items-center justify-start py-2 md:px-5 px-2 gap-[20px] text-5xl border-[1px] border-solid ">
                     <img
                       className=" w-[40.11px] h-[40.11px]"
                       alt=""
@@ -530,7 +530,7 @@ const Swap: FunctionComponent = () => {
 
 <div className="md:mr-28 text-xl block relative">
   <input
-    className="md:w-[130px] w-20 bg-gray-50 block pl-2"
+    className="md:w-[130px] w-[88px] bg-gray-50 block pl-2"
     placeholder="USDC"
     type="number"
     value={usdcValue?.toFixed(2)}
@@ -613,7 +613,7 @@ const Swap: FunctionComponent = () => {
                 </div>
                 {isCg8Buy ? (
                   <>
-                    <div className="self-stretch rounded-2xl bg-gray-50 flex flex-row items-center justify-start py-2 px-5 gap-[20px] text-5xl border-[1px] border-solid ">
+                    <div className="self-stretch rounded-2xl bg-gray-50 flex flex-row items-center justify-start py-2 md:px-5 px-2 gap-[20px] text-5xl border-[1px] border-solid ">
                       <img
                         className=" md:inline-block w-[40.11px] h-[40.11px]"
                         alt=""
@@ -622,7 +622,7 @@ const Swap: FunctionComponent = () => {
 
                       <div className=" md:mr-28 text-xl block">
                         <input
-                          className="md:w-[130px] w-20 bg-gray-50 pl-2"
+                          className="md:w-[130px] w-[88px] bg-gray-50 pl-2"
                           placeholder="USDC"
                           type="number"
                           value={usdcValue}
@@ -684,7 +684,7 @@ const Swap: FunctionComponent = () => {
                     )}
                   </>
                 ) : (
-                  <div className="self-stretch rounded-2xl bg-gray-50 flex flex-row items-center justify-start py-2 px-5 gap-[20px] text-5xl border-[1px] border-gray-200">
+                  <div className="self-stretch rounded-2xl bg-gray-50 flex flex-row items-center justify-start py-2 md:px-5 px-2 gap-[20px] text-5xl border-[1px] border-gray-200">
                     <img
                       className=" w-[40.11px] h-[40.11px]"
                       alt=""
@@ -692,7 +692,7 @@ const Swap: FunctionComponent = () => {
                     />
                     <div className="block md:mr-28  text-xl">
                       <input
-                        className="md:w-[130px] w-20 bg-gray-50 pl-2"
+                        className="md:w-[130px] w-[88px] bg-gray-50 pl-2"
                         placeholder="CG8"
                         type="number"
                         value={cg8Value}
