@@ -530,7 +530,7 @@ const Swap: FunctionComponent = () => {
 
 <div className="md:mr-28 text-xl block relative">
   <input
-    className="md:w-[130px] w-20 bg-gray-50 block px-2"
+    className="md:w-[130px] w-20 bg-gray-50 block pl-2"
     placeholder="USDC"
     type="number"
     value={usdcValue?.toFixed(2)}
@@ -573,7 +573,12 @@ const Swap: FunctionComponent = () => {
                       <p className="text-xs md:text-left md:flex ml-1 block ">
                         Balance:
                         <span className="flex overflow-scroll sm:px-1 px-0">
-                          {usdcBalance?.toFixed(2)}
+                          {parseFloat(
+                              Number(usdcBalance).toFixed(2)
+                            ).toLocaleString(undefined, {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            })}
                         </span>
                       </p>
                     </div>
