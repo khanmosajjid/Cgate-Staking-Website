@@ -263,7 +263,7 @@ const DepositeCG8: React.FC<DepositCardProps> = ({
           <button
             className="text-teal-600 mt-2"
             onClick={() => {
-              setStakeAmount(cg8Balance);
+              setStakeAmount(cg8Balance.toFixed(2));
             }}
           >
             MAX
