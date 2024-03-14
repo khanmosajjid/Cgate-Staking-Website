@@ -482,7 +482,7 @@ const Swap: FunctionComponent = () => {
                       ></input>
                     </div>
                     <button
-                      className="relative text-base font-medium text-teal-600"
+                      className="relative text-base font-medium text-teal-600 -ml-2 md:ml-0 "
                       onClick={async () => {
                         setCg8Value(cg8Balance.toFixed(2));
                         const r1 : any= await getMinAmountOut(cg8Balance.toString());
@@ -547,7 +547,7 @@ const Swap: FunctionComponent = () => {
 </div>
 
                     <button
-                      className="relativ text-base leading-[24px] font-medium text-teal-600"
+                      className="relativ text-base leading-[24px] font-medium text-teal-600 -ml-2 md:ml-0 "
                       onClick={() => {
                         setUsdcValue(
                          usdcBalance.toFixed(2)
@@ -630,7 +630,7 @@ const Swap: FunctionComponent = () => {
                         ></input>
                       </div>
                       <button
-                        className="relativ text-base leading-[24px] font-medium text-teal-600"
+                        className="relativ text-base leading-[24px] font-medium text-teal-600 -ml-2 md:ml-0 "
                         onClick={() => {
                           setUsdcValue(
                             usdcBalance.toFixed(2)
@@ -657,7 +657,7 @@ const Swap: FunctionComponent = () => {
                         </select>
                         <p className="text-xs md:text-left md:flex ml-1 block ">
                           Balance:
-                          <span className="flex overflow-scroll px-1">
+                          <span className="flex overflow-scroll lg:px-1">
                             {parseFloat(
                               Number(usdcBalance).toFixed(2)
                             ).toLocaleString(undefined, {
@@ -700,7 +700,7 @@ const Swap: FunctionComponent = () => {
                       ></input>
                     </div>
                     <button
-                      className="relativ text-base  font-medium text-teal-600 my-auto"
+                      className="relativ text-base  font-medium text-teal-600 my-auto -ml-2 md:ml-0 "
                       onClick={async () => {
                         setCg8Value(cg8Balance.toFixed(2));
                         const r1:any = await getMinAmountOut(cg8Balance.toString());
