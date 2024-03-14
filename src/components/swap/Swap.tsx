@@ -718,7 +718,6 @@ const Swap: FunctionComponent = () => {
                       onClick={async () => {
                         setCg8Value(cg8Balance.toFixed(2));
                         const r1:any = await getMinAmountOut(cg8Balance.toString());
-
                         setUsdcValue(
                           parseFloat((r1).toFixed(2)).toLocaleString(
                             undefined,
