@@ -255,7 +255,7 @@ const DepositeCG8: React.FC<DepositCardProps> = ({
           </svg>
           <input
             type="number"
-            value={new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(stakeAmount)}
+            value={stakeAmount}
             onChange={handleStakeAmountChange}
             className="w-full p-2 mx-4  rounded bg-white"
             placeholder="10.00"
@@ -264,7 +264,7 @@ const DepositeCG8: React.FC<DepositCardProps> = ({
             className="text-teal-600 md:mt-0 mt-2"
             onClick={() => {
               setStakeAmount(
-             cg8Balance
+             cg8Balance.toFixed(2)
               );
             }}
           >
