@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, FunctionComponent } from "react";
 import X from "./assets/X.svg";
@@ -19,10 +20,15 @@ const Settings: FunctionComponent<SettingsProps> = ({
   const [standardbtn, setStandardbtn] = useState(false);
   const [fastbtn, setFastbtn] = useState(false);
   const [Instantbtn, setInstantbtn] = useState(false);
+  const [slippageValue,setSlippageValue]=useState();
 
   const [zero01, setzero01] = useState(true);
   const [zero5, setzero5] = useState(false);
   const [zeroOne, setzeroOne] = useState(false);
+  const handleSlippageValue=(e:any)=>{
+    console.log("here is--->",e.target.value)
+    setSlippageValue(e.target.value)
+  }
 
   return (
     <div
@@ -186,29 +192,9 @@ const Settings: FunctionComponent<SettingsProps> = ({
             </div>
           </div>
           <div className="self-stretch flex-1 flex flex-col items-start justify-center gap-[8px] text-sm text-gray-600">
-            <button className="self-stretch rounded-2xl flex flex-row items-center justify-start py-2.5 px-4  border-[1px] border-solid border-gray-400 ">
-              {zero01 ? (
-                <div className="flex-1 relative leading-[20px] font-medium">
-                  0.1%
-                </div>
-              ) : (
-                ""
-              )}
-              {zero5 ? (
-                <div className="flex-1 relative leading-[20px] font-medium">
-                  0.5%
-                </div>
-              ) : (
-                ""
-              )}
-              {zeroOne ? (
-                <div className="flex-1 relative leading-[20px] font-medium">
-                  1%
-                </div>
-              ) : (
-                ""
-              )}
-            </button>
+            <input type="number" value={slippageValue} onChange={(e)=>{handleSlippageValue(e)}} className="self-stretch rounded-2xl flex flex-row items-center justify-start py-2.5 px-4  border-[1px] border-solid border-gray-400 ">
+             
+            </input>
           </div>
         </div>
       </div>

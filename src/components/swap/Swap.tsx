@@ -426,9 +426,8 @@ const Swap: FunctionComponent = () => {
                 <button
                   className="my-3 block"
                   onClick={() => {
-                    window.open(
-                      "https://pancakeswap.finance/swap?chain=bscTestnet"
-                    );
+                 
+                    setopenSettings(true)
                   }}
                 >
                   Settings

@@ -1,4 +1,3 @@
-
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 // import React from "react";
@@ -8,8 +7,7 @@ import twt from "../../assets/twt.svg"; // Import your icon
 import vertor2 from "../../assets/Vector2.svg"; // Import
 import { ConnectWallet } from "../Header/ConnectWallet";
 import cg8 from "../../assets/CG8.svg";
-import { getAmountOut } from "../../utils/web3Utils";
-import { TOKEN_CONTRACT, USDC_CONTRACT } from "../../constants/contracts"
+import { getMinAmountIn } from "../../utils/web3Utils";
 
 const SidebarMobile = () => {
   const [state, setState] = useState(false);
@@ -18,27 +16,17 @@ const SidebarMobile = () => {
     setState(!state);
   };
 
- 
-
   const [cg8Price, setCg8Price] = useState<string>(); // Change unknown to string
 
-   
-
-    
-  
-    useEffect(() => {
-      const getCG8Balance = async () => {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        let price: any = await getAmountOut(
-          "1",
-          TOKEN_CONTRACT,
-          USDC_CONTRACT
-        );
-        price = parseFloat(price).toFixed(2);
-        setCg8Price(price);
-      };
-      getCG8Balance();
-    }, []);
+  useEffect(() => {
+    const getCG8Balance = async () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      let price: any = await getMinAmountIn("1");
+      price = parseFloat(price).toFixed(2);
+      setCg8Price(price);
+    };
+    getCG8Balance();
+  }, []);
 
   let colorhome = "#475568";
   let colordashboard = "#475568";
@@ -244,7 +232,7 @@ const SidebarMobile = () => {
             <img src={logo} alt="" className="h-6 w-6" />
           </div>
           <button>
-            <ConnectWallet/>
+            <ConnectWallet />
           </button>
         </div>
       </div>
@@ -259,7 +247,7 @@ const SidebarMobile = () => {
           </h1>
         </div>
         <div className="flex mx-8 gap-3 mt-16 md:mt-0">
-        <img className="w-6 h-auto" src={cg8}></img>
+          <img className="w-6 h-auto" src={cg8}></img>
           <h1 className="text-sm">${parseFloat(cg8Price).toFixed(2)}</h1>
           <svg
             xmlns="http://www.w3.org/2000/svg"

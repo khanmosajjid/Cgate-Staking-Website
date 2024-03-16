@@ -84,6 +84,7 @@ const connectorImages = {
   // default: DefaultConnectorImage,
 };
 
+
 const Modal = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
   return (
@@ -303,6 +304,7 @@ export function ConnectWallet() {
               }}
             >
               <img src={connectorImages[index]} className="" />
+              
 
               {!connector?.ready && " (unsupported)"}
               {isLoading &&
