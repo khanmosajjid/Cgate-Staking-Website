@@ -24,9 +24,9 @@ import bg from './assets/Master-bg.jpg'
 function App() {
 	
 	return (
-    <>
+    <div className="w-[100%]">
       
-        <ClickToComponent />
+        {/* <ClickToComponent /> */}
         <div className="fixed -z-10 overflow-hidden ">
           <img className=" w-full h-screen md:h-auto" src={bg} alt="" />
         </div>
@@ -46,7 +46,7 @@ function App() {
           </Routes>
         </div>
     
-    </>
+    </div>
   );
 }
 

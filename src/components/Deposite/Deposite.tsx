@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, useEffect } from "react";
-import { useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { } from "react";
 import Header from "../Header/Header";
 import coin from "./assets/coin.svg";
 import CardSwap from "../CardSwap/CardSwap";
@@ -12,6 +12,7 @@ import { ConnectWallet } from "../Header/ConnectWallet.js";
 import SuccessCard from "../TransactionCard/TransactionCard";
 import bg from "../../assets/Master-bg.svg";
 import { toast } from "react-toastify";
+import bnb from "../../assets/BNB.jpg";
 
 import {
   getTotalPoolsCount,
@@ -70,6 +71,9 @@ const Deposite: React.FC = () => {
   const [transactionHash, setTransactionHash] = useState("");
   const [withdrawnTillNow, setWithdrawnTillNow] = useState();
   const [cg8Price, setCg8Price] = useState<any>();
+  const [isLoading, setIsLoading] = useState(true); 
+
+  
 
   const closeSettings = () => {
     setOpenSettings(false);
@@ -102,7 +106,7 @@ const Deposite: React.FC = () => {
         let amnt: any = Number(user[2]);
         amnt = parseFloat(convertToEther(amnt).toString()).toFixed(2);
         setWithdrawnTillNow(amnt);
-
+        setIsLoading(false); 
         const res: any = await convertToEther(Number(user[1]));
 
         setTotalDeposit(res);
@@ -209,7 +213,7 @@ const Deposite: React.FC = () => {
       ) : (
         ""
       )}
-      <div className="fixed -z-10 overflow-hidden lg:h-screen">
+      <div className="fixed -z-20 overflow-hidden lg:h-screen ">
         <img className="fixed w-full " src={bg} alt="" />
       </div>
 
@@ -226,16 +230,16 @@ const Deposite: React.FC = () => {
             openWithdrawHistory
               ? "pointer-events-none blur-lg"
               : ""
-          } transition-all duration-300  w-[95%] mx-auto md:w-auto `}
+          } transition-all duration-300  w-[95%] mx-auto md:w-auto p-1 `}
         >
-          <div className=" pt-20 lg:pt-0 mb-3 md:mb-0">
+          <div className=" pt-20 lg:pt-0 mb-3 md:mb-0  ">
             <Header heading={"Deposit CG8 to earn USDC"} />
           </div>
 
-          <div className={` space-y-6 lg:mt-20  md:w-auto    `}>
+          <div className={` space-y-6 lg:mt-20  md:w-auto h-[720px] overflow-scroll  rounded-xl`}>
             <div className="md:px-12 md:pl-7 px-6  py-3 bg-white rounded-xl shadow-md  border">
               <div className="flex justify-between">
-                <h1 className="text-[20px]">My deposit summary</h1>
+                <h1 className="text-[20px] ">My deposit summary</h1>
                 <button
                   className="text-teal-500 font-bold text-xl"
                   onClick={() => {
@@ -318,24 +322,31 @@ const Deposite: React.FC = () => {
                     <div className="text-gray-600">~$0.00</div>
                   )}
                 </div>
-
                 <div className="flex flex-col items-left md:space-y-2 py-4 md:py-0">
-                  <div className="text-lg font-light">Earnings YTD</div>
-                  {isConnected ? "" : <div className="text-3xl ">0.00</div>}
-                  {withdrawnTillNow ? (
-                    <div className="text-3xl ">{withdrawnTillNow}</div>
-                  ) : (
-                    <div className="text-gray-600">~$0.00</div>
-                  )}
-                  {withdrawnTillNow ? (
-                    <div className="text-gray-600">~${withdrawnTillNow}</div>
-                  ) : (
-                    ""
-                  )}
-                </div>
+  <div className="text-lg font-light">Earnings till now</div>
+  {isConnected ? (
+    withdrawnTillNow !== null && withdrawnTillNow !== undefined ? (
+      <>
+        <div className="text-3xl">{withdrawnTillNow}</div>
+        <div className="text-gray-600">~${withdrawnTillNow}</div>
+      </>
+    ) : (
+      <>
+      <div className="text-3xl">0.00</div>
+      <div className="text-gray-600">~$0.00</div>
+    </>
+    )
+  ) : (
+    <>
+    <div className="text-3xl">0.00</div>
+    <div className="text-gray-600">~$0.00</div>
+    </>
+  )}
+</div>
+
               </div>
             </div>
-            <div className="space-y-4  border shadow-lg rounded-2xl bg-white">
+            <div className="space-y-4  border shadow-lg rounded-2xl bg-white ">
               <div className="flex justify-between py-3 px-7 ">
                 <div className="text-[20px] ">Pools</div>
                 <div>
@@ -412,8 +423,8 @@ const Deposite: React.FC = () => {
                               <span className="text-xl block">CG8</span>
                               {Number(value[0]) / (24 * 60 * 60) > 0 ? (
                                 <span className="text-gray-600 text-sm">
-                                  locked for {""}
-                                  {Number(value[0]) / (24 * 60 * 60)} Day
+                                  Locked for {""}
+                                  {Number(value[0]) / (24 * 60 * 60)} days
                                 </span>
                               ) : (
                                 <span className="text-gray-600 text-sm">
@@ -523,7 +534,7 @@ const Deposite: React.FC = () => {
                             cg8Price > 0 ? (
                               <div className="text-xs  text-right">
                                 ~$
-                                <span className="md:hidden">(</span>
+                                {/* <span className="md:hidden">(</span> */}
                                 {parseFloat(
                                   (
                                     Number(convertToEther(value[6])) * cg8Price
@@ -532,16 +543,15 @@ const Deposite: React.FC = () => {
                                   minimumFractionDigits: 2,
                                   maximumFractionDigits: 2,
                                 })}
-                                <span className="md:hidden"> )</span>{" "}
-                                {/* USDC */}
+                                {/* <span className="md:hidden"> )</span>{" "} */}
+                               
                               </div>
                             ) : (
                               <div className="text-xs  text-right">
                                 ~$
-                                <span className="md:hidden">(</span>
+                                {/* <span className="md:hidden">(</span> */}
                                 0.00
-                                <span className="md:hidden"> )</span>{" "}
-                                {/* USDC */}
+                                {/* <span className="md:hidden">)</span>{" "} */}
                               </div>
                             )}
                           </div>
@@ -599,22 +609,22 @@ const Deposite: React.FC = () => {
                             {value[7] ? (
                               <div className="text-xs text-right">
                                 ~$
-                                <span className="md:hidden">(</span>
+                                {/* <span className="md:hidden">(</span> */}
                                 {parseFloat(
                                   (Number(value[7]) * cg8Price).toFixed(2)
                                 ).toLocaleString(undefined, {
                                   minimumFractionDigits: 2,
                                   maximumFractionDigits: 2,
                                 })}
-                                <span className="md:hidden">)</span>{" "}
+                                {/* <span className="md:hidden">)</span>{" "} */}
                                 {/* USDC */}
                               </div>
                             ) : (
                               <div className="text-xs  text-right">
                                 ~$
-                                <span className="md:hidden">(</span>
+                                {/* <span className="md:hidden">(</span> */}
                                 0.00
-                                <span className="md:hidden"> )</span>{" "}
+                                {/* <span className="md:hidden"> )</span>{" "} */}
                                 {/* USDC */}
                               </div>
                             )}
@@ -651,14 +661,15 @@ const Deposite: React.FC = () => {
                                 )}
                                 {value[9] ? (
                                   <div className="text-xs text-right">
-                                    ~$<span className="md:hidden">(</span>
+                                    ~$
+                                    {/* <span className="md:hidden">(</span> */}
                                     {parseFloat(
                                       (Number(value[9]) * cg8Price).toFixed(2)
                                     ).toLocaleString(undefined, {
                                       minimumFractionDigits: 2,
                                       maximumFractionDigits: 2,
                                     })}
-                                    <span className="md:hidden">)</span>{" "}
+                                    {/* <span className="md:hidden">)</span>{" "} */}
                                     {/* USDC */}
                                   </div>
                                 ) : (
@@ -671,9 +682,10 @@ const Deposite: React.FC = () => {
                                   0.00 CG8
                                 </span>
                                 <div className="text-xs text-right">
-                                  ~$<span className="md:hidden">(</span>
+                                  ~$
+                                  {/* <span className="md:hidden">(</span> */}
                                   0.00
-                                  <span className="md:hidden">)</span>{" "}
+                                  {/* <span className="md:hidden">)</span>{" "} */}
                                   {/* USDC */}
                                 </div>
                               </>
@@ -835,7 +847,7 @@ const Deposite: React.FC = () => {
                 </svg>
               }
               heading="Enable Pool"
-              subHeading={`CG8 locked for ${parseInt(poolTime)} day`}
+              subHeading={parseInt(poolTime)==0?'Unlocked pool':`CG8 locked for ${parseInt(poolTime)} days`}
               time={poolTime}
               p="Why is this required?"
               btntext="Proceed to your Wallet"

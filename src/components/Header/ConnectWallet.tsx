@@ -201,83 +201,80 @@ export function ConnectWallet() {
 
   if (isConnected) {
     return (
-      <>
-        <div className="">
-          <div className="flex">
-            {/* <img src={ensAvatar} alt='Avatar' /> */}
-            <button
-              className="flex bg-teal-600 rounded-3xl p-2 px-3   text-white"
-              onClick={() => {
-                setopenWallet(!openWallet);
-              }}
-            >
-              Wallet: &nbsp; {formatAddress(address)}
-            </button>
-          </div>
-          {/* <div>Connected to {connector?.name}</div> */}
-          {/* <button onClick={handleDisconnectWallet}>Disconnect</button> */}
-        </div>
-        {openWallet ? (
-          <div
-            ref={settingsRef}
-            className={`absolute z-100 bg-white md:top-12 top-16 md:w-[25%] right-4 p-4 border shadow-2xl rounded-2xl transition-all `}
-          >
-            <div className="flex justify-between mb-5">
-              <h1 className="font-[500px]">Wallet details</h1>
-              <button onClick={() => setopenWallet(false)}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="14"
-                  height="14"
-                  viewBox="0 0 18 18"
-                  fill="none"
-                >
-                  <path
-                    d="M17 1L1 17"
-                    stroke="#475568"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M1 1L17 17"
-                    stroke="#475568"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </button>
-            </div>
-            <h1 className="text-gray-800 text-left">Balance</h1>
-            <div className="flex items-center gap-3 py-3">
-              <img src={BNBLogo} alt="" />
-              <p className="text-center ">
-                {data?.formatted} {data?.symbol}
-              </p>
-            </div>
+		<>
+			<div className=''>
+				<div className='flex'>
+					{/* <img src={ensAvatar} alt='Avatar' /> */}
+					<button
+						className='flex bg-teal-600 rounded-3xl p-2 px-5   text-white'
+						onClick={() => {
+							setopenWallet(!openWallet);
+						}}>
+						<span className='hidden md:flex'> Wallet:</span> &nbsp;{" "}
+						{formatAddress(address)}
+					</button>
+				</div>
+				{/* <div>Connected to {connector?.name}</div> */}
+				{/* <button onClick={handleDisconnectWallet}>Disconnect</button> */}
+			</div>
+			{openWallet ? (
+				<div
+					ref={settingsRef}
+					className={`absolute z-100 bg-white md:top-12 top-16 md:w-[25%] right-4 p-4 border shadow-2xl rounded-2xl transition-all `}>
+					<div className='flex justify-between mb-5'>
+						<h1 className='font-[500px]'>Wallet details</h1>
+						<button onClick={() => setopenWallet(false)}>
+							<svg
+								xmlns='http://www.w3.org/2000/svg'
+								width='14'
+								height='14'
+								viewBox='0 0 18 18'
+								fill='none'>
+								<path
+									d='M17 1L1 17'
+									stroke='#475568'
+									stroke-width='2'
+									stroke-linecap='round'
+									stroke-linejoin='round'
+								/>
+								<path
+									d='M1 1L17 17'
+									stroke='#475568'
+									stroke-width='2'
+									stroke-linecap='round'
+									stroke-linejoin='round'
+								/>
+							</svg>
+						</button>
+					</div>
+					<h1 className='text-gray-800 text-left'>Balance</h1>
+					<div className='flex items-center gap-3 py-3'>
+						<img src={BNBLogo} alt='' />
+						<p className='text-center '>
+							{data?.formatted} {data?.symbol}
+						</p>
+					</div>
 
-            <h1 className="text-sm">
-              Wallet address: {formatAddress(address)}
-            </h1>
-            <div className="py-5">
-              <hr />
-            </div>
+					<h1 className='text-sm'>
+						Wallet address: {formatAddress(address)}
+					</h1>
+					<div className='py-5'>
+						<hr />
+					</div>
 
-            <div className="flex gap-6">
-              <button
-                className="bg-teal-600 px-3 p-2 w-full text-white rounded-3xl cursor-pointer z-100"
-                onClick={handleDisconnectWallet}
-              >
-                Disconnect wallet
-              </button>
-            </div>
-          </div>
-        ) : (
-          ""
-        )}
-      </>
-    );
+					<div className='flex gap-6'>
+						<button
+							className='bg-teal-600 px-3 p-2 w-full text-white rounded-3xl cursor-pointer z-100'
+							onClick={handleDisconnectWallet}>
+							Disconnect wallet
+						</button>
+					</div>
+				</div>
+			) : (
+				""
+			)}
+		</>
+	);
   }
 
   return (

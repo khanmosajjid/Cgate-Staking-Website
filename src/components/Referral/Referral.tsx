@@ -208,19 +208,20 @@ const Referral: FunctionComponent = () => {
           </div>
 
           {openRefsetting ? (
-            <div
-              ref={settingsRef}
-              className="p-3 px-8  rounded-3xl absolute bg-white sm:ml-[80%] ml-[40%] border-gray-50 shadow-xl shadow-gray-300"
-            >
-              <button
-                className="text-teal-600"
-                onClick={() => {
-                  setopenRefCard(!openRefCard);
-                }}
-              >
-                Referral history
-              </button>
-            </div>
+           <div
+           ref={settingsRef}
+           className="p-3 px-12 rounded-3xl absolute bg-white sm:ml-[75%] ml-[30%] border-gray-50 shadow-xl shadow-gray-300"
+         >
+           <button
+             className="text-teal-600 whitespace-nowrap"
+             onClick={() => {
+               setopenRefCard(!openRefCard);
+             }}
+           >
+             Referral history
+           </button>
+         </div>
+         
           ) : (
             ""
           )}

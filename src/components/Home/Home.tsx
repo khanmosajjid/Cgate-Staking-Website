@@ -810,7 +810,7 @@ const Home: React.FC = () => {
                   <span className="">
 									Yield farming can be both lucrative and
 									risky, and its safety depends on various
-									factors.
+									factors:
                   </span>
                    <br /> <br />
 									<span className='-ml-3'>
@@ -818,7 +818,8 @@ const Home: React.FC = () => {
 										Smart contract risk
 									</span>{" "}
 									<br />
-									<span>
+									<div className='ml-3 '>
+									<span >
 										The primary risk in yield farming is
 										associated with the smart contracts used
 										in decentralized finance platforms. If
@@ -828,6 +829,7 @@ const Home: React.FC = () => {
 										this risk, it's crucial to use
 										well-audited platforms.
 									</span>
+									</div>
 									<br />
 									<span className=''>
 										{" "}
@@ -837,7 +839,8 @@ const Home: React.FC = () => {
 										Volatility{" "}
 									</span>
 									<br />
-									<span>
+									<div className='ml-3'>
+									<span >
 										Cryptocurrencies are known for their
 										price volatility. When taking part in
 										yield farming, a user often has exposure
@@ -845,6 +848,7 @@ const Home: React.FC = () => {
 										provided as liquidity, which can lead to
 										gains or losses.
 									</span>
+									</div>
 									<br />
 									<span className=''>
 										{" "}
@@ -854,7 +858,8 @@ const Home: React.FC = () => {
 										Impermanent loss
 									</span>{" "}
 									<br />
-									<span>
+									<div className='ml-3'>
+									<span >
 										When providing liquidity in
 										decentralized exchanges (DEX), a user
 										may experience impermanent loss, which
@@ -864,6 +869,8 @@ const Home: React.FC = () => {
 										user has fewer assets than when it was
 										initially provided as liquidity. <br />
 									</span>
+									</div>
+								    <br/>
 									<span className=''>
 										{" "}
 										<span className=' font-semibold'>
@@ -872,15 +879,18 @@ const Home: React.FC = () => {
 										Regulatory risks
 									</span>{" "}
 									<br />
-                  <span className="">
+									<div className='ml-3'>
+									<span >
 									The regulatory environment for decentralized
 									finance and cryptocurrencies is evolving.
 									Depending on the user's place of residence,
 									participating in yield farming might have
 									legal implications.
                   </span>
+									</div>
+                
 									<br />
-									<br />
+									
 									<span className="md:-ml-4">
 										It's crucial to thoroughly research and
 										understand the risks before
@@ -978,24 +988,35 @@ const Home: React.FC = () => {
 								There are two main use cases of CG8 token:{" "}
                 </span>
 								<br />
+								<br/>
 								<span className='font-semibold '>
 									•
 								</span>{" "}
+								
 								Deposit pools <br />
+								
+								<div className="ml-3">
 								Following principles of yield farming, CG8
 								tokens can be deposited in unlocked and locked
-								CG8 pools to receive rewards in stablecoins.{" "}
+								CG8 pools to receive rewards in stablecoins.
+
+								</div>
+							{" "}
 								<br />{" "}
 								<span className=' font-semibold -'>
 									•
 								</span>{" "}
 								Tokenization <br />
+								<div className="ml-3">
 								In the future we plan to strengthen cooperation
 								with Web2 and other Web3 ventures by offering
 								consulting and development services leading to
 								integration of CG8 tokens into these projects as
 								well. It would allow CG8 to spread up and
 								attract new supporters and community members.
+
+								</div>
+								
 							</li>
 						)}
 
