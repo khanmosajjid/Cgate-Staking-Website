@@ -8,11 +8,12 @@ import CardSwap from "../CardSwap/CardSwap";
 import ClaimHistory from "./ClaimHistory";
 import DepositeHistory from "./DepositeHistory";
 import DepositeCG8 from "./DepositeCG8";
-import { ConnectWallet } from "../Header/ConnectWallet.js";
+
 import SuccessCard from "../TransactionCard/TransactionCard";
 import bg from "../../assets/Master-bg.svg";
 import { toast } from "react-toastify";
 import bnb from "../../assets/BNB.jpg";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 import {
   getTotalPoolsCount,
@@ -804,7 +805,7 @@ const Deposite: React.FC = () => {
                         ) : (
                           <>
                             <div className="">
-                              <ConnectWallet></ConnectWallet>
+                              <ConnectButton></ConnectButton>
                             </div>
                           </>
                         )}

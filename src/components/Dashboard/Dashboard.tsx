@@ -7,7 +7,8 @@ import { useRef, useEffect } from "react";
 import Header from "../Header/Header";
 import HistoricalPrice from "./HistoricalPrice";
 import { useNavigate } from "react-router-dom";
-import { ConnectWallet } from "../Header/ConnectWallet";
+
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useAccount } from "wagmi";
 import {
   cGateBalance,
@@ -239,7 +240,7 @@ const Frame: FunctionComponent = () => {
                     </button>
                   ) : (
                     <div className="  -mr-2 ">
-                      <ConnectWallet></ConnectWallet>
+                      <ConnectButton></ConnectButton>
                     </div>
                   )}
                 </div>

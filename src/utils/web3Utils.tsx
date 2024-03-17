@@ -278,7 +278,7 @@ export const getAmountOut = async (amountIn, tokenA, tokenB) => {
 
     data = convertToEther(data[1]);
     
-    return parseFloat(data)?.toFixed(2);
+    return parseFloat(data);
   } catch (e) {
     console.log("error in---->", e);
     return 0;
@@ -305,14 +305,15 @@ export const getAmountIn = async (amountIn, tokenA, tokenB) => {
 };
 export const getMinAmountOut = async (amountIn) => {
   try {
-    const reserve: any = await getReserve(USDC_CONTRACT, TOKEN_CONTRACT);
-    amountIn = convertToWei(amountIn);
+    const reserve: any = await getReserve(TOKEN_CONTRACT, USDC_CONTRACT);
+    console.log("reserve is---->",reserve);
+    amountIn = convertToWei(amountIn.toString());
 
     let data = await readContract({
       address: PANCAKE_TEST_ROUTER_CONTRACT,
       abi: RouterABI,
       functionName: "getAmountOut",
-      args: [amountIn, reserve[0], reserve[1]],
+      args: [amountIn, reserve[1], reserve[0]],
     });
     console.log("data is----->", data);
     data = data.toString();
@@ -381,20 +382,19 @@ export const buyUsdc = async (amountIn, tokenA, tokenB, to) => {
   try {
     console.log("amount in tokenA tokenB value is", amountIn);
 
-    let amountOut: any = await getAmountOut(
+    let amountOut: any = await getMinAmountOut(
       amountIn,
-      USDC_CONTRACT,
-      TOKEN_CONTRACT
+     
     );
-    amountOut = convertToWei(amountOut);
-    console.log("amount out is---->", amountOut);
-    amountIn = convertToWei(amountIn);
-    console.log("input amount is--->", amountIn);
+    amountOut = convertToWei(amountOut.toString());
+    console.log("amount out is---->", amountOut.toString());
+    amountIn = convertToWei(amountIn.toString());
+    console.log("input amount is--->", amountIn.toString());
     const deadline = 2014960015;
     const data = await writeContract({
       address: PANCAKE_TEST_ROUTER_CONTRACT,
       abi: RouterABI,
-      functionName: "swapExactTokensForTokens",
+      functionName: "swapTokensForExactTokens",
       args: [
         amountIn.toString(),
         amountOut.toString(),

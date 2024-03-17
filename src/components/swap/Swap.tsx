@@ -12,7 +12,8 @@ import gas from "./assets/gas-station-fill.svg";
 import Settings from "./Settings";
 import SwapHistory from "./SwapHistory";
 import { toast } from "react-toastify";
-import { ConnectWallet } from "../Header/ConnectWallet.js";
+
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useAccount } from "wagmi";
 import {
   cGateBalance,
@@ -50,8 +51,9 @@ const Swap: FunctionComponent = () => {
   const [cg8Price, setCg8Price] = useState<any>();
   const [isCg8Buy, setIsCg8cBuy] = useState(true);
   const [insufficientUSDC, setInsufficientUSDC] = useState(false);
+  const [insufficientCG8, setInsufficientCG8] = useState(false);
   const [deadlineTime, setDeadlineTime] = useState<any>(0);
-  const [insufficientLiquidity,setInsufficientLiquidity]=useState(false);
+  const [insufficientLiquidity, setInsufficientLiquidity] = useState(false);
 
   const settingsRef: any = useRef(null);
 
@@ -91,11 +93,11 @@ const Swap: FunctionComponent = () => {
 
   const handleCg8ValueChange = async (e) => {
     let value = e.target.value;
-    value = value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
-    if (value.includes('.')) {
-      const parts = value.split('.');
+    value = value.replace(/[^0-9.]/g, "").replace(/(\..*)\./g, "$1");
+    if (value.includes(".")) {
+      const parts = value.split(".");
       if (parts[1] && parts[1].length > 2) {
-        value = parts[0] + '.' + parts[1].slice(0, 2);
+        value = parts[0] + "." + parts[1].slice(0, 2);
       }
     }
     setCg8Value(value);
@@ -122,24 +124,24 @@ const Swap: FunctionComponent = () => {
           USDC_CONTRACT
         );
         const data3 = await getMinAmountIn(value);
-        console.log("data 3 is--->",data3,typeof data3)
-        if(data3==0){
-          console.log("here--->")
-          setInsufficientLiquidity(true)
-        }else{
-          setInsufficientLiquidity(false)
+        console.log("data 3 is--->", data3, typeof data3);
+        if (data3 == 0) {
+          console.log("here--->");
+          setInsufficientLiquidity(true);
+        } else {
+          setInsufficientLiquidity(false);
         }
 
-        const data2 = await getAmountIn(value, TOKEN_CONTRACT, USDC_CONTRACT);
+        
 
         setUsdcValue(Number(data3).toFixed(2));
         if (data1 > usdcBalance) {
           // toast.error("You dont Have Enough USDC");
           setInsufficientUSDC(true);
-          setCg8Value(0.00);
-          setUsdcValue(0.00);
+          setCg8Value(0.0);
+          setUsdcValue(0.0);
           return;
-        }else{
+        } else {
           setInsufficientUSDC(false);
         }
         if (parseFloat(allowance) < parseFloat(data1)) {
@@ -148,6 +150,7 @@ const Swap: FunctionComponent = () => {
           setIsApprove(true);
         }
       } else {
+        console.log("buying usdc balance is not required");
         const data1: any = await getAmountOut(
           value,
 
@@ -155,17 +158,17 @@ const Swap: FunctionComponent = () => {
           USDC_CONTRACT
         );
         const data2 = await getMinAmountOut(value);
-        console.log("data 2 is----->", data2);
-        console.log("out amount data is----->", data1);
-        setUsdcValue(Number(data1).toFixed(2));
-        if (data1 > usdcBalance) {
-          toast.error("You dont Have Enough USDC");
-          setInsufficientUSDC(true);
-          setCg8Value(0.00);
-          setUsdcValue(0.00);
+        console.log("data 2  of get min amount out is----->", data2);
+      
+        
+        setUsdcValue(Number(data2));
+        if (data1 > cg8Balance) {
+          setInsufficientCG8(true);
+          setCg8Value(0.0);
+          setUsdcValue(0.0);
           return;
-        }else{
-           setInsufficientUSDC(false);
+        } else {
+          setInsufficientCG8(false);
         }
         if (parseFloat(allowance) < parseFloat(data1)) {
           setIsApprove(false);
@@ -180,11 +183,11 @@ const Swap: FunctionComponent = () => {
   const handleUsdcValueChange = async (e) => {
     let value = e.target.value;
     console.log("value and event is---->", value);
-    value = value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
-    if (value.includes('.')) {
-      const parts = value.split('.');
+    value = value.replace(/[^0-9.]/g, "").replace(/(\..*)\./g, "$1");
+    if (value.includes(".")) {
+      const parts = value.split(".");
       if (parts[1] && parts[1].length > 2) {
-        value = parts[0] + '.' + parts[1].slice(0, 2);
+        value = parts[0] + "." + parts[1].slice(0, 2);
       }
     }
     setUsdcValue(value);
@@ -196,7 +199,7 @@ const Swap: FunctionComponent = () => {
         USDC_CONTRACT,
         USDC_ABI
       );
-      console.log("allowance of usdc is----->", allowance);
+
       if (isCg8Buy) {
         const data1: any = await getAmountIn(
           value,
@@ -204,19 +207,19 @@ const Swap: FunctionComponent = () => {
           USDC_CONTRACT
         );
         console.log("out amount data is----->", data1);
-        const data2 : any = await getMinAmountOut(value);
+        const data2: any = await getMinAmountOut(value);
         console.log("Value minimum amount out data is", data2);
 
-        setCg8Value(data2.toFixed(2));
+        setCg8Value(data2);
         if (value > usdcBalance) {
-          toast.error("You dont Have Enough USDC");
+          toast.error("You dont Have Enough USDCttttt");
           setInsufficientUSDC(true);
-          setCg8Value(0.00);
-          setUsdcValue(0.00);
+          setCg8Value(0.0);
+          setUsdcValue(0.0);
           return;
-      }else{
-        setInsufficientUSDC(false);
-      }
+        } else {
+          setInsufficientUSDC(false);
+        }
         if (allowance < value) {
           setIsApprove(false);
         } else {
@@ -231,17 +234,15 @@ const Swap: FunctionComponent = () => {
         console.log("out amount data is----->", data1);
 
         const data2 = await getMinAmountOut(value);
-        console.log("data 2 is agian is ------>", data2);
 
-        setCg8Value(data1.toFixed(2));
-        if (value > usdcBalance) {
-          toast.error("You dont Have Enough USDC");
-          setInsufficientUSDC(true);
-          setCg8Value(0.00);
-          setUsdcValue(0.00);
+        setCg8Value(data2);
+        if (value > cg8Balance) {
+          setInsufficientCG8(true);
+          setCg8Value(0.0);
+          setUsdcValue(0.0);
           return;
-        }else{
-          setInsufficientUSDC(false);
+        } else {
+          setInsufficientCG8(false);
         }
         if (allowance < value) {
           setIsApprove(false);
@@ -254,7 +255,6 @@ const Swap: FunctionComponent = () => {
     }
   };
 
-  
   const buyCgate = async () => {
     try {
       const slippage = await estimateSlippage(
@@ -329,24 +329,58 @@ const Swap: FunctionComponent = () => {
   const approve = async () => {
     try {
       setLoader(true);
-      const res = await approveToken(
-        address,
-        PANCAKE_TEST_ROUTER_CONTRACT,
-        USDC_CONTRACT,
-        USDC_ABI
-      );
+      if (isCg8Buy) {
+        const res = await approveToken(
+          address,
+          PANCAKE_TEST_ROUTER_CONTRACT,
+          USDC_CONTRACT,
+          USDC_ABI
+        );
 
-      if (res.status == "success") {
-        toast.success("Approved Successful");
-        await buyCgate();
-        setCg8Value(0);
-        setUsdcValue(0);
-        setLoader(false);
-      } else {
-        toast.error("Transaction Failed");
-        setLoader(false);
-        setCg8Value(0);
-        setUsdcValue(0);
+        if (res.status == "success") {
+          toast.success("Approved Successful");
+          if (isCg8Buy) {
+            await buyCgate();
+          } else {
+            console.log("here in buy usdc");
+            await buyUSDC();
+          }
+
+          setCg8Value(0);
+          setUsdcValue(0);
+          setLoader(false);
+        } else {
+          toast.error("Transaction Failed");
+          setLoader(false);
+          setCg8Value(0);
+          setUsdcValue(0);
+        }
+      }else{
+        const res = await approveToken(
+          address,
+          PANCAKE_TEST_ROUTER_CONTRACT,
+          TOKEN_CONTRACT,
+          USDC_ABI
+        );
+
+        if (res.status == "success") {
+          toast.success("Approved Successful");
+          if (isCg8Buy) {
+            await buyCgate();
+          } else {
+            console.log("here in buy usdc");
+            await buyUSDC();
+          }
+
+          setCg8Value(0);
+          setUsdcValue(0);
+          setLoader(false);
+        } else {
+          toast.error("Transaction Failed");
+          setLoader(false);
+          setCg8Value(0);
+          setUsdcValue(0);
+        }
       }
     } catch (e) {
       toast.error("Something went wrong");
@@ -440,8 +474,7 @@ const Swap: FunctionComponent = () => {
                 <button
                   className="my-3 block"
                   onClick={() => {
-                 
-                    setopenSettings(true)
+                    setopenSettings(true);
                   }}
                 >
                   Settings
@@ -467,10 +500,10 @@ const Swap: FunctionComponent = () => {
                 {isCg8Buy ? (
                   <div className="self-stretch rounded-2xl bg-gray-50 flex flex-row items-center justify-start py-2 md:px-5 px-2 gap-[20px] text-5xl border-[1px] border-gray-200">
                     <img
-  className=" md:block w-[40.11px] h-[40.11px]"
-  alt=""
-  src={CG8}
-/>
+                      className=" md:block w-[40.11px] h-[40.11px]"
+                      alt=""
+                      src={CG8}
+                    />
                     <div className="block md:mr-28  text-xl">
                       <input
                         className="md:w-[130px] w-[84px] -ml-2 md:ml-0 bg-gray-50 pl-2"
@@ -484,10 +517,10 @@ const Swap: FunctionComponent = () => {
                       className="relative text-base font-medium text-teal-600 -ml-2 md:ml-0 "
                       onClick={async () => {
                         setCg8Value(cg8Balance.toFixed(2));
-                        const r1 : any= await getMinAmountOut(cg8Balance.toString());
-                        setUsdcValue(
-                         r1.toFixed(2)
+                        const r1: any = await getMinAmountOut(
+                          cg8Balance.toString()
                         );
+                        setUsdcValue(r1.toFixed(2));
                       }}
                     >
                       MAX
@@ -507,9 +540,9 @@ const Swap: FunctionComponent = () => {
                         <option value="CGate">CG8</option>
                       </select>
                       <p className="text-xs md:text-left  md:flex ml-1 md:ml-1 block  ">
-                        Balance: 
+                        Balance:
                         <span className="flex sm:px-1 px-0 ">
-                        {parseFloat(
+                          {parseFloat(
                             Number(cg8Balance).toFixed(2)
                           ).toLocaleString(undefined, {
                             minimumFractionDigits: 2,
@@ -527,30 +560,49 @@ const Swap: FunctionComponent = () => {
                       src={logo}
                     />
 
-<div className="md:mr-28 text-xl block relative">
-  <input
-    className="md:w-[130px]  w-[84px] -ml-2 md:ml-0 bg-gray-50 block pl-2"
-    placeholder="USDC"
-    type="number"
-    value={usdcValue?.toFixed(2)}
-    onChange={handleUsdcValueChange}
-  />
-  <div className="text-red-600 text-[16px] absolute left-0">
-    {insufficientUSDC && (
-      <p className="mb-2 " style={{ paddingLeft: '0.5rem' }}>Insufficient USDC balance</p>
-    )}
-    {insufficientLiquidity && (
-     <p className="mb-2" style={{ paddingLeft: '0.5rem', paddingTop: '0.5rem' }}>Insufficient Liquidity</p>
-    )}
-  </div>
-</div>
+                    <div className="md:mr-28 text-xl block relative">
+                      <input
+                        className="md:w-[130px]  w-[84px] -ml-2 md:ml-0 bg-gray-50 block pl-2"
+                        placeholder="USDC"
+                        type="number"
+                        value={usdcValue}
+                        onChange={handleUsdcValueChange}
+                      />
+                      <div className="text-red-600 text-[16px] absolute left-0">
+                        {insufficientUSDC && (
+                          <p
+                            className="mb-2 "
+                            style={{ paddingLeft: "0.5rem" }}
+                          >
+                            Insufficient USDC balance
+                          </p>
+                        )}
+                        {insufficientCG8 && (
+                          <p
+                            className="mb-2 "
+                            style={{ paddingLeft: "0.5rem" }}
+                          >
+                            Insufficient CG8 balance
+                          </p>
+                        )}
+                        {insufficientLiquidity && (
+                          <p
+                            className="mb-2"
+                            style={{
+                              paddingLeft: "0.5rem",
+                              paddingTop: "0.5rem",
+                            }}
+                          >
+                            Insufficient Liquidity
+                          </p>
+                        )}
+                      </div>
+                    </div>
 
                     <button
                       className="relativ text-base leading-[24px] font-medium text-teal-600 -ml-2 md:ml-0 "
                       onClick={() => {
-                        setUsdcValue(
-                         usdcBalance.toFixed(2)
-                        );
+                        setUsdcValue(usdcBalance.toFixed(2));
                       }}
                     >
                       MAX
@@ -567,18 +619,24 @@ const Swap: FunctionComponent = () => {
                         className="bg-gray-50 text-xl md:px- text-left  md:pr-20"
                       >
                         {/* <option value=""></option> */}
-                        <option className="" value="USDC">USDC</option>
+                        <option className="" value="USDC">
+                          USDC
+                        </option>
                       </select>
                       <p className="text-xs md:text-left md:flex ml-1 block ">
                         Balance:
-                        <span className="flex overflow-scroll sm:px-1 px-0">
-                          {parseFloat(
+                        {usdcBalance ? (
+                          <span className="flex overflow-scroll sm:px-1 px-0">
+                            {parseFloat(
                               Number(usdcBalance).toFixed(2)
                             ).toLocaleString(undefined, {
                               minimumFractionDigits: 2,
                               maximumFractionDigits: 2,
                             })}
-                        </span>
+                          </span>
+                        ) : (
+                          "0.00"
+                        )}
                       </p>
                     </div>
                   </div>
@@ -631,9 +689,7 @@ const Swap: FunctionComponent = () => {
                       <button
                         className="relativ text-base leading-[24px] font-medium text-teal-600 -ml-2 md:ml-0 "
                         onClick={() => {
-                          setUsdcValue(
-                            usdcBalance.toFixed(2)
-                            );
+                          setUsdcValue(usdcBalance.toFixed(2));
                         }}
                       >
                         MAX
@@ -668,14 +724,25 @@ const Swap: FunctionComponent = () => {
                       </div>
                     </div>
                     {insufficientUSDC ? (
-                      <h1 className="text-red-600 text-[16px] -mt-4 mb-3  mt-1" style={{ paddingLeft: '0.5rem', paddingTop: '0.5rem' }}>
+                      <h1
+                        className="text-red-600 text-[16px] -mt-4 mb-3  mt-1"
+                        style={{ paddingLeft: "0.5rem", paddingTop: "0.5rem" }}
+                      >
                         Insufficient USDC balance
                       </h1>
                     ) : (
                       ""
                     )}
+                    {insufficientCG8 && (
+                      <p className="mb-2 " style={{ paddingLeft: "0.5rem" }}>
+                        Insufficient CG8 balance
+                      </p>
+                    )}
                     {insufficientLiquidity ? (
-                      <h1 className="text-red-600 text-[16px] -mt-4 mb-3" style={{ paddingLeft: '0.5rem', paddingTop: '0.5rem' }}>
+                      <h1
+                        className="text-red-600 text-[16px] -mt-4 mb-3"
+                        style={{ paddingLeft: "0.5rem", paddingTop: "0.5rem" }}
+                      >
                         Insufficient Liquidity
                       </h1>
                     ) : (
@@ -702,9 +769,10 @@ const Swap: FunctionComponent = () => {
                       className="relativ text-base  font-medium text-teal-600 my-auto -ml-2 md:ml-0 "
                       onClick={async () => {
                         setCg8Value(cg8Balance.toFixed(2));
-                        const r1:any = await getMinAmountOut(cg8Balance.toString());
-                        setUsdcValue( r1.toFixed(2) );
-                          
+                        const r1: any = await getMinAmountOut(
+                          cg8Balance.toString()
+                        );
+                        setUsdcValue(r1.toFixed(2));
                       }}
                     >
                       MAX
@@ -726,7 +794,7 @@ const Swap: FunctionComponent = () => {
                       <p className="text-xs md:text-left  md:flex ml-1 md:ml-1 block  ">
                         Balance:&nbsp;
                         <span className="flex ">
-                         {parseFloat(
+                          {parseFloat(
                             Number(cg8Balance).toFixed(2)
                           ).toLocaleString(undefined, {
                             minimumFractionDigits: 2,
@@ -780,21 +848,34 @@ const Swap: FunctionComponent = () => {
                   </>
                 ) : (
                   <>
-                    <button
-                      className="self-stretch rounded-3xl flex flex-row items-center justify-center text-sm text-white"
-                      onClick={approve}
-                    >
-                      <div className="flex-1 rounded-3xl bg-teal-600 flex flex-row items-center justify-center p-4 gap-[8px]">
-                        <div className="relative leading-[15px]  ">
-                          Approve USDC
+                    {isCg8Buy ? (
+                      <button
+                        className="self-stretch rounded-3xl flex flex-row items-center justify-center text-sm text-white"
+                        onClick={approve}
+                      >
+                        <div className="flex-1 rounded-3xl bg-teal-600 flex flex-row items-center justify-center p-4 gap-[8px]">
+                          <div className="relative leading-[15px]  ">
+                            Approve USDC
+                          </div>
                         </div>
-                      </div>
-                    </button>
+                      </button>
+                    ) : (
+                      <button
+                        className="self-stretch rounded-3xl flex flex-row items-center justify-center text-sm text-white"
+                        onClick={approve}
+                      >
+                        <div className="flex-1 rounded-3xl bg-teal-600 flex flex-row items-center justify-center p-4 gap-[8px]">
+                          <div className="relative leading-[15px]  ">
+                            Approve CG8
+                          </div>
+                        </div>
+                      </button>
+                    )}
                   </>
                 )}
               </>
             ) : (
-              <ConnectWallet></ConnectWallet>
+              <ConnectButton></ConnectButton>
             )}
           </div>
         </div>

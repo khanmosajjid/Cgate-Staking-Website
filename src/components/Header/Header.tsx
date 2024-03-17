@@ -7,6 +7,7 @@ import bnb from "../../assets/BNB.jpg";
 import React, { useEffect, useRef } from "react";
 import { getNetwork } from "@wagmi/core";
 import { stakingContract } from "../../utils/web3Utils.js";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 
 interface HeaderProps {
@@ -43,7 +44,8 @@ const Header = ({ heading }: HeaderProps) => {
             )}
           </div>
           <div className="">
-            <ConnectWallet></ConnectWallet>
+            {/* <ConnectWallet></ConnectWallet> */}
+            <ConnectButton></ConnectButton>
           </div>
           {/* <img
 							className='relative w-[10.5px] h-1.5'
