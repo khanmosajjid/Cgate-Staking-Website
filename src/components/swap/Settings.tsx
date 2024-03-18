@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, FunctionComponent } from "react";
+import React, { useState, FunctionComponent,useEffect } from "react";
 import X from "./assets/X.svg";
 
 interface SettingsProps {   
@@ -21,14 +21,51 @@ const Settings: FunctionComponent<SettingsProps> = ({
   const [fastbtn, setFastbtn] = useState(false);
   const [Instantbtn, setInstantbtn] = useState(false);
   const [slippageValue,setSlippageValue]=useState();
-
+  const [transactionDeadline,setTransactionDeadline]=useState(0);
   const [zero01, setzero01] = useState(true);
   const [zero5, setzero5] = useState(false);
   const [zeroOne, setzeroOne] = useState(false);
-  const handleSlippageValue=(e:any)=>{
-    console.log("here is--->",e.target.value)
-    setSlippageValue(e.target.value)
-  }
+
+
+   useEffect(() => {
+     const savedSettings = localStorage.getItem("settings");
+     if (savedSettings) {
+       const parsedSettings = JSON.parse(savedSettings);
+       setDefaultbtn(parsedSettings.defaultbtn);
+       setStandardbtn(parsedSettings.standardbtn);
+       setFastbtn(parsedSettings.fastbtn);
+       setInstantbtn(parsedSettings.Instantbtn);
+       setSlippageValue(parsedSettings.slippageValue);
+       setzero01(parsedSettings.zero01);
+       setzero5(parsedSettings.zero5);
+       setzeroOne(parsedSettings.zeroOne);
+       setTransactionDeadline(parsedSettings.transactionDeadline)
+       
+     }
+   }, []);
+
+   const handleSlippageValue = (e: any) => {
+     console.log("here is--->", e.target.value);
+     setSlippageValue(e.target.value);
+   };
+  const handleConfirm = () => {
+    const settingsToSave = {
+      defaultbtn,
+      standardbtn,
+      fastbtn,
+      Instantbtn,
+      slippageValue,
+      zero01,
+      zero5,
+      zeroOne,
+      transactionDeadline
+    };
+    console.log("setting to save is",settingsToSave)
+    localStorage.setItem("settings", JSON.stringify(settingsToSave));
+  };
+    
+
+  
 
   return (
     <div
@@ -210,8 +247,10 @@ const Settings: FunctionComponent<SettingsProps> = ({
             <div className="flex-1 relative leading-[20px] font-medium">
               <input
                 type="text"
-                placeholder="20"
+               
+                value={transactionDeadline}
                 onChange={(e) => {
+                  setTransactionDeadline(parseInt(e.target.value));
                   setDeadlineTime(parseInt(e.target.value));
                 }}
               />
@@ -229,7 +268,7 @@ const Settings: FunctionComponent<SettingsProps> = ({
               setSetting(false);
             }}
           >
-            <div className="relative leading-[20px] font-medium">Confirm</div>
+            <div className="relative leading-[20px] font-medium" onClick={handleConfirm}>Confirm</div>
           </button>
         </div>
       </div>
