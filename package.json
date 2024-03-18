@@ -14,7 +14,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.9",
     "@mui/material": "^5.14.10",
-    "@rainbow-me/rainbowkit": "^1.2.0",
+    "@rainbow-me/rainbowkit": "^2.0.2",
     "axios": "^1.6.2",
     "click-to-react-component": "^1.0.8",
     "ethers": "^5.7.1",
@@ -31,7 +31,7 @@
     "redux-thunk": "^2.4.2",
     "viem": "^1.18.2",
     "vite-plugin-ssr": "^0.4.142",
-    "wagmi": "^1.4.5"
+    "wagmi": "1.4.5"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

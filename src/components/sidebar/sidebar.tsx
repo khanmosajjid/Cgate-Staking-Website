@@ -18,7 +18,7 @@ const Sidebar = () => {
     const getCG8Balance = async () => {
        let price: any = await getMinAmountIn("1");
        price = parseFloat(price).toFixed(2);
-       setCg8Price(price);;
+       setCg8Price(price);
     };
     getCG8Balance();
   }, []);
@@ -200,7 +200,7 @@ const Sidebar = () => {
             />
           </svg>
         </div>
-        <nav className="space-y-2 mt-4 text-center mb-32 text-sm font-light w-[80%] mx-auto">
+        <nav className="space-y-2 mt-4 text-center mb-24 text-sm font-light w-[80%] mx-auto">
           {sidebarNavItems.map((item, index) => (
             <Link
               // onClick={handleClick}
@@ -219,14 +219,14 @@ const Sidebar = () => {
           ))}
         </nav>
 
-        <div className="self-stretch flex-1 rounded-xl overflow-hidden flex flex-col items-start py-2.5 px-0 gap-[12px] text-left ml-10 font-light ">
-          <div className="self-stretch rounded bg-basic-white flex flex-row items-center justify-start gap-[10px] text-sm ">
+        <div className="self-stretch text-[15px] flex-1 rounded-xl  overflow-hidden flex flex-col items-start py-2.5 px-0 gap-[4px] text-left ml-10 font-light ">
+          <div className="self-stretch rounded bg-basic-white flex flex-row items-center justify-start gap-[4px]  ">
             <img
               className="relative w-6 h-6 overflow-hidden shrink-0"
               alt=""
               src={globe}
             />
-            <Link to="/home" className="relative leading-[20px] font-medium">
+            <Link to="/home" className="relative leading-[20px] ">
               Language
             </Link>
             <img
@@ -237,7 +237,7 @@ const Sidebar = () => {
           </div>
           <Link
             to="/home"
-            className="self-stretch relative tracking-[-0.02em] leading-[24px]"
+            className="self-stretch  relative tracking-[-0.02em] leading-[24px]"
           >
             Whitepaper
           </Link>

@@ -5,7 +5,7 @@ import logo from "../../assets/BNB.jpg";
 // import globe from "../../assets/globe.svg"; // Import your icon
 import twt from "../../assets/twt.svg"; // Import your icon
 import vertor2 from "../../assets/Vector2.svg"; // Import
-import { ConnectWallet } from "../Header/ConnectWallet";
+// import { ConnectWallet } from "../Header/ConnectWallet";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import cg8 from "../../assets/CG8.svg";
 import { getMinAmountIn } from "../../utils/web3Utils";
@@ -267,7 +267,7 @@ const SidebarMobile = () => {
 						/>
 					</svg>
 				</div>
-				<nav className='space-y-2 mt-4  text-center mb-32 pl-4  text-sm text-gray-600 w-[90%]  '>
+				<nav className='space-y-2 mt-4  text-center mb-24 pl-4  text-sm text-gray-600 w-[90%]  '>
 					{sidebarNavItems.map((item, index) => (
 						<Link
 							// onClick={handleClick}
@@ -286,8 +286,8 @@ const SidebarMobile = () => {
 					))}
 				</nav>
 
-				<div className='self-stretch flex-1  rounded-xl overflow-hidden grid grid-col items-start py-2.5 pl-14 gap-[2px] text-left -ml-6 font-light mt-6'>
-					<div className='self-stretch rounded  flex flex-row items-center justify-start gap-[10px] text-sm '>
+				<div className='self-stretch flex-1  rounded-xl overflow-hidden grid grid-col items-start py-2.5 pl-14 gap-[2px] text-left -ml-6 font-light mt-2'>
+					<div className='self-stretch rounded  flex flex-row items-center justify-start gap-[4px] text-sm '>
 						{/* <img
               className="relative w-6 h-6 overflow-hidden shrink-0"
               alt=""
@@ -295,7 +295,7 @@ const SidebarMobile = () => {
             /> */}
 						<Link
 							to='/home'
-							className='relative leading-[20px] font-medium mb-3'>
+							className='relative leading-[20px]  mb-1'>
 							Language
 						</Link>
 						<img
@@ -306,22 +306,22 @@ const SidebarMobile = () => {
 					</div>
 					<Link
 						to='/home'
-						className='self-stretch relative tracking-[-0.02em] leading-[24px] mb-3'>
+						className='self-stretch relative tracking-[-0.02em] leading-[24px] mb-1'>
 						Whitepaper
 					</Link>
 					<Link
 						to='/home'
-						className='self-stretch relative tracking-[-0.02em] leading-[24px] mb-3'>
+						className='self-stretch relative tracking-[-0.02em] leading-[24px] mb-1'>
 						Tutorials
 					</Link>
 					<Link
 						to='/home'
-						className='self-stretch relative tracking-[-0.02em] leading-[24px] mb-3'>
+						className='self-stretch relative tracking-[-0.02em] leading-[24px] mb-1'>
 						Audit
 					</Link>
 					<Link
 						to='/'
-						className='self-stretch relative tracking-[-0.02em] leading-[24px] mb-3'>
+						className='self-stretch relative tracking-[-0.02em] leading-[24px] mb-1'>
 						Contact us
 					</Link>
 					<Link
