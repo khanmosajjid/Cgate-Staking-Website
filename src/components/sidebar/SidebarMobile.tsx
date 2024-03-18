@@ -6,6 +6,7 @@ import logo from "../../assets/BNB.jpg";
 import twt from "../../assets/twt.svg"; // Import your icon
 import vertor2 from "../../assets/Vector2.svg"; // Import
 import { ConnectWallet } from "../Header/ConnectWallet";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 import cg8 from "../../assets/CG8.svg";
 import { getMinAmountIn } from "../../utils/web3Utils";
 
@@ -236,7 +237,7 @@ const SidebarMobile = () => {
 						<img src={logo} alt='' className='h-8 w-8' />
 					</div>
 					<button className=''>
-						<ConnectWallet />
+						<ConnectButton></ConnectButton>
 					</button>
 				</div>
 			</div>
