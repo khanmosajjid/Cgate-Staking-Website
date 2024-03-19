@@ -62,6 +62,20 @@ const Swap: FunctionComponent = () => {
     setopenSettings(false);
   };
 
+  const toggleBuySell = async () => {
+    setIsCg8cBuy(!isCg8Buy); // Toggle the buy/sell state
+  
+    // Assuming `cg8Value` is the amount of CG8 to buy/sell and `usdcValue` is the corresponding USDC amount
+    if (!isCg8Buy) { // If currently buying CG8, switch to buying USDC and recalculate
+      const newCg8Value = await getAmountOut(usdcValue, USDC_CONTRACT, TOKEN_CONTRACT); // This is a simplified example, adjust according to your actual function
+      setCg8Value(newCg8Value.toFixed(2));
+    } else { // If currently buying USDC, switch to buying CG8 and recalculate
+      const newUsdcValue = await getAmountOut(cg8Value, TOKEN_CONTRACT, USDC_CONTRACT); // Adjust according to your actual function
+      setUsdcValue(newUsdcValue.toFixed(2));
+    }
+  };
+  
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (settingsRef.current && !settingsRef.current.contains(event.target)) {
@@ -212,7 +226,7 @@ const Swap: FunctionComponent = () => {
 
         setCg8Value(data2);
         if (value > usdcBalance) {
-          toast.error("You dont Have Enough USDCttttt");
+          toast.error("You dont Have Enough USDC");
           setInsufficientUSDC(true);
           setCg8Value(0.0);
           setUsdcValue(0.0);
@@ -644,9 +658,7 @@ const Swap: FunctionComponent = () => {
 
                 <div className="self-stretch flex flex-col items-center justify-start">
                   <button
-                    onClick={() => {
-                      setIsCg8cBuy(!isCg8Buy);
-                    }}
+                    onClick={toggleBuySell}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

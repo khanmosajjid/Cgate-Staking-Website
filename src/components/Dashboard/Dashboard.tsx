@@ -36,6 +36,8 @@ const Frame: FunctionComponent = () => {
 
   const settingsRef = useRef(null);
 
+  
+
   const closeSettings = () => {
     setSetting(false);
   };
@@ -228,7 +230,7 @@ const Frame: FunctionComponent = () => {
                     </svg>
                   </div>
                 </div>
-                <div className="rounded-3xl  bg-teal-600 py-[4px] md:mt-3 mt-1 text-center w-[95%] mx-auto ">
+                <div className="rounded-3xl  bg-teal-600 py-[3px] md:mt-3 mt-1 text-center w-[95%] mx-auto ">
                   {isConnected ? (
                     <button
                       className="text-white bg-teal-600  py-3 rounded-3xl w-full  text-sm mx-auto "
