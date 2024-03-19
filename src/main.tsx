@@ -99,7 +99,7 @@ const myCustomTheme: Theme = {
     modalMobile: '10px',
   },
   shadows: {
-    connectButton: '0 2px 4px rgba(0, 0, 0, 0.1)', // Example shadow, adjust as needed
+    connectButton: '', // Example shadow, adjust as needed
     dialog: '0 4px 6px rgba(0, 0, 0, 0.1)',
     profileDetailsAction: '0 2px 4px rgba(0, 0, 0, 0.1)',
     selectedOption: '0 2px 4px rgba(0, 0, 0, 0.1)',
