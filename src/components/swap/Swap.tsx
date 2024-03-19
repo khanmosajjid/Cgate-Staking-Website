@@ -464,7 +464,7 @@ const Swap: FunctionComponent = () => {
                 className="block bg-white border md:p-5 p-2 z-50  rounded-xl absolute lg:left-[534px] left-[150px] md:mt-10 mt-12  md:w-52  shadow-xl text-teal-600 "
               >
                 <button
-                  className="pt-4 "
+                  className="pt-1 "
                   onClick={() => {
                     setopenHistory(true);
                   }}
