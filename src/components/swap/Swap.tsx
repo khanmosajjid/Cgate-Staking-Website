@@ -61,8 +61,6 @@ const Swap: FunctionComponent = () => {
     setSetting(false);
     setopenSettings(false);
   };
-
-
   
 
   const toggleBuySell = async () => {
@@ -71,10 +69,10 @@ const Swap: FunctionComponent = () => {
     // Assuming `cg8Value` is the amount of CG8 to buy/sell and `usdcValue` is the corresponding USDC amount
     if (!isCg8Buy) { // If currently buying CG8, switch to buying USDC and recalculate
       const newCg8Value = await getAmountOut(usdcValue, USDC_CONTRACT, TOKEN_CONTRACT); // This is a simplified example, adjust according to your actual function
-      setCg8Value(newCg8Value);
+      setCg8Value(newCg8Value.toFixed(2));
     } else { // If currently buying USDC, switch to buying CG8 and recalculate
       const newUsdcValue = await getAmountOut(cg8Value, TOKEN_CONTRACT, USDC_CONTRACT); // Adjust according to your actual function
-      setUsdcValue(newUsdcValue);
+      setUsdcValue(newUsdcValue.toFixed(2));
     }
   };
   
@@ -109,23 +107,15 @@ const Swap: FunctionComponent = () => {
   }, [isConnected, address]);
 
   const handleCg8ValueChange = async (e) => {
-  let value = e.target.value.trim();
-  if (!value) {
-    // Reset values and warnings when input is cleared
-    setCg8Value('');
-    setUsdcValue('');
-    setInsufficientUSDC(false);
-    setInsufficientCG8(false);
-    return; // Exit early if input is empty
-  }
-
-  // Ensure value is numeric and format correctly
-  value = value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
-  if (value.includes('.')) {
-    const parts = value.split('.');
-    value = parts[0] + '.' + (parts[1] ? parts[1].slice(0, 2) : '');
-  }
-  setCg8Value(value);
+    let value = e.target.value;
+    value = value.replace(/[^0-9.]/g, "").replace(/(\..*)\./g, "$1");
+    if (value.includes(".")) {
+      const parts = value.split(".");
+      if (parts[1] && parts[1].length > 2) {
+        value = parts[0] + "." + parts[1].slice(0, 2);
+      }
+    }
+    setCg8Value(value);
     try {
       // console.log("data for checkin allowance is----->", data1);
       const allowance: any = await checkAllowance(
@@ -148,7 +138,6 @@ const Swap: FunctionComponent = () => {
           TOKEN_CONTRACT,
           USDC_CONTRACT
         );
-        console.log("data1 is------->",data1);
         const data3 = await getMinAmountIn(value);
         console.log("data 3 is--->", data3, typeof data3);
         if (data3 == 0) {
@@ -160,7 +149,7 @@ const Swap: FunctionComponent = () => {
 
         
 
-        setUsdcValue(Number(data3));
+        setUsdcValue(Number(data3).toFixed(2));
         if (data1 > usdcBalance) {
           // toast.error("You dont Have Enough USDC");
           setInsufficientUSDC(true);
@@ -183,7 +172,6 @@ const Swap: FunctionComponent = () => {
           TOKEN_CONTRACT,
           USDC_CONTRACT
         );
-        console.log("data1 is----->",data1);
         const data2 = await getMinAmountOut(value);
         console.log("data 2  of get min amount out is----->", data2);
       
@@ -208,21 +196,14 @@ const Swap: FunctionComponent = () => {
     }
   };
   const handleUsdcValueChange = async (e) => {
-    let value = e.target.value.trim();
-    if (!value) {
-      // Reset values and warnings when input is cleared
-      setUsdcValue('');
-      setCg8Value('');
-      setInsufficientUSDC(false);
-      setInsufficientCG8(false);
-      return; // Exit early if input is empty
-    }
-  
-    // Ensure value is numeric and format correctly
-    value = value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
-    if (value.includes('.')) {
-      const parts = value.split('.');
-      value = parts[0] + '.' + (parts[1] ? parts[1].slice(0, 2) : '');
+    let value = e.target.value;
+    console.log("value and event is---->", value);
+    value = value.replace(/[^0-9.]/g, "").replace(/(\..*)\./g, "$1");
+    if (value.includes(".")) {
+      const parts = value.split(".");
+      if (parts[1] && parts[1].length > 2) {
+        value = parts[0] + "." + parts[1].slice(0, 2);
+      }
     }
     setUsdcValue(value);
 
@@ -241,7 +222,7 @@ const Swap: FunctionComponent = () => {
           USDC_CONTRACT
         );
         console.log("out amount data is----->", data1);
-        const data2: any = await getMinAmountIn(value);
+        const data2: any = await getMinAmountOut(value);
         console.log("Value minimum amount out data is", data2);
 
         setCg8Value(data2);
@@ -318,19 +299,18 @@ const Swap: FunctionComponent = () => {
         setLoader(false);
         setCg8Value(0);
         setUsdcValue(0);
-        // window.location.reload();
+        window.location.reload();
       }
     } catch (e) {
       setLoader(false);
       setCg8Value(0);
       setUsdcValue(0);
-      // window.location.reload();
+      window.location.reload();
     }
   };
   const buyUSDC = async () => {
     try {
       setLoader(true);
-      console.log("usdc value is----->",usdcValue)
       const res: any = await buyUsdc(
         usdcValue,
         TOKEN_CONTRACT,
@@ -351,13 +331,13 @@ const Swap: FunctionComponent = () => {
         setLoader(false);
         setCg8Value(0);
         setUsdcValue(0);
-        // window.location.reload();
+        window.location.reload();
       }
     } catch (e) {
       setLoader(false);
       setCg8Value(0);
       setUsdcValue(0);
-      // window.location.reload();
+      window.location.reload();
     }
   };
 
@@ -551,12 +531,11 @@ const Swap: FunctionComponent = () => {
                     {/* <button
                       className="relative text-base font-medium text-teal-600 -ml-2 md:ml-0 "
                       onClick={async () => {
-                        console.log("here 222222")
                         setCg8Value(cg8Balance.toFixed(2));
                         const r1: any = await getMinAmountOut(
                           cg8Balance.toString()
                         );
-                        setUsdcValue(r1);
+                        setUsdcValue(r1.toFixed(2));
                       }}
                     >
                       MAX
@@ -637,12 +616,8 @@ const Swap: FunctionComponent = () => {
 
                     {/* <button
                       className="relativ text-base leading-[24px] font-medium text-teal-600 -ml-2 md:ml-0 "
-                      onClick={async() => {
-                        console.log("here 3333333")
+                      onClick={() => {
                         setUsdcValue(usdcBalance.toFixed(2));
-                        const r:any=await getMinAmountOut(usdcBalance.toString())
-                        console.log("r is----->",r);
-                        setCg8Value(r)
                       }}
                     >
                       MAX
@@ -726,11 +701,8 @@ const Swap: FunctionComponent = () => {
                       </div>
                       {/* <button
                         className="relativ text-base leading-[24px] font-medium text-teal-600 -ml-2 md:ml-0 "
-                        onClick={async() => {
-                          console.log("here 1111")
-                          setUsdcValue(usdcBalance);
-                          const r:any=await getMinAmountOut(usdcBalance.toString())
-                          setCg8Value(r)
+                        onClick={() => {
+                          setUsdcValue(usdcBalance.toFixed(2));
                         }}
                       >
                         MAX
@@ -809,12 +781,11 @@ const Swap: FunctionComponent = () => {
                     {/* <button
                       className="relativ text-base  font-medium text-teal-600 my-auto -ml-2 md:ml-0 "
                       onClick={async () => {
-                        console.log("here 44444444")
-                        setCg8Value(cg8Balance);
+                        setCg8Value(cg8Balance.toFixed(2));
                         const r1: any = await getMinAmountOut(
                           cg8Balance.toString()
                         );
-                        setUsdcValue(r1);
+                        setUsdcValue(r1.toFixed(2));
                       }}
                     >
                       MAX

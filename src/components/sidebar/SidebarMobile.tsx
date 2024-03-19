@@ -285,18 +285,14 @@ const SidebarMobile = () => {
 					))}
 				</nav>
 
-				<div className='self-stretch flex-1  rounded-xl overflow-hidden grid grid-col items-start py-2.5 pl-14 gap-[2px] text-left -ml-6  text-[15px]  text-gray-600'>
+				<div className='self-stretch flex-1  rounded-xl overflow-hidden grid grid-col items-start py-2.5 pl-14 gap-[2px] text-left -ml-6  text-[14.2px]  text-gray-600'>
 					<div className='self-stretch rounded  flex flex-row items-center justify-start gap-[4px] '>
 						{/* <img
               className="relative w-6 h-6 overflow-hidden shrink-0"
               alt=""
               src={globe}
             /> */}
-            <img
-              className="relative w-6 h-6 overflow-hidden shrink-0"
-              alt=""
-              src={globe}
-            />
+           
 						<Link
 							to='/home'
 							className='relative leading-[24px]  mb-1 flex gap-1'>
