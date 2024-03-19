@@ -5,6 +5,7 @@ import logo from "../../assets/BNB.jpg";
 // import globe from "../../assets/globe.svg"; // Import your icon
 import twt from "../../assets/twt.svg"; // Import your icon
 import vertor2 from "../../assets/Vector2.svg"; // Import
+import globe from "../../assets/globe.svg"; // Import your icon
 // import { ConnectWallet } from "../Header/ConnectWallet";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import cg8 from "../../assets/CG8.svg";
