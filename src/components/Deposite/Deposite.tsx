@@ -1006,7 +1006,7 @@ const Deposite: React.FC = () => {
 
                   setLoader(false);
                   setTransaction(true);
-                  window.location.reload();
+                  // window.location.reload();
                 } else {
                   toast.error("Transaction Failed");
                   setLoader(false);
@@ -1015,7 +1015,7 @@ const Deposite: React.FC = () => {
                 }
                 setTransaction(true);
                 setOpenClaimCard(false);
-                window.location.reload();
+                // window.location.reload();
               }}
             />
           </div>
