@@ -62,6 +62,9 @@ const Swap: FunctionComponent = () => {
     setopenSettings(false);
   };
 
+
+  
+
   const toggleBuySell = async () => {
     setIsCg8cBuy(!isCg8Buy); // Toggle the buy/sell state
   
@@ -106,15 +109,23 @@ const Swap: FunctionComponent = () => {
   }, [isConnected, address]);
 
   const handleCg8ValueChange = async (e) => {
-    let value = e.target.value;
-    value = value.replace(/[^0-9.]/g, "").replace(/(\..*)\./g, "$1");
-    if (value.includes(".")) {
-      const parts = value.split(".");
-      if (parts[1] && parts[1].length > 2) {
-        value = parts[0] + "." + parts[1].slice(0, 2);
-      }
-    }
-    setCg8Value(value);
+  let value = e.target.value.trim();
+  if (!value) {
+    // Reset values and warnings when input is cleared
+    setCg8Value('');
+    setUsdcValue('');
+    setInsufficientUSDC(false);
+    setInsufficientCG8(false);
+    return; // Exit early if input is empty
+  }
+
+  // Ensure value is numeric and format correctly
+  value = value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+  if (value.includes('.')) {
+    const parts = value.split('.');
+    value = parts[0] + '.' + (parts[1] ? parts[1].slice(0, 2) : '');
+  }
+  setCg8Value(value);
     try {
       // console.log("data for checkin allowance is----->", data1);
       const allowance: any = await checkAllowance(
@@ -195,14 +206,21 @@ const Swap: FunctionComponent = () => {
     }
   };
   const handleUsdcValueChange = async (e) => {
-    let value = e.target.value;
-    console.log("value and event is---->", value);
-    value = value.replace(/[^0-9.]/g, "").replace(/(\..*)\./g, "$1");
-    if (value.includes(".")) {
-      const parts = value.split(".");
-      if (parts[1] && parts[1].length > 2) {
-        value = parts[0] + "." + parts[1].slice(0, 2);
-      }
+    let value = e.target.value.trim();
+    if (!value) {
+      // Reset values and warnings when input is cleared
+      setUsdcValue('');
+      setCg8Value('');
+      setInsufficientUSDC(false);
+      setInsufficientCG8(false);
+      return; // Exit early if input is empty
+    }
+  
+    // Ensure value is numeric and format correctly
+    value = value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+    if (value.includes('.')) {
+      const parts = value.split('.');
+      value = parts[0] + '.' + (parts[1] ? parts[1].slice(0, 2) : '');
     }
     setUsdcValue(value);
 

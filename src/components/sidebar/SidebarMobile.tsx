@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 // import React from "react";
 import logo from "../../assets/BNB.jpg";
+import globe from "../../assets/globe.svg"; // Import your icon
 // import globe from "../../assets/globe.svg"; // Import your icon
 import twt from "../../assets/twt.svg"; // Import your icon
 import vertor2 from "../../assets/Vector2.svg"; // Import
@@ -267,7 +268,7 @@ const SidebarMobile = () => {
 						/>
 					</svg>
 				</div>
-				<nav className='space-y-2 mt-4  text-center mb-24 pl-4  text-sm text-gray-600 w-[90%]  '>
+				<nav className='space-y-2 mt-4  text-center mb-12 pl-4  text-sm text-gray-600 w-[90%]  '>
 					{sidebarNavItems.map((item, index) => (
 						<Link
 							// onClick={handleClick}
@@ -293,6 +294,11 @@ const SidebarMobile = () => {
               alt=""
               src={globe}
             /> */}
+            <img
+              className="relative w-6 h-6 overflow-hidden shrink-0"
+              alt=""
+              src={globe}
+            />
 						<Link
 							to='/home'
 							className='relative leading-[20px]  mb-1'>
