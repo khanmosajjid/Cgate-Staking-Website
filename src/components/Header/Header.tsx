@@ -45,7 +45,7 @@ const Header = ({ heading }: HeaderProps) => {
           </div>
           <div className="">
             {/* <ConnectWallet></ConnectWallet> */}
-            <ConnectButton></ConnectButton>
+            <ConnectButton showBalance={false}/>
           </div>
           {/* <img
 							className='relative w-[10.5px] h-1.5'

@@ -20,7 +20,7 @@ const Settings: FunctionComponent<SettingsProps> = ({
   const [standardbtn, setStandardbtn] = useState(false);
   const [fastbtn, setFastbtn] = useState(false);
   const [Instantbtn, setInstantbtn] = useState(false);
-  const [slippageValue,setSlippageValue]=useState();
+  const [slippageValue,setSlippageValue]=useState('');
   const [transactionDeadline,setTransactionDeadline]=useState(0);
   const [zero01, setzero01] = useState(true);
   const [zero5, setzero5] = useState(false);
@@ -45,8 +45,21 @@ const Settings: FunctionComponent<SettingsProps> = ({
    }, []);
 
    const handleSlippageValue = (e: any) => {
+    const value = e.target.value;
      console.log("here is--->", e.target.value);
-     setSlippageValue(e.target.value);
+     setSlippageValue(value);
+
+     // Deselect the preset buttons when a value is manually entered
+     if (value === '') {
+      setzero01(true);
+      setzero5(false);
+      setzeroOne(false);
+  } else {
+      // If there's any input, deselect all preset buttons
+      setzero01(false);
+      setzero5(false);
+      setzeroOne(false);
+  }
    };
   const handleConfirm = () => {
     const settingsToSave = {
@@ -264,9 +277,10 @@ const Settings: FunctionComponent<SettingsProps> = ({
           <button
             className="flex-1 rounded-3xl bg-teal-600 flex flex-row items-center justify-center p-4 lg:gap-[8px]"
             onClick={() => {
+              handleConfirm(); 
               setOpenSettings(false);
               setSetting(false);
-            }}
+          }}
           >
             <div className="relative leading-[20px] font-medium" onClick={handleConfirm}>Confirm</div>
           </button>
