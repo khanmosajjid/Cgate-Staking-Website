@@ -920,7 +920,7 @@ const Deposite: React.FC = () => {
             <SuccessCard
               transactionID={transactionHash ? transactionHash : TransactionId}
               setTransaction={setTransaction}
-              msg="Transaction Successful!"
+              msg="Transaction successful!"
               svg={
                 <svg
                   className="mx-auto"
