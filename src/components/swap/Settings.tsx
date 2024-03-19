@@ -242,7 +242,7 @@ const Settings: FunctionComponent<SettingsProps> = ({
             </div>
           </div>
           <div className="self-stretch flex-1 flex flex-col items-start justify-center gap-[8px] text-sm text-gray-600">
-            <input type="number" value={slippageValue} onChange={(e)=>{handleSlippageValue(e)}} className="self-stretch rounded-2xl flex flex-row items-center justify-start py-2.5 px-4  border-[1px] border-solid border-gray-400 ">
+            <input type="number" value={slippageValue} onChange={(e)=>{handleSlippageValue(e)}} className="self-stretch rounded-2xl flex flex-row items-center justify-start py-2.5 px-4 w-16 md:w-auto  border-[1px] border-solid border-gray-400 ">
              
             </input>
           </div>

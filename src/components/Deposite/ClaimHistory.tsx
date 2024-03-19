@@ -46,7 +46,7 @@ const ClaimHistory = ({ setOpenClaimHistory }: ClaimHistoryProps) => {
   };
 
   return (
-    <div className="bg-white p-5 rounded-lg shadow-md lg:w-[570px]  py-8 ml-2 w-[390px]">
+    <div className="bg-white p-5 rounded-lg shadow-md lg:w-[570px]  py-8 ml-2 w-[380px]">
       <div className="flex justify-between items-center  ">
         <h1 className="text-lg">My claim history</h1>
         <span

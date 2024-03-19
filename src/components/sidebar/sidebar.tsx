@@ -200,7 +200,7 @@ const Sidebar = () => {
             />
           </svg>
         </div>
-        <nav className="space-y-2 mt-4 text-center mb-24 text-sm font-light w-[80%] mx-auto">
+        <nav className="space-y-2 mt-4 text-center mb-16 text-sm font-light w-[80%] mx-auto">
           {sidebarNavItems.map((item, index) => (
             <Link
               // onClick={handleClick}
@@ -219,7 +219,7 @@ const Sidebar = () => {
           ))}
         </nav>
 
-        <div className="self-stretch text-[15px] flex-1 rounded-xl  overflow-hidden flex flex-col items-start py-2.5 px-0 gap-[4px] text-left ml-10 font-light ">
+        <div className="self-stretch text-[15px] flex-1 rounded-xl  overflow-hidden flex flex-col items-start py-3 px-0 gap-[4px] text-left ml-10 font-light ">
           <div className="self-stretch rounded bg-basic-white flex flex-row items-center justify-start gap-[4px]  ">
             <img
               className="relative w-6 h-6 overflow-hidden shrink-0"

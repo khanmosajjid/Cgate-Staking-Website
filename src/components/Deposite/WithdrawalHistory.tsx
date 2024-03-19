@@ -26,8 +26,8 @@ const WithdrawalHistory = ({
 	};
 
 	return (
-		<div className='fixed inset-0 bg-gray-300 bg-opacity-50 flex justify-center  items-center p-4 '>
-			<div className='bg-[#F5F6FE] rounded-xl shadow-lg overflow-auto md:w-[700px] w-[96%] p-4'>
+		<div className='fixed inset-0 bg-gray-300 bg-opacity-50 flex justify-center  items-center p-4 px-2 '>
+			<div className='bg-[#F5F6FE] rounded-xl shadow-lg overflow-auto md:w-[700px] w-[99%] p-4'>
 				<div className='flex justify-between items-center p-4 border-b'>
 					<h2 className='text-[16px]'>My withdrawal history</h2>
 					<button

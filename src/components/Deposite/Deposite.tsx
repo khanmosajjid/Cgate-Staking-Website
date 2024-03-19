@@ -937,7 +937,7 @@ const Deposite: React.FC = () => {
                   />
                 </svg>
               }
-              btntext="view in explorer"
+              btntext="View in explorer"
             />
           </div>
         ) : (
