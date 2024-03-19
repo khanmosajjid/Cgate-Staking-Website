@@ -23,7 +23,7 @@ const SuccessCard: React.FC<SuccessCardProps> = ({
 }) => {
   console.log("transaction id is-----.....", transactionID,setTransaction);
   return (
-    <div className="bg-white p-6 lg:w-[400px] w-[390px] rounded-xl shadow-lg border border-green-300 md:ml-[295px] mt-[130px]">
+    <div className="bg-white p-6 lg:w-[400px] w-[390px] rounded-xl shadow-lg border  border-green-300 md:ml-[295px] mt-[130px]">
       <button
         className="ml-80"
         onClick={() => {
@@ -36,7 +36,7 @@ const SuccessCard: React.FC<SuccessCardProps> = ({
       <div className=" items-center justify-center mb-4 mx-auto ">
         <div className="w-[30%] mx-auto">{svg}</div>
         <div>
-          <h2 className="text-xl font-bold text-center mt-4  ">{msg}</h2>
+          <h2 className="text-xl font-normal text-center mt-4  ">{msg}</h2>
           <p className="text-xs text-center mt-4">{para}</p>
         </div>
       </div>
@@ -48,7 +48,7 @@ const SuccessCard: React.FC<SuccessCardProps> = ({
       <hr />
       <br />
       <button
-        className="w-full px-10 py-2 rounded-3xl bg-blue-600 text-white text-sm"
+        className="w-full px-10 py-2 rounded-3xl bg-teal-600 text-white text-sm"
         onClick={async () => {
           const url = exporerURL + transactionID;
           window.open(url, "_blank");

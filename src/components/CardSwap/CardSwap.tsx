@@ -65,7 +65,7 @@ const CardSwap = ({
 					X
 				</button>
 				<div className=' ml-28 '>{svg}</div>
-				<h1 className='mt-4 my-4 font-semibold text-[24px]'>
+				<h1 className='mt-4 my-4 mb-8 font-normal text-[24px]'>
 					{heading}
 				</h1>
 				<div className='flex mx-auto text-center items-center justify-center gap-2'>
