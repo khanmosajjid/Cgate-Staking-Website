@@ -68,10 +68,10 @@ const Swap: FunctionComponent = () => {
     // Assuming `cg8Value` is the amount of CG8 to buy/sell and `usdcValue` is the corresponding USDC amount
     if (!isCg8Buy) { // If currently buying CG8, switch to buying USDC and recalculate
       const newCg8Value = await getAmountOut(usdcValue, USDC_CONTRACT, TOKEN_CONTRACT); // This is a simplified example, adjust according to your actual function
-      setCg8Value(newCg8Value.toFixed(2));
+      setCg8Value(newCg8Value);
     } else { // If currently buying USDC, switch to buying CG8 and recalculate
       const newUsdcValue = await getAmountOut(cg8Value, TOKEN_CONTRACT, USDC_CONTRACT); // Adjust according to your actual function
-      setUsdcValue(newUsdcValue.toFixed(2));
+      setUsdcValue(newUsdcValue);
     }
   };
   
@@ -137,6 +137,7 @@ const Swap: FunctionComponent = () => {
           TOKEN_CONTRACT,
           USDC_CONTRACT
         );
+        console.log("data1 is------->",data1);
         const data3 = await getMinAmountIn(value);
         console.log("data 3 is--->", data3, typeof data3);
         if (data3 == 0) {
@@ -148,7 +149,7 @@ const Swap: FunctionComponent = () => {
 
         
 
-        setUsdcValue(Number(data3).toFixed(2));
+        setUsdcValue(Number(data3));
         if (data1 > usdcBalance) {
           // toast.error("You dont Have Enough USDC");
           setInsufficientUSDC(true);
@@ -171,6 +172,7 @@ const Swap: FunctionComponent = () => {
           TOKEN_CONTRACT,
           USDC_CONTRACT
         );
+        console.log("data1 is----->",data1);
         const data2 = await getMinAmountOut(value);
         console.log("data 2  of get min amount out is----->", data2);
       
@@ -221,7 +223,7 @@ const Swap: FunctionComponent = () => {
           USDC_CONTRACT
         );
         console.log("out amount data is----->", data1);
-        const data2: any = await getMinAmountOut(value);
+        const data2: any = await getMinAmountIn(value);
         console.log("Value minimum amount out data is", data2);
 
         setCg8Value(data2);
@@ -298,18 +300,19 @@ const Swap: FunctionComponent = () => {
         setLoader(false);
         setCg8Value(0);
         setUsdcValue(0);
-        window.location.reload();
+        // window.location.reload();
       }
     } catch (e) {
       setLoader(false);
       setCg8Value(0);
       setUsdcValue(0);
-      window.location.reload();
+      // window.location.reload();
     }
   };
   const buyUSDC = async () => {
     try {
       setLoader(true);
+      console.log("usdc value is----->",usdcValue)
       const res: any = await buyUsdc(
         usdcValue,
         TOKEN_CONTRACT,
@@ -330,13 +333,13 @@ const Swap: FunctionComponent = () => {
         setLoader(false);
         setCg8Value(0);
         setUsdcValue(0);
-        window.location.reload();
+        // window.location.reload();
       }
     } catch (e) {
       setLoader(false);
       setCg8Value(0);
       setUsdcValue(0);
-      window.location.reload();
+      // window.location.reload();
     }
   };
 
@@ -527,18 +530,19 @@ const Swap: FunctionComponent = () => {
                         onChange={handleCg8ValueChange}
                       ></input>
                     </div>
-                    <button
+                    {/* <button
                       className="relative text-base font-medium text-teal-600 -ml-2 md:ml-0 "
                       onClick={async () => {
+                        console.log("here 222222")
                         setCg8Value(cg8Balance.toFixed(2));
                         const r1: any = await getMinAmountOut(
                           cg8Balance.toString()
                         );
-                        setUsdcValue(r1.toFixed(2));
+                        setUsdcValue(r1);
                       }}
                     >
                       MAX
-                    </button>
+                    </button> */}
                     <img
                       className="self-stretch  max-h-full w-1px "
                       alt=""
@@ -613,14 +617,18 @@ const Swap: FunctionComponent = () => {
                       </div>
                     </div>
 
-                    <button
+                    {/* <button
                       className="relativ text-base leading-[24px] font-medium text-teal-600 -ml-2 md:ml-0 "
-                      onClick={() => {
+                      onClick={async() => {
+                        console.log("here 3333333")
                         setUsdcValue(usdcBalance.toFixed(2));
+                        const r:any=await getMinAmountOut(usdcBalance.toString())
+                        console.log("r is----->",r);
+                        setCg8Value(r)
                       }}
                     >
                       MAX
-                    </button>
+                    </button> */}
                     <img
                       className="self-stretch relativ max-h-full w-1px "
                       alt=""
@@ -698,14 +706,17 @@ const Swap: FunctionComponent = () => {
                           onChange={handleUsdcValueChange}
                         ></input>
                       </div>
-                      <button
+                      {/* <button
                         className="relativ text-base leading-[24px] font-medium text-teal-600 -ml-2 md:ml-0 "
-                        onClick={() => {
-                          setUsdcValue(usdcBalance.toFixed(2));
+                        onClick={async() => {
+                          console.log("here 1111")
+                          setUsdcValue(usdcBalance);
+                          const r:any=await getMinAmountOut(usdcBalance.toString())
+                          setCg8Value(r)
                         }}
                       >
                         MAX
-                      </button>
+                      </button> */}
 
                       <img
                         className="self-stretch relativ max-h-full w-1px "
@@ -777,18 +788,19 @@ const Swap: FunctionComponent = () => {
                         onChange={handleCg8ValueChange}
                       ></input>
                     </div>
-                    <button
+                    {/* <button
                       className="relativ text-base  font-medium text-teal-600 my-auto -ml-2 md:ml-0 "
                       onClick={async () => {
-                        setCg8Value(cg8Balance.toFixed(2));
+                        console.log("here 44444444")
+                        setCg8Value(cg8Balance);
                         const r1: any = await getMinAmountOut(
                           cg8Balance.toString()
                         );
-                        setUsdcValue(r1.toFixed(2));
+                        setUsdcValue(r1);
                       }}
                     >
                       MAX
-                    </button>
+                    </button> */}
                     <img
                       className="self-stretch  max-h-full w-1px "
                       alt=""
