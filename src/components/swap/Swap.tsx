@@ -600,7 +600,7 @@ const Swap: FunctionComponent = () => {
                             Insufficient CG8 balance
                           </p>
                         )}
-                        {insufficientLiquidity && (
+                        {/* {insufficientLiquidity && (
                           <p
                             className="mb-2"
                             style={{
@@ -610,7 +610,7 @@ const Swap: FunctionComponent = () => {
                           >
                             Insufficient Liquidity
                           </p>
-                        )}
+                        )} */}
                       </div>
                     </div>
 
@@ -751,7 +751,7 @@ const Swap: FunctionComponent = () => {
                         Insufficient CG8 balance
                       </p>
                     )}
-                    {insufficientLiquidity ? (
+                    {/* {insufficientLiquidity ? (
                       <h1
                         className="text-red-600 text-[16px] -mt-4 mb-3"
                         style={{ paddingLeft: "0.5rem", paddingTop: "0.5rem" }}
@@ -760,7 +760,7 @@ const Swap: FunctionComponent = () => {
                       </h1>
                     ) : (
                       ""
-                    )}
+                    )} */}
                   </>
                 ) : (
                   <div className="self-stretch rounded-2xl bg-gray-50 flex flex-row items-center justify-start py-2 md:px-5 px-2 gap-[20px] text-5xl border-[1px] border-gray-200">
