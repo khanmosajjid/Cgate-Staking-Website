@@ -2,6 +2,8 @@ import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 // import React from "react";
 import logo from "../../assets/BNB.jpg";
+import globe from "../../assets/globe.svg"; // Import your icon
+
 // import globe from "../../assets/globe.svg"; // Import your icon
 import twt from "../../assets/twt.svg"; // Import your icon
 import vertor2 from "../../assets/Vector2.svg"; // Import
@@ -252,9 +254,7 @@ const SidebarMobile = () => {
 				</div>
 				<div className='flex mx-4 gap-3 mt-5 md:mt-0 items-center'>
 					<img className='w-8 h-auto' src={cg8}></img>
-					<h1 className=''>
-						${parseFloat(cg8Price).toFixed(2)}
-					</h1>
+					<h1 className=''>${parseFloat(cg8Price).toFixed(2)}</h1>
 					<svg
 						xmlns='http://www.w3.org/2000/svg'
 						width='20'
@@ -267,7 +267,7 @@ const SidebarMobile = () => {
 						/>
 					</svg>
 				</div>
-				<nav className='space-y-2 mt-4  text-center mb-24 pl-4  text-sm text-gray-600 w-[90%]  '>
+				<nav className='space-y-2 mt-4  text-center mb-12 pl-4  text-sm text-gray-600 w-[90%]  '>
 					{sidebarNavItems.map((item, index) => (
 						<Link
 							// onClick={handleClick}
@@ -286,8 +286,8 @@ const SidebarMobile = () => {
 					))}
 				</nav>
 
-				<div className='self-stretch flex-1  rounded-xl overflow-hidden grid grid-col items-start py-2.5 pl-14 gap-[2px] text-left -ml-6 font-light mt-2'>
-					<div className='self-stretch rounded  flex flex-row items-center justify-start gap-[4px] text-sm '>
+				<div className='self-stretch flex-1  rounded-xl overflow-hidden grid grid-col items-start py-2.5 pl-14 gap-[2px] text-left -ml-6  text-[15px]  text-gray-600'>
+					<div className='self-stretch rounded  flex flex-row items-center justify-start gap-[4px] '>
 						{/* <img
               className="relative w-6 h-6 overflow-hidden shrink-0"
               alt=""
@@ -295,7 +295,12 @@ const SidebarMobile = () => {
             /> */}
 						<Link
 							to='/home'
-							className='relative leading-[20px]  mb-1'>
+							className='relative leading-[24px]  mb-1 flex gap-1'>
+							<img
+								className='relative w-6 h-6 overflow-hidden shrink-0'
+								alt=''
+								src={globe}
+							/>
 							Language
 						</Link>
 						<img
