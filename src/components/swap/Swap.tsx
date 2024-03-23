@@ -593,7 +593,7 @@ const Swap: FunctionComponent = () => {
 												onChange={handleUsdcValueChange}
 											/>
 											<div className='text-red-600 text-[16px] absolute  text-left  '>
-												{insufficientUSDC && (
+												{/* {insufficientUSDC && (
 													<p
 														className='mb-2 absolute top-[210px] w-[200px] md:top-[205px] left-0 -ml-[80px]'
 														style={{
@@ -613,7 +613,7 @@ const Swap: FunctionComponent = () => {
 														}}>
 														Insufficient CG8 balance
 													</p>
-												)}
+												)} */}
 
 												{/* {insufficientLiquidity && (
                           <p
@@ -761,7 +761,7 @@ const Swap: FunctionComponent = () => {
 												</p>
 											</div>
 										</div>
-										{insufficientUSDC ? (
+										{/* {insufficientUSDC ? (
 											<h1
 												className='text-red-600 text-[16px]  mb-3  mt-1'
 												style={{
@@ -781,7 +781,7 @@ const Swap: FunctionComponent = () => {
 												}}>
 												Insufficient CG8 balance
 											</p>
-										)}
+										)} */}
 										{/* {insufficientLiquidity ? (
                       <h1
                         className="text-red-600 text-[16px] -mt-4 mb-3"
