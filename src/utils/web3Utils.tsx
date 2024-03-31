@@ -327,13 +327,16 @@ export const getMinAmountOut = async (amountIn) => {
 };
 export const getMinAmountIn = async (amountOut) => {
   try {
-    const reserve: any = await getReserve(USDC_CONTRACT, TOKEN_CONTRACT);
+    const reserve: any = await getReserve(
+      TOKEN_CONTRACT,USDC_CONTRACT
+      
+    );
     amountOut = convertToWei(amountOut);
     let data = await readContract({
       address: PANCAKE_TEST_ROUTER_CONTRACT,
       abi: RouterABI,
       functionName: "getAmountIn",
-      args: [amountOut, reserve[0], reserve[1]],
+      args: [amountOut, reserve[1], reserve[0]],
     });
 
     data = data.toString();
@@ -348,22 +351,25 @@ export const getMinAmountIn = async (amountOut) => {
   }
 };
 
-export const buyCG8 = async (amountIn, tokenA, tokenB, to) => {
+export const buyCG8 = async (amountIn:any, tokenA:any, tokenB:any, to:any) => {
   try {
+    console.log("tokena and token b is--->",tokenA,tokenB)
     console.log("amount in is---->", amountIn);
 
     let amountOut = await getMinAmountIn(amountIn);
+    
     amountOut = convertToWei(amountOut.toString());
-    console.log("amount out is---->", amountOut);
+    console.log("amount out is---->", amountOut.toString());
     amountIn = convertToWei(amountIn.toString());
     amountIn = amountIn.toString();
+    
 
     const deadline = 2014960015;
     const data = await writeContract({
       address: PANCAKE_TEST_ROUTER_CONTRACT,
       abi: RouterABI,
       functionName: "swapTokensForExactTokens",
-      args: [amountIn, amountOut, [tokenA, tokenB], to, deadline],
+      args: [amountIn, amountOut, [tokenB, tokenA], to, deadline],
     });
     console.log("data of swap is------>", data);
     const res: any = await waitForTransaction({
@@ -394,7 +400,7 @@ export const buyUsdc = async (amountIn, tokenA, tokenB, to) => {
     const data = await writeContract({
       address: PANCAKE_TEST_ROUTER_CONTRACT,
       abi: RouterABI,
-      functionName: "swapTokensForExactTokens",
+      functionName: "swapExactTokensForTokens",
       args: [
         amountIn.toString(),
         amountOut.toString(),

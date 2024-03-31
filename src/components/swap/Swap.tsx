@@ -138,7 +138,10 @@ const Swap: FunctionComponent = () => {
           TOKEN_CONTRACT,
           USDC_CONTRACT
         );
+        console.log("data 1 is------>",data1);
         const data3 = await getMinAmountIn(value);
+        const data4=await getMinAmountOut(value)
+        console.log("data 4 is---->",data4);
         console.log("data 3 is--->", data3, typeof data3);
         if (data3 == 0) {
           console.log("here--->");
@@ -149,7 +152,7 @@ const Swap: FunctionComponent = () => {
 
         
 
-        setUsdcValue(Number(data3).toFixed(2));
+        setUsdcValue(Number(data3));
         if (data1 > usdcBalance) {
           // toast.error("You dont Have Enough USDC");
           setInsufficientUSDC(true);
@@ -299,13 +302,13 @@ const Swap: FunctionComponent = () => {
         setLoader(false);
         setCg8Value(0);
         setUsdcValue(0);
-        window.location.reload();
+        // window.location.reload();
       }
     } catch (e) {
       setLoader(false);
       setCg8Value(0);
       setUsdcValue(0);
-      window.location.reload();
+      // window.location.reload();
     }
   };
   const buyUSDC = async () => {
@@ -331,13 +334,13 @@ const Swap: FunctionComponent = () => {
         setLoader(false);
         setCg8Value(0);
         setUsdcValue(0);
-        window.location.reload();
+        // window.location.reload();
       }
     } catch (e) {
       setLoader(false);
       setCg8Value(0);
       setUsdcValue(0);
-      window.location.reload();
+      // window.location.reload();
     }
   };
 
