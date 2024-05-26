@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, useEffect, useRef } from "react";
-import { } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
+import {} from "react";
 import Header from "../Header/Header";
 import coin from "./assets/coin.svg";
 import CardSwap from "../CardSwap/CardSwap";
 import ClaimHistory from "./ClaimHistory";
 import DepositeHistory from "./DepositeHistory";
 import DepositeCG8 from "./DepositeCG8";
-
+import { appContext } from "../../context/context.jsx";
 import SuccessCard from "../TransactionCard/TransactionCard";
 import bg from "../../assets/Master-bg.svg";
 import { toast } from "react-toastify";
@@ -72,9 +72,8 @@ const Deposite: React.FC = () => {
   const [transactionHash, setTransactionHash] = useState("");
   const [withdrawnTillNow, setWithdrawnTillNow] = useState();
   const [cg8Price, setCg8Price] = useState<any>();
-  const [isLoading, setIsLoading] = useState(true); 
-
-  
+  const [isLoading, setIsLoading] = useState(true);
+  const myContext = useContext<any>(appContext);
 
   const closeSettings = () => {
     setOpenSettings(false);
@@ -99,15 +98,15 @@ const Deposite: React.FC = () => {
       const pool = await poolsDetails(address);
       if (isConnected) {
         setLoader(true);
-        let price: any = await getMinAmountIn("1");
-        price = parseFloat(price).toFixed(2);
+        const price = myContext?.trade?.outputAmount.toExact();
+        
         setCg8Price(price);
         const user: any = await userDetails(address);
 
         let amnt: any = Number(user[2]);
         amnt = parseFloat(convertToEther(amnt).toString()).toFixed(2);
         setWithdrawnTillNow(amnt);
-        setIsLoading(false); 
+        setIsLoading(false);
         const res: any = await convertToEther(Number(user[1]));
 
         setTotalDeposit(res);
@@ -237,7 +236,9 @@ const Deposite: React.FC = () => {
             <Header heading={"Deposit CG8 to earn USDC"} />
           </div>
 
-          <div className={` space-y-6 lg:mt-20  md:w-auto h-[720px] overflow-scroll  rounded-xl`}>
+          <div
+            className={` space-y-6 lg:mt-20  md:w-auto h-[720px] overflow-scroll  rounded-xl`}
+          >
             <div className="md:px-12 md:pl-7 px-6  py-3 bg-white rounded-xl shadow-md  border">
               <div className="flex justify-between">
                 <h1 className="text-[20px] ">My deposit summary</h1>
@@ -324,27 +325,29 @@ const Deposite: React.FC = () => {
                   )}
                 </div>
                 <div className="flex flex-col items-left md:space-y-2 py-4 md:py-0">
-  <div className="text-lg font-light">Earnings till now</div>
-  {isConnected ? (
-    withdrawnTillNow !== null && withdrawnTillNow !== undefined ? (
-      <>
-        <div className="text-3xl">{withdrawnTillNow}</div>
-        <div className="text-gray-600">~${withdrawnTillNow}</div>
-      </>
-    ) : (
-      <>
-      <div className="text-3xl">0.00</div>
-      <div className="text-gray-600">~$0.00</div>
-    </>
-    )
-  ) : (
-    <>
-    <div className="text-3xl">0.00</div>
-    <div className="text-gray-600">~$0.00</div>
-    </>
-  )}
-</div>
-
+                  <div className="text-lg font-light">Earnings till now</div>
+                  {isConnected ? (
+                    withdrawnTillNow !== null &&
+                    withdrawnTillNow !== undefined ? (
+                      <>
+                        <div className="text-3xl">{withdrawnTillNow}</div>
+                        <div className="text-gray-600">
+                          ~${withdrawnTillNow}
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="text-3xl">0.00</div>
+                        <div className="text-gray-600">~$0.00</div>
+                      </>
+                    )
+                  ) : (
+                    <>
+                      <div className="text-3xl">0.00</div>
+                      <div className="text-gray-600">~$0.00</div>
+                    </>
+                  )}
+                </div>
               </div>
             </div>
             <div className="space-y-4  border shadow-lg rounded-2xl bg-white ">
@@ -545,7 +548,6 @@ const Deposite: React.FC = () => {
                                   maximumFractionDigits: 2,
                                 })}
                                 {/* <span className="md:hidden"> )</span>{" "} */}
-                               
                               </div>
                             ) : (
                               <div className="text-xs  text-right">
@@ -768,7 +770,7 @@ const Deposite: React.FC = () => {
                                   </button>
                                 </>
                               )}
-                          
+
                               {value[8] ? (
                                 <button
                                   className=" p-2 rounded-3xl flex-grow w-20 text-white border text-[12px] bg-teal-600 "
@@ -848,7 +850,11 @@ const Deposite: React.FC = () => {
                 </svg>
               }
               heading="Enable Pool"
-              subHeading={parseInt(poolTime)==0?'Unlocked pool':`CG8 locked for ${parseInt(poolTime)} days`}
+              subHeading={
+                parseInt(poolTime) == 0
+                  ? "Unlocked pool"
+                  : `CG8 locked for ${parseInt(poolTime)} days`
+              }
               time={poolTime}
               p="Why is this required?"
               btntext="Proceed to your Wallet"

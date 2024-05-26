@@ -26,6 +26,24 @@ import { useAccount } from "wagmi";
 import { emitter } from "./eventEmitter";
 import { addDepositHistory } from "./apiServices";
 import { useNavigate } from "react-router-dom";
+import {
+  Native,
+  ChainId,
+  CurrencyAmount,
+  TradeType,
+  Percent,
+  ERC20Token,
+  WBNB,
+} from "@pancakeswap/sdk";
+
+import {
+  SmartRouter,
+  SmartRouterTrade,
+  SMART_ROUTER_ADDRESSES,
+  SwapRouter,
+} from "@pancakeswap/smart-router";
+import { bscTokens } from "@pancakeswap/tokens";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 export const stakingContract = async () => {
   const contract = getContract({
@@ -114,7 +132,6 @@ export const getUsdcBalance = async (account) => {
       functionName: "balanceOf",
       args: [account],
     });
-    
 
     return convertToEther(data);
   } catch (e) {
@@ -240,7 +257,6 @@ export const getPair = async (tokenA, tokenB) => {
       functionName: "getPair",
       args: [tokenA, tokenB],
     });
-    
 
     return data;
   } catch (e) {
@@ -257,7 +273,6 @@ export const getReserve = async (tokenA, tokenB) => {
       abi: PairABI,
       functionName: "getReserves",
     });
-   
 
     return data;
   } catch (e) {
@@ -277,14 +292,14 @@ export const getAmountOut = async (amountIn, tokenA, tokenB) => {
     });
 
     data = convertToEther(data[1]);
-    
+
     return parseFloat(data);
   } catch (e) {
     console.log("error in---->", e);
     return 0;
   }
 };
-export const getAmountIn = async (amountIn, tokenA, tokenB) => {
+export const getAmountIns = async (amountIn, tokenA, tokenB) => {
   try {
     amountIn = convertToWei(amountIn);
 
@@ -295,7 +310,6 @@ export const getAmountIn = async (amountIn, tokenA, tokenB) => {
       args: [amountIn, [tokenA, tokenB]],
     });
     data = convertToEther(data[0]);
-    
 
     return parseFloat(data)?.toFixed(2);
   } catch (e) {
@@ -306,7 +320,7 @@ export const getAmountIn = async (amountIn, tokenA, tokenB) => {
 export const getMinAmountOut = async (amountIn) => {
   try {
     const reserve: any = await getReserve(TOKEN_CONTRACT, USDC_CONTRACT);
-    console.log("reserve is---->",reserve);
+    console.log("reserve is---->", reserve);
     amountIn = convertToWei(amountIn.toString());
 
     let data = await readContract({
@@ -327,22 +341,21 @@ export const getMinAmountOut = async (amountIn) => {
 };
 export const getMinAmountIn = async (amountOut) => {
   try {
-    const reserve: any = await getReserve(
-      TOKEN_CONTRACT,USDC_CONTRACT
-      
-    );
+    const reserve: any = await getReserve(TOKEN_CONTRACT, USDC_CONTRACT);
+    console.log("reserve is----->", reserve[1], reserve[0]);
     amountOut = convertToWei(amountOut);
+    console.log("amount out is----->", amountOut.toString());
     let data = await readContract({
       address: PANCAKE_TEST_ROUTER_CONTRACT,
       abi: RouterABI,
       functionName: "getAmountIn",
-      args: [amountOut, reserve[1], reserve[0]],
+      args: [amountOut.toString(), Number(reserve[1]), Number(reserve[0])],
     });
-
+ console.log("data for get min amount ----->", data);
     data = data.toString();
 
     data = convertToEther(data);
-    console.log("data for get min amount ----->",data,typeof data);
+   
 
     return data;
   } catch (e) {
@@ -351,18 +364,22 @@ export const getMinAmountIn = async (amountOut) => {
   }
 };
 
-export const buyCG8 = async (amountIn:any, tokenA:any, tokenB:any, to:any) => {
+export const buyCG8 = async (
+  amountIn: any,
+  tokenA: any,
+  tokenB: any,
+  to: any
+) => {
   try {
-    console.log("tokena and token b is--->",tokenA,tokenB)
+    console.log("tokena and token b is--->", tokenA, tokenB);
     console.log("amount in is---->", amountIn);
 
     let amountOut = await getMinAmountIn(amountIn);
-    
+
     amountOut = convertToWei(amountOut.toString());
     console.log("amount out is---->", amountOut.toString());
     amountIn = convertToWei(amountIn.toString());
     amountIn = amountIn.toString();
-    
 
     const deadline = 2014960015;
     const data = await writeContract({
@@ -388,10 +405,7 @@ export const buyUsdc = async (amountIn, tokenA, tokenB, to) => {
   try {
     console.log("amount in tokenA tokenB value is", amountIn);
 
-    let amountOut: any = await getMinAmountOut(
-      amountIn,
-     
-    );
+    let amountOut: any = await getMinAmountOut(amountIn);
     amountOut = convertToWei(amountOut.toString());
     console.log("amount out is---->", amountOut.toString());
     amountIn = convertToWei(amountIn.toString());
@@ -637,7 +651,6 @@ export const withdraw = async (poolId) => {
     toast.error(detailsPart);
 
     emitter.emit("loading", false);
-
   }
 };
 
@@ -645,7 +658,7 @@ export const withdrawPerStake = async (poolId, amount, stakeId) => {
   try {
     console.log("withdraw per stake details is", poolId, amount, stakeId);
     amount = convertToWei(amount);
-    console.log("amount in withperstake is----->",amount);
+    console.log("amount in withperstake is----->", amount);
     emitter.emit("loading", true);
     const data = await writeContract({
       address: STAKING_CONTRACT,
@@ -736,46 +749,13 @@ export const isPoolActive = async (poolId) => {
     return false;
   }
 };
-
-export async function estimateSlippage(tokenA, tokenB, amount) {
-  // Fetch the reserves for each token in the liquidity pool
-  try {
-    amount = convertToWei(amount.toString());
-    amount = Number(amount);
-    const reserves = await getReserve(tokenA, tokenB);
-    console.log("reserve is---->", reserves);
-    const tokenAReserve = Number(reserves[0]);
-    const tokenBReserve = Number(reserves[1]);
-    const amountInTokenBEquivalent = (amount * tokenBReserve) / tokenAReserve;
-    console.log("here is---->", amountInTokenBEquivalent);
-    const newTokenAReserve = tokenAReserve + amount;
-    const newTokenBReserve = tokenBReserve - amountInTokenBEquivalent;
-    const newPrice = newTokenBReserve / newTokenAReserve;
-    const oldPrice = tokenBReserve / tokenAReserve;
-    const priceImpact = ((newPrice - oldPrice) / oldPrice) * 100;
-    console.log("price impact", priceImpact);
-
-    let estimatedSlippage;
-    if (priceImpact < 0.5) {
-      estimatedSlippage = 0.5; // Minimum slippage
-    } else if (priceImpact < 1) {
-      estimatedSlippage = 1; // Moderate slippage
-    } else {
-      estimatedSlippage = priceImpact; // High slippage for high price impact
-    }
-
-    return estimatedSlippage;
-  } catch (e) {
-    console.log("errror is---->", e);
-  }
-}
 export async function addCommasToNumbers(number) {
   // Check if numbers is an array
-   const parsedNumber = parseFloat(number);
-   // Check if the parsed number is NaN (not a number)
-   if (isNaN(parsedNumber)) {
-     return "NaN";
-   }
-   // Format the number with commas for thousands separators
-   return parsedNumber.toLocaleString();
+  const parsedNumber = parseFloat(number);
+  // Check if the parsed number is NaN (not a number)
+  if (isNaN(parsedNumber)) {
+    return "NaN";
+  }
+  // Format the number with commas for thousands separators
+  return parsedNumber.toLocaleString();
 }

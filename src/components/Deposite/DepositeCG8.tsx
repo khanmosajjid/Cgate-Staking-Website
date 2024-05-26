@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import coin from "../../assets/Bitcoin.svg";
 import X from "../../assets/X.svg";
 import {
@@ -18,7 +18,7 @@ import {
   ADMIN,
 } from "../../constants/contracts";
 import { toast } from "react-toastify";
-
+import { appContext } from "../../context/context.jsx";
 import { useAccount, useNetwork, useSwitchNetwork } from "wagmi";
 import { ThreeCircles } from "react-loader-spinner";
 interface DepositCardProps {
@@ -50,7 +50,7 @@ const DepositeCG8: React.FC<DepositCardProps> = ({
   const { chain } = useNetwork();
   const [insufficientBalance, setInsufficientBalance] = useState(false);
   const [cg8Price, setCg8Price] = useState<any>();
-
+  const myContext = useContext<any>(appContext);
   const { chains, error, isLoading, pendingChainId, switchNetwork } =
     useSwitchNetwork();
 
@@ -68,8 +68,7 @@ const DepositeCG8: React.FC<DepositCardProps> = ({
       }
       const getCG8Balance = async () => {
         if (isConnected) {
-          let price: any = await getMinAmountIn("1");
-          price = parseFloat(price).toFixed(2);
+          const price = myContext?.trade?.outputAmount.toExact();
           setCg8Price(price);
           const res: any = await cGateBalance(address);
           setCg8Balance(parseFloat(res));
@@ -139,7 +138,7 @@ const DepositeCG8: React.FC<DepositCardProps> = ({
         toast.error("Invalid referrer address");
         return false;
       }
-      if(referrer==address){
+      if (referrer == address) {
         toast.error("You cannot refer yourself");
         return;
       }
@@ -150,7 +149,7 @@ const DepositeCG8: React.FC<DepositCardProps> = ({
         TOKEN_CONTRACT,
         TOKEN_ABI
       );
-      
+
       if (parseInt(allowance) < parseInt(stakeAmount)) {
         await approve();
       }
@@ -264,9 +263,7 @@ const DepositeCG8: React.FC<DepositCardProps> = ({
           <button
             className="text-teal-600 md:mt-0 mt-0 -ml-1"
             onClick={() => {
-              setStakeAmount(
-               cg8Balance.toFixed(2)
-              );
+              setStakeAmount(cg8Balance.toFixed(2));
             }}
           >
             MAX
@@ -283,13 +280,14 @@ const DepositeCG8: React.FC<DepositCardProps> = ({
         <div className="flex justify-between">
           <div>{subheading}</div>
           <div className="block">
-            <span className="block"> {parseFloat((cg8Balance).toFixed(2)).toLocaleString(
-                undefined,
-                {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                }
-              )} CG8</span>
+            <span className="block">
+              {" "}
+              {parseFloat(cg8Balance.toFixed(2)).toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}{" "}
+              CG8
+            </span>
             <div className="text-xs text-right">
               ~$
               {parseFloat((cg8Balance * cg8Price).toFixed(2)).toLocaleString(
@@ -316,7 +314,9 @@ const DepositeCG8: React.FC<DepositCardProps> = ({
         </div>
         <div className="mb-3  text-sm flex justify-between">
           <label className="block  mb-2">Pool type</label>
-          <div className="text-gray-600">{poolTime == 0 ? "Unlocked" : `Locked for ${poolTime} days`}</div>
+          <div className="text-gray-600">
+            {poolTime == 0 ? "Unlocked" : `Locked for ${poolTime} days`}
+          </div>
         </div>
         <div className="mb-3  text-sm flex justify-between">
           <label className="block  mb-2">Your reference</label>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Layout from "./components/sidebar/sidebar"; 
@@ -16,16 +17,14 @@ import Referral from "./components/Referral/Referral";
 import SidebarMobile from "./components/sidebar/SidebarMobile";
 import Home from "./components/Home/Home";
 import bg from './assets/Master-bg.jpg'
-
-
-
+import ContextProvider from "./context/context.jsx"
 
 
 function App() {
 	
 	return (
-    <div className="w-[100%]">
-      
+    <ContextProvider>
+      <div className="w-[100%]">
         {/* <ClickToComponent /> */}
         <div className="fixed -z-10 overflow-hidden ">
           <img className=" w-full h-screen md:h-auto" src={bg} alt="" />
@@ -41,12 +40,12 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/deposit" element={<Deposit />} />
             <Route path="/swap" element={<Swap />} />
-            <Route path="/referral" element={<Referral/>} />
+            <Route path="/referral" element={<Referral />} />
             <Route path="/" element={<Home />} />
           </Routes>
         </div>
-    
-    </div>
+      </div>
+    </ContextProvider>
   );
 }
 

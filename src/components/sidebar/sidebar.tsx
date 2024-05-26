@@ -1,27 +1,29 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link, Outlet, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import React from "react";
 import globe from "../../assets/globe.svg"; // Import your icon
 import twt from "../../assets/twt.svg"; // Import your icon
 import vertor2 from "../../assets/Vector2.svg"; // Import
-import {getAmountOut,getMinAmountIn } from "../../utils/web3Utils.js";
-import { TOKEN_CONTRACT,USDC_CONTRACT } from "../../constants/contracts.js";
+
 import cg8 from "../../assets/CG8.svg";
+import {appContext} from '../../context/context.jsx'
 const Sidebar = () => {
   // const [state, setState] = useState(true);
   const location = useLocation(); // Added line
   const [cg8Price, setCg8Price] = useState<any>();
-
+  const myContext = useContext<any>(appContext);
   useEffect(() => {
     const getCG8Balance = async () => {
-       let price: any = await getMinAmountIn("1");
-       price = parseFloat(price).toFixed(2);
+      console.log(myContext)
+      const price = myContext?.trade?.outputAmount.toExact();
+      //  let price = myContext
+      //  price = parseFloat(price).toFixed(2);
        setCg8Price(price);
     };
     getCG8Balance();
-  }, []);
+  }, [myContext]);
   let colorhome = "#475568";
   let colordashboard = "#475568";
   let colorswap = "#475568";

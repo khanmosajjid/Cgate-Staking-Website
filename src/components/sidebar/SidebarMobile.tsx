@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 // import React from "react";
 import logo from "../../assets/BNB.jpg";
 // import globe from "../../assets/globe.svg"; // Import your icon
@@ -9,22 +11,23 @@ import globe from "../../assets/globe.svg"; // Import your icon
 // import { ConnectWallet } from "../Header/ConnectWallet";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import cg8 from "../../assets/CG8.svg";
-import { getMinAmountIn } from "../../utils/web3Utils";
-
+import { appContext } from "../../context/context.jsx";
 const SidebarMobile = () => {
   const [state, setState] = useState(false);
+   const myContext = useContext<any>(appContext);
   const location = useLocation(); // Added line
   const handleClick = () => {
     setState(!state);
   };
 
-  const [cg8Price, setCg8Price] = useState<string>(); // Change unknown to string
+  const [cg8Price, setCg8Price] = useState<any>(); // Change unknown to string
 
   useEffect(() => {
     const getCG8Balance = async () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      let price: any = await getMinAmountIn("1");
-      price = parseFloat(price).toFixed(2);
+      console.log("myContext", myContext?.trade?.outputAmount.toExact());
+      const price= myContext?.trade?.outputAmount.toExact();
+      
       setCg8Price(price);
     };
     getCG8Balance();
@@ -253,7 +256,7 @@ const SidebarMobile = () => {
 				</div>
 				<div className='flex mx-4 gap-3 mt-5 md:mt-0 items-center'>
 					<img className='w-8 h-auto' src={cg8}></img>
-					<h1 className=''>${parseFloat(cg8Price).toFixed(2)}</h1>
+					<h1 className=''>$@@@{cg8Price}</h1>
 					<svg
 						xmlns='http://www.w3.org/2000/svg'
 						width='20'

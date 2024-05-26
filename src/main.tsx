@@ -5,7 +5,7 @@ import App from "./App";
 import "./index.css";
 import "@rainbow-me/rainbowkit/styles.css";
 import { lightTheme, getDefaultWallets, RainbowKitProvider, Theme, } from "@rainbow-me/rainbowkit";
-import { bscTestnet } from "wagmi/chains";
+import { bscTestnet,bsc } from "wagmi/chains";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 import "react-toastify/dist/ReactToastify.css";
@@ -25,7 +25,7 @@ import { BrowserRouter } from "react-router-dom";
 //   ]
 // );
 const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [bscTestnet],
+  [bsc],
   [alchemyProvider({ apiKey: "yourAlchemyApiKey" }), publicProvider()]
 );
 

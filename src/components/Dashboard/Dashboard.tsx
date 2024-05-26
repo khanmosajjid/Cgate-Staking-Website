@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FunctionComponent, useState } from "react";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useContext } from "react";
 // import React from "react";
 // import bg from "../../assets/Master-bg.svg";
 import Header from "../Header/Header";
@@ -15,12 +15,12 @@ import {
   getUsdcToClaimed,
   userDetails,
   convertToEther,
-  getAmountOut,
   getMinAmountIn,
 } from "../../utils/web3Utils";
 import { loginUser } from "../../utils/apiServices";
 import { USDC_CONTRACT, TOKEN_CONTRACT } from "../../constants/contracts";
 import CG8stats from "./CG8stats";
+import { appContext } from "../../context/context.jsx";
 
 const Frame: FunctionComponent = () => {
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ const Frame: FunctionComponent = () => {
   const [amountToClaim, setAmountToClaim] = useState(0);
   const [totalDeposit, setTotalDeposit] = useState<any>();
   const [cg8Price, setCg8Price] = useState<any>();
-
+const myContext = useContext<any>(appContext);
   const settingsRef = useRef(null);
 
   
@@ -45,11 +45,8 @@ const Frame: FunctionComponent = () => {
     const fetchAccountDetails = async () => {
       try {
         if (address && address != undefined) {
-          let price: any = await getMinAmountIn(
-            "1",
-            
-          );
-          price = parseFloat(price).toFixed(2);
+          const price: any = myContext?.trade?.outputAmount.toExact();
+         
           setCg8Price(price);
           let cg8Balance: any = await cGateBalance(address);
           cg8Balance = parseFloat(cg8Balance)?.toFixed(2);
