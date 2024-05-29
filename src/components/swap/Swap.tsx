@@ -65,26 +65,25 @@ const Swap: FunctionComponent = () => {
   };
 
   const toggleBuySell = async () => {
-    setIsCg8cBuy(!isCg8Buy); // Toggle the buy/sell state
-
-    // Assuming `cg8Value` is the amount of CG8 to buy/sell and `usdcValue` is the corresponding USDC amount
+    console.log("buy sell toggle");
+    setIsCg8cBuy(!isCg8Buy);
     if (!isCg8Buy) {
-      // If currently buying CG8, switch to buying USDC and recalculate
       const newCg8Value = await getAmountOut(
         usdcValue,
         USDC_CONTRACT,
         TOKEN_CONTRACT
-      ); // This is a simplified example, adjust according to your actual function
+      );
       setCg8Value(newCg8Value.toFixed(2));
     } else {
-      // If currently buying USDC, switch to buying CG8 and recalculate
       const newUsdcValue = await getAmountOut(
         cg8Value,
         TOKEN_CONTRACT,
         USDC_CONTRACT
-      ); // Adjust according to your actual function
+      );
       setUsdcValue(newUsdcValue.toFixed(2));
     }
+    setCg8Value(0);
+    setUsdcValue(0);
   };
 
   useEffect(() => {
@@ -168,7 +167,7 @@ const Swap: FunctionComponent = () => {
           setIsApprove(true);
         }
       } else {
-        console.log("buying usdc balance is not required");
+        console.log("in buying usdc");
         const allowance: any = await checkAllowance(
           address,
           PANCAKE_TEST_ROUTER_CONTRACT,
@@ -176,15 +175,11 @@ const Swap: FunctionComponent = () => {
           USDC_ABI
         );
         console.log("allowance is---->", allowance);
-        const data1: any = await getAmountOut(
-          value,
-          TOKEN_CONTRACT,
-          USDC_CONTRACT
-        );
+        
 
-        let res = await myContext?.getBestRoute(value, "CG8", 1);
+        let res = await myContext?.getBestRoute(value,"CG8",0);
         console.log("result of cg8 buy is----->", res?.inputAmount.toExact());
-        const data3 = res?.inputAmount.toExact();
+        const data3 = res?.outputAmount.toExact();
 
         setUsdcValue(data3);
         if (data3 > cg8Balance) {
@@ -230,14 +225,9 @@ const Swap: FunctionComponent = () => {
       );
 
       if (isCg8Buy) {
-        const data1: any = await getAmountIns(
-          value,
-          TOKEN_CONTRACT,
-          USDC_CONTRACT
-        );
-        let res = await myContext?.getBestRoute(value, "USDC", 1);
+        let res = await myContext?.getBestRoute(value, "USDC", 0);
         console.log("result of cg8 buy is----->", res?.inputAmount.toExact());
-        const data2 = res?.inputAmount.toExact();
+        const data2 = res?.outputAmount.toExact();
 
         setCg8Value(data2);
         if (value > usdcBalance) {
@@ -281,9 +271,8 @@ const Swap: FunctionComponent = () => {
   const buyCgate = async () => {
     try {
       setLoader(true);
-       let res1 = await myContext?.getBestRoute(usdcValue,"USDC",0);
-       let res2 = await myContext?.swap(address,res1);
-    
+      let res1 = await myContext?.getBestRoute(usdcValue, "USDC", 0);
+      let res2 = await myContext?.swap(address, res1);
 
       if (res2.status == "success") {
         toast.success("Transaction Successfull");
@@ -312,11 +301,8 @@ const Swap: FunctionComponent = () => {
       setLoader(true);
       let res1 = await myContext?.getBestRoute(usdcValue, "USDC", 1);
       let res2 = await myContext?.swap(address, res1);
-      
-      console.log("res2 is------>", res2);
-    
 
-     
+      console.log("res2 is------>", res2);
 
       if (res2.status == "success") {
         toast.success("Transaction Successfull");

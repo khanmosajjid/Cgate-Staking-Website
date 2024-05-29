@@ -186,7 +186,7 @@ const ContextProvider = ({ children }) => {
 
   useEffect(() => {
     try {
-      getBestRoute(1, "CG8", 0).then((trade) => {
+      getBestRoute(1,"CG8", 0).then((trade) => {
         setTrade(trade);
       });
     } catch (e) {
