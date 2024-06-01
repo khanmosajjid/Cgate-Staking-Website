@@ -6,17 +6,44 @@ import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 interface IPancakeRouter {
-    function getAmountIn(uint256 amountOut, uint256 reserveIn, uint256 reserveOut) external view returns (uint256 amountIn);
-}
-interface IPancakeFactory {
-    function getPair(address tokenA,address tokenB) external view returns (address pairContract);
-}
-interface IPancakePairContract {
-    function getReserves() external view returns (uint112 reserve0, uint112 reserve1, uint32 blockTimestampLast);
+    function getAmountIn(
+        uint256 amountOut,
+        uint256 reserveIn,
+        uint256 reserveOut
+    ) external view returns (uint256 amountIn);
 }
 
-contract StakingPoolV3 is Initializable,ReentrancyGuardUpgradeable {
-     using SafeERC20 for IERC20;
+interface IPancakeFactory {
+    function getPair(
+        address tokenA,
+        address tokenB
+    ) external view returns (address pairContract);
+}
+
+interface IPancakePairContract {
+    function getReserves()
+        external
+        view
+        returns (uint112 reserve0, uint112 reserve1, uint32 blockTimestampLast);
+}
+
+interface IUniswapV3Pool {
+    function slot0()
+        external
+        view
+        returns (
+            uint160 sqrtPriceX96,
+            int24 tick,
+            uint16 observationIndex,
+            uint16 observationCardinality,
+            uint16 observationCardinalityNext,
+            uint8 feeProtocol,
+            bool unlocked
+        );
+}
+
+contract StakingPoolV3 is Initializable, ReentrancyGuardUpgradeable {
+    using SafeERC20 for IERC20;
     address public admin;
     uint256 private poolIdCounter;
     uint256 oneYear;
@@ -26,12 +53,11 @@ contract StakingPoolV3 is Initializable,ReentrancyGuardUpgradeable {
     address[] public voters;
     mapping(address => bool) public hasVoted;
 
-
-
-    address public  PANCAKE_ROUTER_ADDRESS ;
-    address public  CG8_TOKEN_ADDRESS ;
-    address public  USDC_TOKEN_ADDRESS;
-    address public  PANCAKE_FACTORY_ADDRESS;
+    address public PANCAKE_ROUTER_ADDRESS;
+    address public CG8_TOKEN_ADDRESS;
+    address public USDC_TOKEN_ADDRESS;
+    address public PANCAKE_FACTORY_ADDRESS;
+    
     struct Pool {
         uint256 timePeriod;
         address stakeToken;
@@ -66,28 +92,30 @@ contract StakingPoolV3 is Initializable,ReentrancyGuardUpgradeable {
     mapping(address => UserInfo) public users;
     mapping(address => mapping(uint256 => uint256)) public usersStakesPerPool;
     mapping(address => bool) public signers;
+    address public poolAddress;
 
-     event OwnershipTransferProposed(address indexed newOwner);
+    event OwnershipTransferProposed(address indexed newOwner);
     event VoteCasted(address indexed voter, bool approve);
 
     function initialize(address[] memory _initialVoters) public initializer {
-         __ReentrancyGuard_init();
+        __ReentrancyGuard_init();
         admin = msg.sender;
-        oneYear=365 days;
-        price=1000000000000;
+        oneYear = 365 days;
+        price = 1000000000000;
         PANCAKE_ROUTER_ADDRESS = 0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3;
         CG8_TOKEN_ADDRESS = 0x9f7b09eb38ed912aB5932dCcAD0b1F501aBFE6Fd;
         USDC_TOKEN_ADDRESS = 0xd1Fac5Ff5d03b70D3383909692d09Fc6d97c8219;
         PANCAKE_FACTORY_ADDRESS = 0xB7926C0430Afb07AA7DEfDE6DA862aE0Bde767bc;
-         for (uint256 i = 0; i < _initialVoters.length; i++) {
+        for (uint256 i = 0; i < _initialVoters.length; i++) {
             voters.push(_initialVoters[i]);
         }
     }
-modifier onlyVoter() {
+
+    modifier onlyVoter() {
         require(isVoter(msg.sender), "Not a valid voter");
         _;
     }
-     modifier onlyIfNotVoted() {
+    modifier onlyIfNotVoted() {
         require(!hasVoted[msg.sender], "Already voted");
         _;
     }
@@ -105,13 +133,16 @@ modifier onlyVoter() {
         require(pools[poolId].isActive, "Pool Is Not Active");
         _;
     }
-   
 
     // Function to get the pair contract address
     event Error(string message);
 
 
- function isVoter(address _addr) internal view returns (bool) {
+    function setPoolAddress(address _poolAddress) external onlyAdmin{
+        poolAddress = _poolAddress;
+    }
+
+    function isVoter(address _addr) internal view returns (bool) {
         for (uint256 i = 0; i < voters.length; i++) {
             if (voters[i] == _addr) {
                 return true;
@@ -120,37 +151,25 @@ modifier onlyVoter() {
         return false;
     }
 
-     function proposeOwnershipTransfer(
-        address newOwner
-    ) external onlyAdmin {
+    function proposeOwnershipTransfer(address newOwner) external onlyAdmin {
         require(newOwner != address(0), "New owner cannot be zero address");
         proposedOwner = newOwner;
         emit OwnershipTransferProposed(newOwner);
     }
 
-   
-
-   
-
-   
-     function cancelOwnershipTransfer() onlyAdmin external{
-        proposedOwner=address(0);
-        for (uint256 i = 0; i < voters.length;i++) {
+    function cancelOwnershipTransfer() external onlyAdmin {
+        proposedOwner = address(0);
+        for (uint256 i = 0; i < voters.length; i++) {
             hasVoted[voters[i]] = false;
         }
     }
-     function castVote(
-        bool approve
-    ) external onlyVoter onlyIfNotVoted  {
+
+    function castVote(bool approve) external onlyVoter onlyIfNotVoted {
         hasVoted[msg.sender] = true;
         emit VoteCasted(msg.sender, approve);
     }
 
- function finalizeOwnershipTransfer()
-        external
-        onlyAdmin
-        
-    {
+    function finalizeOwnershipTransfer() external onlyAdmin {
         uint256 approvalCount = 0;
         uint256 totalVoters = voters.length;
 
@@ -165,30 +184,35 @@ modifier onlyVoter() {
 
         require(approve, "Insufficient approvals");
 
-        
         address newOwner = proposedOwner;
 
-       
-       admin=newOwner;
-   
+        admin = newOwner;
 
         // Reset voting state
         proposedOwner = address(0);
         for (uint256 i = 0; i < totalVoters; i++) {
             hasVoted[voters[i]] = false;
         }
-
-        
     }
+
     // Function to get the pair contract address
-    function getPair(address tokenA, address tokenB) public view returns (address) {
-        address pair = IPancakeFactory(PANCAKE_FACTORY_ADDRESS).getPair(tokenA, tokenB);
+    function getPair(
+        address tokenA,
+        address tokenB
+    ) public view returns (address) {
+        address pair = IPancakeFactory(PANCAKE_FACTORY_ADDRESS).getPair(
+            tokenA,
+            tokenB
+        );
         return pair;
     }
 
     // Function to get the reserves from the pair contract
-    function getReserves(address pair) public view returns (uint112 reserve0, uint112 reserve1) {
-        (uint112 reserveA, uint112 reserveB, ) = IPancakePairContract(pair).getReserves();
+    function getReserves(
+        address pair
+    ) public view returns (uint112 reserve0, uint112 reserve1) {
+        (uint112 reserveA, uint112 reserveB, ) = IPancakePairContract(pair)
+            .getReserves();
         return (reserveA, reserveB);
     }
 
@@ -202,15 +226,24 @@ modifier onlyVoter() {
         return amount / 1 ether; // Assuming 1 token = 1 ether, adjust accordingly
     }
 
- function getCurrentCgatePrice() public view returns (uint256) {
-        address pair = getPair(CG8_TOKEN_ADDRESS,USDC_TOKEN_ADDRESS);
+    function getPrice() public view returns (uint256 ) {
+        IUniswapV3Pool pool = IUniswapV3Pool(poolAddress);
+        (uint160 sqrtPriceX96, , , , , , ) = pool.slot0();
+        return (uint256(sqrtPriceX96) ** 2 * 1e18) >> (96 * 2);
+    }
+
+    function getCurrentCgatePrice() public view returns (uint256) {
+        address pair = getPair(CG8_TOKEN_ADDRESS, USDC_TOKEN_ADDRESS);
         if (pair == address(0)) {
-           
             return 0;
         }
         (uint112 reserveA, uint112 reserveB) = getReserves(pair);
-        uint256 _price = IPancakeRouter(PANCAKE_ROUTER_ADDRESS).getAmountIn(1e18,reserveB, reserveA);
-      
+        uint256 _price = IPancakeRouter(PANCAKE_ROUTER_ADDRESS).getAmountIn(
+            1e18,
+            reserveB,
+            reserveA
+        );
+
         return _price;
     }
 
@@ -227,13 +260,13 @@ modifier onlyVoter() {
         UserStake storage userStake = userStakes[user][poolId][stakeId];
         Pool storage pool = pools[poolId];
         uint256 currentTime = block.timestamp;
-       
+
         // if (currentTime < userStake.stakeTime + pool.timePeriod) {
         //         return 0;
         // }
         uint256 stakedTime = currentTime - userStake.lastWithdrawTimestamp;
         uint256 reward = ((userStake.depositedValueInDollars * stakedTime) *
-            pool.rewardPercentPerStakedTokenPerYear)/
+            pool.rewardPercentPerStakedTokenPerYear) /
             10000 /
             oneYear;
         return reward;
@@ -284,7 +317,8 @@ modifier onlyVoter() {
                 rewardWithdrawnTillNow: 0,
                 stakeTime: block.timestamp,
                 referrer: referrer,
-                depositedValueInDollars:_amount*getCurrentCgatePrice()/1e18
+                depositedValueInDollars: (_amount * getPrice()) /
+                    1e18
             })
         );
 
@@ -303,17 +337,14 @@ modifier onlyVoter() {
         users[referrer].totalReferrers += 1;
     }
 
-   
-
     function updateCurrentCgatePrice(uint256 newPrice) public onlyAdmin {
-        price=newPrice;
+        price = newPrice;
     }
 
     function unStakeIndividual(
         uint256 poolId,
         uint256 _stakeId
     ) external isValidPool(poolId) isActivePool(poolId) {
-        
         UserStake storage userStake = userStakes[msg.sender][poolId][_stakeId];
         Pool storage pool = pools[poolId];
 
@@ -326,7 +357,7 @@ modifier onlyVoter() {
         );
 
         claimIndividualReward(poolId, _stakeId);
-        
+
         // Update the lastWithdrawTimestamp
         userStake.lastWithdrawTimestamp = currentTime;
 
@@ -336,14 +367,13 @@ modifier onlyVoter() {
             "Staked token transfer failed"
         );
         users[msg.sender].activeStakes -= userStake.amount;
-        usersStakesPerPool[msg.sender][poolId]-=userStake.amount;
-        pools[poolId].totalStakes-= userStake.amount;
+        usersStakesPerPool[msg.sender][poolId] -= userStake.amount;
+        pools[poolId].totalStakes -= userStake.amount;
         // Reduce the staked amount
         userStake.amount = 0;
-         userStake.depositedValueInDollars = 0;
+        userStake.depositedValueInDollars = 0;
 
         // delete userStakes[msg.sender][poolId][_stakeId];
-        
     }
 
     function unStake(
@@ -359,11 +389,10 @@ modifier onlyVoter() {
             UserStake storage userStake = userStakes[msg.sender][poolId][
                 stakeId
             ];
-            
-            
+
             uint256 currentTime = block.timestamp;
             if (currentTime >= userStake.stakeTime + pool.timePeriod) {
-                totalAmount+=userStake.amount;
+                totalAmount += userStake.amount;
                 claimIndividualReward(poolId, stakeId);
                 userStake.amount = 0;
 
@@ -378,11 +407,12 @@ modifier onlyVoter() {
         }
         users[msg.sender].activeStakes -= totalAmount;
         usersStakesPerPool[msg.sender][poolId] -= totalAmount;
-        if(totalAmount>0)
-            {require(
+        if (totalAmount > 0) {
+            require(
                 IERC20(pool.stakeToken).transfer(msg.sender, totalAmount),
                 "Staked token transfer failed"
-            );}
+            );
+        }
     }
 
     function claimIndividualReward(
@@ -391,7 +421,7 @@ modifier onlyVoter() {
     ) public isValidPool(poolId) isActivePool(poolId) returns (uint256) {
         UserStake storage userStake = userStakes[msg.sender][poolId][stakeId];
         Pool storage pool = pools[poolId];
-        if(userStake.amount==0){
+        if (userStake.amount == 0) {
             return 0;
         }
         uint256 currentTime = block.timestamp;
@@ -545,13 +575,18 @@ modifier onlyVoter() {
         return total;
     }
 
-    function withdrawEth(address payable _receiver) external onlyAdmin nonReentrant {
+    function withdrawEth(
+        address payable _receiver
+    ) external onlyAdmin nonReentrant {
         require(_receiver != address(0), "Invalid address");
 
         _receiver.transfer(address(this).balance);
     }
 
-    function withdrawDumpToken(address receiver, IERC20 _token) external onlyAdmin nonReentrant {
+    function withdrawDumpToken(
+        address receiver,
+        IERC20 _token
+    ) external onlyAdmin nonReentrant {
         _token.transfer(receiver, _token.balanceOf(address(this)));
     }
 
@@ -581,22 +616,19 @@ modifier onlyVoter() {
         return totalAmount;
     }
 
-    function setRouter(address _router)external onlyAdmin{
+    function setRouter(address _router) external onlyAdmin {
         PANCAKE_ROUTER_ADDRESS = _router;
     }
-     function setFactory(address _factory)external onlyAdmin{
+
+    function setFactory(address _factory) external onlyAdmin {
         PANCAKE_FACTORY_ADDRESS = _factory;
     }
 
-     function setCg8Address(address _cg8Address)external onlyAdmin{
+    function setCg8Address(address _cg8Address) external onlyAdmin {
         CG8_TOKEN_ADDRESS = _cg8Address;
     }
 
-    function setUSDCAddress(address _usdcAddress)external onlyAdmin{
+    function setUSDCAddress(address _usdcAddress) external onlyAdmin {
         USDC_TOKEN_ADDRESS = _usdcAddress;
     }
-
-   
-
-
 }
