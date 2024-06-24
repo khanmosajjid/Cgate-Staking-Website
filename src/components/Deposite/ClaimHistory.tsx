@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 import { getClaimHistory } from "../../utils/apiServices";
 import {getAmountOut,getMinAmountIn } from "../../utils/web3Utils";
-import { USDC_CONTRACT,TOKEN_CONTRACT } from "../../constants/contracts";
+
 interface ClaimHistoryProps {
   setOpenClaimHistory: (value: boolean) => void;
 }

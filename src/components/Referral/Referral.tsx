@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { FunctionComponent, useState } from "react";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useContext } from "react";
 import Header from "../Header/Header";
 import insta from "../../assets/insta.png";
 import bg from "../../assets/Master-bg.svg";
@@ -110,8 +110,8 @@ const Referral: FunctionComponent = () => {
             </p>
           </div>
           <div className="w-full  mx-auto text-base md:text-lg lg:text-xl leading-tight font-medium ">
-  <h1 className="break-words">{referralLink}</h1>
-</div>
+            <h1 className="break-words">{referralLink}</h1>
+          </div>
           <div className="flex flex-row items-center justify-start gap-[8px] text-sm text-white -ml-10">
             <div className="rounded-round-buttons w-[120px] flex flex-row items-center justify-center">
               <div className="rounded-3xl bg-blue-600 flex flex-row items-center justify-center py-3  gap-[8px]">
@@ -208,20 +208,19 @@ const Referral: FunctionComponent = () => {
           </div>
 
           {openRefsetting ? (
-           <div
-           ref={settingsRef}
-           className="p-3 px-12 rounded-3xl absolute bg-white sm:ml-[75%] ml-[30%] border-gray-50 shadow-xl shadow-gray-300"
-         >
-           <button
-             className="text-teal-600 whitespace-nowrap"
-             onClick={() => {
-               setopenRefCard(!openRefCard);
-             }}
-           >
-             Referral history
-           </button>
-         </div>
-         
+            <div
+              ref={settingsRef}
+              className="p-3 px-12 rounded-3xl absolute bg-white sm:ml-[75%] ml-[30%] border-gray-50 shadow-xl shadow-gray-300"
+            >
+              <button
+                className="text-teal-600 whitespace-nowrap"
+                onClick={() => {
+                  setopenRefCard(!openRefCard);
+                }}
+              >
+                Referral history
+              </button>
+            </div>
           ) : (
             ""
           )}
@@ -234,9 +233,9 @@ const Referral: FunctionComponent = () => {
             <div>
               <h1 className="mt-5 md:mt-0">Total referral rewards</h1>
               <h1 className="text-4xl font-semibold mt-4">
-                {referrerReward} CG8
+                ${referrerReward} USDC
               </h1>
-              <p className="text-sm mt-2 text-[#475568]">~${referrerReward}</p>
+             
             </div>
           </div>
         </div>

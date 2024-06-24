@@ -351,11 +351,31 @@ export const getMinAmountIn = async (amountOut) => {
       functionName: "getAmountIn",
       args: [amountOut.toString(), Number(reserve[1]), Number(reserve[0])],
     });
- console.log("data for get min amount ----->", data);
+    console.log("data for get min amount ----->", data);
     data = data.toString();
 
     data = convertToEther(data);
-   
+
+    return data;
+  } catch (e) {
+    console.log("error in---->", e);
+    return 0;
+  }
+};
+
+export const getMaxTransactionAmount = async () => {
+  try {
+    let data = await readContract({
+      address: TOKEN_CONTRACT,
+      abi: TokenABI,
+      functionName: "maxTransactionAmount",
+      args: [],
+    });
+    console.log("data for get max transaction amount ----->", data);
+    data = data.toString();
+
+    data = convertToEther(data);
+    data=addCommasToNumbers(data)
 
     return data;
   } catch (e) {
@@ -479,8 +499,6 @@ export const approveToken = async (account, spenderContract, contract, abi) => {
     toast.error(e.message);
   }
 };
-
-//Staking Functions
 
 export const getPendingRewardForPool = async (poolId, account) => {
   try {
@@ -634,6 +652,7 @@ export const withdraw = async (poolId) => {
       toast.success("Transaction Successfull");
 
       emitter.emit("loading", true);
+      
     } else {
       toast.error("Transaction Failed");
       emitter.emit("loading", true);
@@ -750,9 +769,8 @@ export const isPoolActive = async (poolId) => {
   }
 };
 export async function addCommasToNumbers(number) {
-  // Check if numbers is an array
   const parsedNumber = parseFloat(number);
-  // Check if the parsed number is NaN (not a number)
+
   if (isNaN(parsedNumber)) {
     return "NaN";
   }

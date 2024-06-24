@@ -315,6 +315,4528 @@
         "solcVersion": "0.8.19"
       },
       "contracts/cgateStaking.sol:StakingPoolV3": {
+        "src": "contracts/cgateStaking.sol:44",
+        "version": {
+          "withMetadata": "a465d6c0fef522b5c8e75f22fab697e3c1b88f5b2cf1de362bd2781ea07197b5",
+          "withoutMetadata": "cf0f870363962431f71dda4d9484045ada83150d691816e6723e125432c39c18",
+          "linkedWithoutMetadata": "cf0f870363962431f71dda4d9484045ada83150d691816e6723e125432c39c18"
+        },
+        "inherit": [
+          "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:ReentrancyGuardUpgradeable",
+          "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:Initializable"
+        ],
+        "libraries": [
+          "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol:SafeERC20"
+        ],
+        "methods": [
+          "initialize(address[])",
+          "setPoolAddress(address)",
+          "proposeOwnershipTransfer(address)",
+          "cancelOwnershipTransfer()",
+          "castVote(bool)",
+          "finalizeOwnershipTransfer()",
+          "getPair(address,address)",
+          "getReserves(address)",
+          "getPrice()",
+          "getPriceInverse()",
+          "getCurrentCgatePrice()",
+          "getTotalPoolsCount()",
+          "getPendingReward(uint256,uint256,address)",
+          "createStakingPool(uint256,address,address,uint256,uint256)",
+          "stake(uint256,uint256,address)",
+          "updateCurrentCgatePrice(uint256)",
+          "unStakeIndividual(uint256,uint256)",
+          "unStake(uint256)",
+          "claimIndividualReward(uint256,uint256)",
+          "claimReward(uint256)",
+          "setAdmin(address)",
+          "setRewardToken(uint256,address)",
+          "setRewardPercent(uint256,uint256)",
+          "setTimePeriod(uint256,uint256)",
+          "setReferralRewardPercent(uint256,uint256)",
+          "togglePoolStatus(uint256)",
+          "setSpecialReferrerRewardPercent(address,uint256)",
+          "getTotalPendingRewardsForPool(uint256,address)",
+          "withdrawEth(address payable)",
+          "withdrawDumpToken(address,address)",
+          "totalStakeCount(address,uint256)",
+          "totalUnstakeAllowed(address,uint256)",
+          "setRouter(address)",
+          "setFactory(address)",
+          "setCg8Address(address)",
+          "setUSDCAddress(address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "_initialized",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_uint8",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:63",
+              "retypedFrom": "bool"
+            },
+            {
+              "label": "_initializing",
+              "offset": 1,
+              "slot": "0",
+              "type": "t_bool",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:68"
+            },
+            {
+              "label": "_status",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_uint256",
+              "contract": "ReentrancyGuardUpgradeable",
+              "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:38"
+            },
+            {
+              "label": "__gap",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_array(t_uint256)49_storage",
+              "contract": "ReentrancyGuardUpgradeable",
+              "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:88"
+            },
+            {
+              "label": "admin",
+              "offset": 0,
+              "slot": "51",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:46"
+            },
+            {
+              "label": "poolIdCounter",
+              "offset": 0,
+              "slot": "52",
+              "type": "t_uint256",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:47"
+            },
+            {
+              "label": "oneYear",
+              "offset": 0,
+              "slot": "53",
+              "type": "t_uint256",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:48"
+            },
+            {
+              "label": "price",
+              "offset": 0,
+              "slot": "54",
+              "type": "t_uint256",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:49"
+            },
+            {
+              "label": "proposedOwner",
+              "offset": 0,
+              "slot": "55",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:51"
+            },
+            {
+              "label": "voters",
+              "offset": 0,
+              "slot": "56",
+              "type": "t_array(t_address)dyn_storage",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:52"
+            },
+            {
+              "label": "hasVoted",
+              "offset": 0,
+              "slot": "57",
+              "type": "t_mapping(t_address,t_bool)",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:53"
+            },
+            {
+              "label": "PANCAKE_ROUTER_ADDRESS",
+              "offset": 0,
+              "slot": "58",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:55"
+            },
+            {
+              "label": "CG8_TOKEN_ADDRESS",
+              "offset": 0,
+              "slot": "59",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:56"
+            },
+            {
+              "label": "USDC_TOKEN_ADDRESS",
+              "offset": 0,
+              "slot": "60",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:57"
+            },
+            {
+              "label": "PANCAKE_FACTORY_ADDRESS",
+              "offset": 0,
+              "slot": "61",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:58"
+            },
+            {
+              "label": "pools",
+              "offset": 0,
+              "slot": "62",
+              "type": "t_mapping(t_uint256,t_struct(Pool)1511_storage)",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:87"
+            },
+            {
+              "label": "userStakes",
+              "offset": 0,
+              "slot": "63",
+              "type": "t_mapping(t_address,t_mapping(t_uint256,t_array(t_struct(UserStake)1535_storage)dyn_storage))",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:88"
+            },
+            {
+              "label": "referrers",
+              "offset": 0,
+              "slot": "64",
+              "type": "t_mapping(t_address,t_address)",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:89"
+            },
+            {
+              "label": "specialReferrersPercents",
+              "offset": 0,
+              "slot": "65",
+              "type": "t_mapping(t_address,t_uint256)",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:90"
+            },
+            {
+              "label": "users",
+              "offset": 0,
+              "slot": "66",
+              "type": "t_mapping(t_address,t_struct(UserInfo)1522_storage)",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:91"
+            },
+            {
+              "label": "usersStakesPerPool",
+              "offset": 0,
+              "slot": "67",
+              "type": "t_mapping(t_address,t_mapping(t_uint256,t_uint256))",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:92"
+            },
+            {
+              "label": "signers",
+              "offset": 0,
+              "slot": "68",
+              "type": "t_mapping(t_address,t_bool)",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:93"
+            },
+            {
+              "label": "poolAddress",
+              "offset": 0,
+              "slot": "69",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:94"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_array(t_address)dyn_storage": {
+              "label": "address[]",
+              "numberOfBytes": "32"
+            },
+            "t_array(t_struct(UserStake)1535_storage)dyn_storage": {
+              "label": "struct StakingPoolV3.UserStake[]",
+              "numberOfBytes": "32"
+            },
+            "t_array(t_uint256)49_storage": {
+              "label": "uint256[49]",
+              "numberOfBytes": "1568"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_mapping(t_address,t_address)": {
+              "label": "mapping(address => address)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_bool)": {
+              "label": "mapping(address => bool)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_mapping(t_uint256,t_array(t_struct(UserStake)1535_storage)dyn_storage))": {
+              "label": "mapping(address => mapping(uint256 => struct StakingPoolV3.UserStake[]))",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_mapping(t_uint256,t_uint256))": {
+              "label": "mapping(address => mapping(uint256 => uint256))",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_struct(UserInfo)1522_storage)": {
+              "label": "mapping(address => struct StakingPoolV3.UserInfo)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_uint256)": {
+              "label": "mapping(address => uint256)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_uint256,t_array(t_struct(UserStake)1535_storage)dyn_storage)": {
+              "label": "mapping(uint256 => struct StakingPoolV3.UserStake[])",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_uint256,t_struct(Pool)1511_storage)": {
+              "label": "mapping(uint256 => struct StakingPoolV3.Pool)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_uint256,t_uint256)": {
+              "label": "mapping(uint256 => uint256)",
+              "numberOfBytes": "32"
+            },
+            "t_struct(Pool)1511_storage": {
+              "label": "struct StakingPoolV3.Pool",
+              "members": [
+                {
+                  "label": "timePeriod",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "stakeToken",
+                  "type": "t_address",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "rewardToken",
+                  "type": "t_address",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "rewardPercentPerStakedTokenPerYear",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "3"
+                },
+                {
+                  "label": "referralRewardPercent",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "4"
+                },
+                {
+                  "label": "isActive",
+                  "type": "t_bool",
+                  "offset": 0,
+                  "slot": "5"
+                },
+                {
+                  "label": "totalStakes",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "6"
+                }
+              ],
+              "numberOfBytes": "224"
+            },
+            "t_struct(UserInfo)1522_storage": {
+              "label": "struct StakingPoolV3.UserInfo",
+              "members": [
+                {
+                  "label": "totalStaked",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "activeStakes",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "totalRewardWithdrawnTillNow",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "referralIncomeWithdrawnTillNow",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "3"
+                },
+                {
+                  "label": "totalReferrers",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "4"
+                }
+              ],
+              "numberOfBytes": "160"
+            },
+            "t_struct(UserStake)1535_storage": {
+              "label": "struct StakingPoolV3.UserStake",
+              "members": [
+                {
+                  "label": "amount",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "lastWithdrawTimestamp",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "rewardWithdrawnTillNow",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "stakeTime",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "3"
+                },
+                {
+                  "label": "referrer",
+                  "type": "t_address",
+                  "offset": 0,
+                  "slot": "4"
+                },
+                {
+                  "label": "depositedValueInDollars",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "5"
+                }
+              ],
+              "numberOfBytes": "192"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            },
+            "t_uint8": {
+              "label": "uint8",
+              "numberOfBytes": "1"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      }
+    },
+    {
+      "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:Initializable": {
+        "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:58",
+        "inherit": [],
+        "libraries": [
+          "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:AddressUpgradeable"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "_initialized",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_uint8",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:63",
+              "retypedFrom": "bool"
+            },
+            {
+              "label": "_initializing",
+              "offset": 1,
+              "slot": "0",
+              "type": "t_bool",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:68"
+            }
+          ],
+          "types": {
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_uint8": {
+              "label": "uint8",
+              "numberOfBytes": "1"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:ReentrancyGuardUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:23",
+        "inherit": [
+          "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:Initializable"
+        ],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "_initialized",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_uint8",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:63",
+              "retypedFrom": "bool"
+            },
+            {
+              "label": "_initializing",
+              "offset": 1,
+              "slot": "0",
+              "type": "t_bool",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:68"
+            },
+            {
+              "label": "_status",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_uint256",
+              "contract": "ReentrancyGuardUpgradeable",
+              "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:38"
+            },
+            {
+              "label": "__gap",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_array(t_uint256)49_storage",
+              "contract": "ReentrancyGuardUpgradeable",
+              "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:88"
+            }
+          ],
+          "types": {
+            "t_array(t_uint256)49_storage": {
+              "label": "uint256[49]",
+              "numberOfBytes": "1568"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            },
+            "t_uint8": {
+              "label": "uint8",
+              "numberOfBytes": "1"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:AddressUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:9",
+        "version": {
+          "withMetadata": "64ffc306b0277a6292a801064609404f03e807169325f679f2583838ce69c813",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "delegatecall",
+            "src": "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:185"
+          },
+          {
+            "kind": "delegatecall",
+            "src": "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:185"
+          }
+        ],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "@openzeppelin/contracts/token/ERC20/IERC20.sol:IERC20": {
+        "src": "@openzeppelin/contracts/token/ERC20/IERC20.sol:9",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "totalSupply()",
+          "balanceOf(address)",
+          "transfer(address,uint256)",
+          "allowance(address,address)",
+          "approve(address,uint256)",
+          "transferFrom(address,address,uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "@openzeppelin/contracts/token/ERC20/extensions/IERC20Permit.sol:IERC20Permit": {
+        "src": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Permit.sol:42",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)",
+          "nonces(address)",
+          "DOMAIN_SEPARATOR()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol:SafeERC20": {
+        "src": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol:19",
+        "version": {
+          "withMetadata": "3bbc8bbcb35e78461efe1d807e020216707f630deaf27977f6a55cce684a2739",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [
+          "@openzeppelin/contracts/utils/Address.sol:Address"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "@openzeppelin/contracts/utils/Address.sol:Address": {
+        "src": "@openzeppelin/contracts/utils/Address.sol:9",
+        "version": {
+          "withMetadata": "ac791ba99f8c8c4cec90c38313e985053cd3fe68916498358cbb6451bcbbf027",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "delegatecall",
+            "src": "@openzeppelin/contracts/utils/Address.sol:185"
+          },
+          {
+            "kind": "delegatecall",
+            "src": "@openzeppelin/contracts/utils/Address.sol:185"
+          }
+        ],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "contracts/cgateStaking.sol:IPancakeFactory": {
+        "src": "contracts/cgateStaking.sol:16",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "getPair(address,address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "contracts/cgateStaking.sol:IPancakePairContract": {
+        "src": "contracts/cgateStaking.sol:23",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "getReserves()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "contracts/cgateStaking.sol:IPancakeRouter": {
+        "src": "contracts/cgateStaking.sol:8",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "getAmountIn(uint256,uint256,uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "contracts/cgateStaking.sol:IUniswapV3Pool": {
+        "src": "contracts/cgateStaking.sol:30",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "slot0()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "contracts/cgateStaking.sol:StakingPoolV3": {
+        "src": "contracts/cgateStaking.sol:44",
+        "version": {
+          "withMetadata": "a465d6c0fef522b5c8e75f22fab697e3c1b88f5b2cf1de362bd2781ea07197b5",
+          "withoutMetadata": "cf0f870363962431f71dda4d9484045ada83150d691816e6723e125432c39c18",
+          "linkedWithoutMetadata": "cf0f870363962431f71dda4d9484045ada83150d691816e6723e125432c39c18"
+        },
+        "inherit": [
+          "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:ReentrancyGuardUpgradeable",
+          "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:Initializable"
+        ],
+        "libraries": [
+          "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol:SafeERC20"
+        ],
+        "methods": [
+          "initialize(address[])",
+          "setPoolAddress(address)",
+          "proposeOwnershipTransfer(address)",
+          "cancelOwnershipTransfer()",
+          "castVote(bool)",
+          "finalizeOwnershipTransfer()",
+          "getPair(address,address)",
+          "getReserves(address)",
+          "getPrice()",
+          "getPriceInverse()",
+          "getCurrentCgatePrice()",
+          "getTotalPoolsCount()",
+          "getPendingReward(uint256,uint256,address)",
+          "createStakingPool(uint256,address,address,uint256,uint256)",
+          "stake(uint256,uint256,address)",
+          "updateCurrentCgatePrice(uint256)",
+          "unStakeIndividual(uint256,uint256)",
+          "unStake(uint256)",
+          "claimIndividualReward(uint256,uint256)",
+          "claimReward(uint256)",
+          "setAdmin(address)",
+          "setRewardToken(uint256,address)",
+          "setRewardPercent(uint256,uint256)",
+          "setTimePeriod(uint256,uint256)",
+          "setReferralRewardPercent(uint256,uint256)",
+          "togglePoolStatus(uint256)",
+          "setSpecialReferrerRewardPercent(address,uint256)",
+          "getTotalPendingRewardsForPool(uint256,address)",
+          "withdrawEth(address payable)",
+          "withdrawDumpToken(address,address)",
+          "totalStakeCount(address,uint256)",
+          "totalUnstakeAllowed(address,uint256)",
+          "setRouter(address)",
+          "setFactory(address)",
+          "setCg8Address(address)",
+          "setUSDCAddress(address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "_initialized",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_uint8",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:63",
+              "retypedFrom": "bool"
+            },
+            {
+              "label": "_initializing",
+              "offset": 1,
+              "slot": "0",
+              "type": "t_bool",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:68"
+            },
+            {
+              "label": "_status",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_uint256",
+              "contract": "ReentrancyGuardUpgradeable",
+              "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:38"
+            },
+            {
+              "label": "__gap",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_array(t_uint256)49_storage",
+              "contract": "ReentrancyGuardUpgradeable",
+              "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:88"
+            },
+            {
+              "label": "admin",
+              "offset": 0,
+              "slot": "51",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:46"
+            },
+            {
+              "label": "poolIdCounter",
+              "offset": 0,
+              "slot": "52",
+              "type": "t_uint256",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:47"
+            },
+            {
+              "label": "oneYear",
+              "offset": 0,
+              "slot": "53",
+              "type": "t_uint256",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:48"
+            },
+            {
+              "label": "price",
+              "offset": 0,
+              "slot": "54",
+              "type": "t_uint256",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:49"
+            },
+            {
+              "label": "proposedOwner",
+              "offset": 0,
+              "slot": "55",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:51"
+            },
+            {
+              "label": "voters",
+              "offset": 0,
+              "slot": "56",
+              "type": "t_array(t_address)dyn_storage",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:52"
+            },
+            {
+              "label": "hasVoted",
+              "offset": 0,
+              "slot": "57",
+              "type": "t_mapping(t_address,t_bool)",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:53"
+            },
+            {
+              "label": "PANCAKE_ROUTER_ADDRESS",
+              "offset": 0,
+              "slot": "58",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:55"
+            },
+            {
+              "label": "CG8_TOKEN_ADDRESS",
+              "offset": 0,
+              "slot": "59",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:56"
+            },
+            {
+              "label": "USDC_TOKEN_ADDRESS",
+              "offset": 0,
+              "slot": "60",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:57"
+            },
+            {
+              "label": "PANCAKE_FACTORY_ADDRESS",
+              "offset": 0,
+              "slot": "61",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:58"
+            },
+            {
+              "label": "pools",
+              "offset": 0,
+              "slot": "62",
+              "type": "t_mapping(t_uint256,t_struct(Pool)1511_storage)",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:87"
+            },
+            {
+              "label": "userStakes",
+              "offset": 0,
+              "slot": "63",
+              "type": "t_mapping(t_address,t_mapping(t_uint256,t_array(t_struct(UserStake)1535_storage)dyn_storage))",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:88"
+            },
+            {
+              "label": "referrers",
+              "offset": 0,
+              "slot": "64",
+              "type": "t_mapping(t_address,t_address)",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:89"
+            },
+            {
+              "label": "specialReferrersPercents",
+              "offset": 0,
+              "slot": "65",
+              "type": "t_mapping(t_address,t_uint256)",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:90"
+            },
+            {
+              "label": "users",
+              "offset": 0,
+              "slot": "66",
+              "type": "t_mapping(t_address,t_struct(UserInfo)1522_storage)",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:91"
+            },
+            {
+              "label": "usersStakesPerPool",
+              "offset": 0,
+              "slot": "67",
+              "type": "t_mapping(t_address,t_mapping(t_uint256,t_uint256))",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:92"
+            },
+            {
+              "label": "signers",
+              "offset": 0,
+              "slot": "68",
+              "type": "t_mapping(t_address,t_bool)",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:93"
+            },
+            {
+              "label": "poolAddress",
+              "offset": 0,
+              "slot": "69",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:94"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_array(t_address)dyn_storage": {
+              "label": "address[]",
+              "numberOfBytes": "32"
+            },
+            "t_array(t_struct(UserStake)1535_storage)dyn_storage": {
+              "label": "struct StakingPoolV3.UserStake[]",
+              "numberOfBytes": "32"
+            },
+            "t_array(t_uint256)49_storage": {
+              "label": "uint256[49]",
+              "numberOfBytes": "1568"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_mapping(t_address,t_address)": {
+              "label": "mapping(address => address)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_bool)": {
+              "label": "mapping(address => bool)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_mapping(t_uint256,t_array(t_struct(UserStake)1535_storage)dyn_storage))": {
+              "label": "mapping(address => mapping(uint256 => struct StakingPoolV3.UserStake[]))",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_mapping(t_uint256,t_uint256))": {
+              "label": "mapping(address => mapping(uint256 => uint256))",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_struct(UserInfo)1522_storage)": {
+              "label": "mapping(address => struct StakingPoolV3.UserInfo)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_uint256)": {
+              "label": "mapping(address => uint256)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_uint256,t_array(t_struct(UserStake)1535_storage)dyn_storage)": {
+              "label": "mapping(uint256 => struct StakingPoolV3.UserStake[])",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_uint256,t_struct(Pool)1511_storage)": {
+              "label": "mapping(uint256 => struct StakingPoolV3.Pool)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_uint256,t_uint256)": {
+              "label": "mapping(uint256 => uint256)",
+              "numberOfBytes": "32"
+            },
+            "t_struct(Pool)1511_storage": {
+              "label": "struct StakingPoolV3.Pool",
+              "members": [
+                {
+                  "label": "timePeriod",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "stakeToken",
+                  "type": "t_address",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "rewardToken",
+                  "type": "t_address",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "rewardPercentPerStakedTokenPerYear",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "3"
+                },
+                {
+                  "label": "referralRewardPercent",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "4"
+                },
+                {
+                  "label": "isActive",
+                  "type": "t_bool",
+                  "offset": 0,
+                  "slot": "5"
+                },
+                {
+                  "label": "totalStakes",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "6"
+                }
+              ],
+              "numberOfBytes": "224"
+            },
+            "t_struct(UserInfo)1522_storage": {
+              "label": "struct StakingPoolV3.UserInfo",
+              "members": [
+                {
+                  "label": "totalStaked",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "activeStakes",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "totalRewardWithdrawnTillNow",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "referralIncomeWithdrawnTillNow",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "3"
+                },
+                {
+                  "label": "totalReferrers",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "4"
+                }
+              ],
+              "numberOfBytes": "160"
+            },
+            "t_struct(UserStake)1535_storage": {
+              "label": "struct StakingPoolV3.UserStake",
+              "members": [
+                {
+                  "label": "amount",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "lastWithdrawTimestamp",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "rewardWithdrawnTillNow",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "stakeTime",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "3"
+                },
+                {
+                  "label": "referrer",
+                  "type": "t_address",
+                  "offset": 0,
+                  "slot": "4"
+                },
+                {
+                  "label": "depositedValueInDollars",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "5"
+                }
+              ],
+              "numberOfBytes": "192"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            },
+            "t_uint8": {
+              "label": "uint8",
+              "numberOfBytes": "1"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      }
+    },
+    {
+      "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:Initializable": {
+        "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:58",
+        "inherit": [],
+        "libraries": [
+          "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:AddressUpgradeable"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "_initialized",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_uint8",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:63",
+              "retypedFrom": "bool"
+            },
+            {
+              "label": "_initializing",
+              "offset": 1,
+              "slot": "0",
+              "type": "t_bool",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:68"
+            }
+          ],
+          "types": {
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_uint8": {
+              "label": "uint8",
+              "numberOfBytes": "1"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:ReentrancyGuardUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:23",
+        "inherit": [
+          "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:Initializable"
+        ],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "_initialized",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_uint8",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:63",
+              "retypedFrom": "bool"
+            },
+            {
+              "label": "_initializing",
+              "offset": 1,
+              "slot": "0",
+              "type": "t_bool",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:68"
+            },
+            {
+              "label": "_status",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_uint256",
+              "contract": "ReentrancyGuardUpgradeable",
+              "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:38"
+            },
+            {
+              "label": "__gap",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_array(t_uint256)49_storage",
+              "contract": "ReentrancyGuardUpgradeable",
+              "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:88"
+            }
+          ],
+          "types": {
+            "t_array(t_uint256)49_storage": {
+              "label": "uint256[49]",
+              "numberOfBytes": "1568"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            },
+            "t_uint8": {
+              "label": "uint8",
+              "numberOfBytes": "1"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:AddressUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:9",
+        "version": {
+          "withMetadata": "64ffc306b0277a6292a801064609404f03e807169325f679f2583838ce69c813",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "delegatecall",
+            "src": "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:185"
+          },
+          {
+            "kind": "delegatecall",
+            "src": "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:185"
+          }
+        ],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "@openzeppelin/contracts/token/ERC20/IERC20.sol:IERC20": {
+        "src": "@openzeppelin/contracts/token/ERC20/IERC20.sol:9",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "totalSupply()",
+          "balanceOf(address)",
+          "transfer(address,uint256)",
+          "allowance(address,address)",
+          "approve(address,uint256)",
+          "transferFrom(address,address,uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "@openzeppelin/contracts/token/ERC20/extensions/IERC20Permit.sol:IERC20Permit": {
+        "src": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Permit.sol:42",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)",
+          "nonces(address)",
+          "DOMAIN_SEPARATOR()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol:SafeERC20": {
+        "src": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol:19",
+        "version": {
+          "withMetadata": "3bbc8bbcb35e78461efe1d807e020216707f630deaf27977f6a55cce684a2739",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [
+          "@openzeppelin/contracts/utils/Address.sol:Address"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "@openzeppelin/contracts/utils/Address.sol:Address": {
+        "src": "@openzeppelin/contracts/utils/Address.sol:9",
+        "version": {
+          "withMetadata": "ac791ba99f8c8c4cec90c38313e985053cd3fe68916498358cbb6451bcbbf027",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "delegatecall",
+            "src": "@openzeppelin/contracts/utils/Address.sol:185"
+          },
+          {
+            "kind": "delegatecall",
+            "src": "@openzeppelin/contracts/utils/Address.sol:185"
+          }
+        ],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "contracts/cgateStaking.sol:IPancakeFactory": {
+        "src": "contracts/cgateStaking.sol:16",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "getPair(address,address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "contracts/cgateStaking.sol:IPancakePairContract": {
+        "src": "contracts/cgateStaking.sol:23",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "getReserves()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "contracts/cgateStaking.sol:IPancakeRouter": {
+        "src": "contracts/cgateStaking.sol:8",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "getAmountIn(uint256,uint256,uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "contracts/cgateStaking.sol:IUniswapV3Pool": {
+        "src": "contracts/cgateStaking.sol:30",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "slot0()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "contracts/cgateStaking.sol:StakingPoolV3": {
+        "src": "contracts/cgateStaking.sol:44",
+        "version": {
+          "withMetadata": "f41389fcae7b419b41080451f30aebc0b5eebf9af6b6bf62585202989fce9fdc",
+          "withoutMetadata": "7d0c02e1acc763c335d16450d5390c4852a991b9b97b599894f990b6483b5a9c",
+          "linkedWithoutMetadata": "7d0c02e1acc763c335d16450d5390c4852a991b9b97b599894f990b6483b5a9c"
+        },
+        "inherit": [
+          "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:ReentrancyGuardUpgradeable",
+          "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:Initializable"
+        ],
+        "libraries": [
+          "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol:SafeERC20"
+        ],
+        "methods": [
+          "initialize(address[])",
+          "setPoolAddress(address)",
+          "proposeOwnershipTransfer(address)",
+          "cancelOwnershipTransfer()",
+          "castVote(bool)",
+          "finalizeOwnershipTransfer()",
+          "getPair(address,address)",
+          "getReserves(address)",
+          "getPrice()",
+          "getPriceInverse()",
+          "getCurrentCgatePrice()",
+          "getTotalPoolsCount()",
+          "getPendingReward(uint256,uint256,address)",
+          "createStakingPool(uint256,address,address,uint256,uint256)",
+          "stake(uint256,uint256,address)",
+          "updateCurrentCgatePrice(uint256)",
+          "unStakeIndividual(uint256,uint256)",
+          "unStake(uint256)",
+          "claimIndividualReward(uint256,uint256)",
+          "claimReward(uint256)",
+          "setAdmin(address)",
+          "setRewardToken(uint256,address)",
+          "setRewardPercent(uint256,uint256)",
+          "setTimePeriod(uint256,uint256)",
+          "setReferralRewardPercent(uint256,uint256)",
+          "togglePoolStatus(uint256)",
+          "setSpecialReferrerRewardPercent(address,uint256)",
+          "getTotalPendingRewardsForPool(uint256,address)",
+          "withdrawEth(address payable)",
+          "withdrawDumpToken(address,address)",
+          "totalStakeCount(address,uint256)",
+          "totalUnstakeAllowed(address,uint256)",
+          "setRouter(address)",
+          "setFactory(address)",
+          "setCg8Address(address)",
+          "setUSDCAddress(address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "_initialized",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_uint8",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:63",
+              "retypedFrom": "bool"
+            },
+            {
+              "label": "_initializing",
+              "offset": 1,
+              "slot": "0",
+              "type": "t_bool",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:68"
+            },
+            {
+              "label": "_status",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_uint256",
+              "contract": "ReentrancyGuardUpgradeable",
+              "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:38"
+            },
+            {
+              "label": "__gap",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_array(t_uint256)49_storage",
+              "contract": "ReentrancyGuardUpgradeable",
+              "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:88"
+            },
+            {
+              "label": "admin",
+              "offset": 0,
+              "slot": "51",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:46"
+            },
+            {
+              "label": "poolIdCounter",
+              "offset": 0,
+              "slot": "52",
+              "type": "t_uint256",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:47"
+            },
+            {
+              "label": "oneYear",
+              "offset": 0,
+              "slot": "53",
+              "type": "t_uint256",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:48"
+            },
+            {
+              "label": "price",
+              "offset": 0,
+              "slot": "54",
+              "type": "t_uint256",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:49"
+            },
+            {
+              "label": "proposedOwner",
+              "offset": 0,
+              "slot": "55",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:51"
+            },
+            {
+              "label": "voters",
+              "offset": 0,
+              "slot": "56",
+              "type": "t_array(t_address)dyn_storage",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:52"
+            },
+            {
+              "label": "hasVoted",
+              "offset": 0,
+              "slot": "57",
+              "type": "t_mapping(t_address,t_bool)",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:53"
+            },
+            {
+              "label": "PANCAKE_ROUTER_ADDRESS",
+              "offset": 0,
+              "slot": "58",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:55"
+            },
+            {
+              "label": "CG8_TOKEN_ADDRESS",
+              "offset": 0,
+              "slot": "59",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:56"
+            },
+            {
+              "label": "USDC_TOKEN_ADDRESS",
+              "offset": 0,
+              "slot": "60",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:57"
+            },
+            {
+              "label": "PANCAKE_FACTORY_ADDRESS",
+              "offset": 0,
+              "slot": "61",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:58"
+            },
+            {
+              "label": "pools",
+              "offset": 0,
+              "slot": "62",
+              "type": "t_mapping(t_uint256,t_struct(Pool)1511_storage)",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:87"
+            },
+            {
+              "label": "userStakes",
+              "offset": 0,
+              "slot": "63",
+              "type": "t_mapping(t_address,t_mapping(t_uint256,t_array(t_struct(UserStake)1535_storage)dyn_storage))",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:88"
+            },
+            {
+              "label": "referrers",
+              "offset": 0,
+              "slot": "64",
+              "type": "t_mapping(t_address,t_address)",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:89"
+            },
+            {
+              "label": "specialReferrersPercents",
+              "offset": 0,
+              "slot": "65",
+              "type": "t_mapping(t_address,t_uint256)",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:90"
+            },
+            {
+              "label": "users",
+              "offset": 0,
+              "slot": "66",
+              "type": "t_mapping(t_address,t_struct(UserInfo)1522_storage)",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:91"
+            },
+            {
+              "label": "usersStakesPerPool",
+              "offset": 0,
+              "slot": "67",
+              "type": "t_mapping(t_address,t_mapping(t_uint256,t_uint256))",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:92"
+            },
+            {
+              "label": "signers",
+              "offset": 0,
+              "slot": "68",
+              "type": "t_mapping(t_address,t_bool)",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:93"
+            },
+            {
+              "label": "poolAddress",
+              "offset": 0,
+              "slot": "69",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:94"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_array(t_address)dyn_storage": {
+              "label": "address[]",
+              "numberOfBytes": "32"
+            },
+            "t_array(t_struct(UserStake)1535_storage)dyn_storage": {
+              "label": "struct StakingPoolV3.UserStake[]",
+              "numberOfBytes": "32"
+            },
+            "t_array(t_uint256)49_storage": {
+              "label": "uint256[49]",
+              "numberOfBytes": "1568"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_mapping(t_address,t_address)": {
+              "label": "mapping(address => address)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_bool)": {
+              "label": "mapping(address => bool)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_mapping(t_uint256,t_array(t_struct(UserStake)1535_storage)dyn_storage))": {
+              "label": "mapping(address => mapping(uint256 => struct StakingPoolV3.UserStake[]))",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_mapping(t_uint256,t_uint256))": {
+              "label": "mapping(address => mapping(uint256 => uint256))",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_struct(UserInfo)1522_storage)": {
+              "label": "mapping(address => struct StakingPoolV3.UserInfo)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_uint256)": {
+              "label": "mapping(address => uint256)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_uint256,t_array(t_struct(UserStake)1535_storage)dyn_storage)": {
+              "label": "mapping(uint256 => struct StakingPoolV3.UserStake[])",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_uint256,t_struct(Pool)1511_storage)": {
+              "label": "mapping(uint256 => struct StakingPoolV3.Pool)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_uint256,t_uint256)": {
+              "label": "mapping(uint256 => uint256)",
+              "numberOfBytes": "32"
+            },
+            "t_struct(Pool)1511_storage": {
+              "label": "struct StakingPoolV3.Pool",
+              "members": [
+                {
+                  "label": "timePeriod",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "stakeToken",
+                  "type": "t_address",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "rewardToken",
+                  "type": "t_address",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "rewardPercentPerStakedTokenPerYear",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "3"
+                },
+                {
+                  "label": "referralRewardPercent",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "4"
+                },
+                {
+                  "label": "isActive",
+                  "type": "t_bool",
+                  "offset": 0,
+                  "slot": "5"
+                },
+                {
+                  "label": "totalStakes",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "6"
+                }
+              ],
+              "numberOfBytes": "224"
+            },
+            "t_struct(UserInfo)1522_storage": {
+              "label": "struct StakingPoolV3.UserInfo",
+              "members": [
+                {
+                  "label": "totalStaked",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "activeStakes",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "totalRewardWithdrawnTillNow",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "referralIncomeWithdrawnTillNow",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "3"
+                },
+                {
+                  "label": "totalReferrers",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "4"
+                }
+              ],
+              "numberOfBytes": "160"
+            },
+            "t_struct(UserStake)1535_storage": {
+              "label": "struct StakingPoolV3.UserStake",
+              "members": [
+                {
+                  "label": "amount",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "lastWithdrawTimestamp",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "rewardWithdrawnTillNow",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "stakeTime",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "3"
+                },
+                {
+                  "label": "referrer",
+                  "type": "t_address",
+                  "offset": 0,
+                  "slot": "4"
+                },
+                {
+                  "label": "depositedValueInDollars",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "5"
+                }
+              ],
+              "numberOfBytes": "192"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            },
+            "t_uint8": {
+              "label": "uint8",
+              "numberOfBytes": "1"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      }
+    },
+    {
+      "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:Initializable": {
+        "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:58",
+        "inherit": [],
+        "libraries": [
+          "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:AddressUpgradeable"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "_initialized",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_uint8",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:63",
+              "retypedFrom": "bool"
+            },
+            {
+              "label": "_initializing",
+              "offset": 1,
+              "slot": "0",
+              "type": "t_bool",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:68"
+            }
+          ],
+          "types": {
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_uint8": {
+              "label": "uint8",
+              "numberOfBytes": "1"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:ReentrancyGuardUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:23",
+        "inherit": [
+          "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:Initializable"
+        ],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "_initialized",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_uint8",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:63",
+              "retypedFrom": "bool"
+            },
+            {
+              "label": "_initializing",
+              "offset": 1,
+              "slot": "0",
+              "type": "t_bool",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:68"
+            },
+            {
+              "label": "_status",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_uint256",
+              "contract": "ReentrancyGuardUpgradeable",
+              "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:38"
+            },
+            {
+              "label": "__gap",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_array(t_uint256)49_storage",
+              "contract": "ReentrancyGuardUpgradeable",
+              "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:88"
+            }
+          ],
+          "types": {
+            "t_array(t_uint256)49_storage": {
+              "label": "uint256[49]",
+              "numberOfBytes": "1568"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            },
+            "t_uint8": {
+              "label": "uint8",
+              "numberOfBytes": "1"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:AddressUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:9",
+        "version": {
+          "withMetadata": "64ffc306b0277a6292a801064609404f03e807169325f679f2583838ce69c813",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "delegatecall",
+            "src": "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:185"
+          },
+          {
+            "kind": "delegatecall",
+            "src": "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:185"
+          }
+        ],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "@openzeppelin/contracts/token/ERC20/IERC20.sol:IERC20": {
+        "src": "@openzeppelin/contracts/token/ERC20/IERC20.sol:9",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "totalSupply()",
+          "balanceOf(address)",
+          "transfer(address,uint256)",
+          "allowance(address,address)",
+          "approve(address,uint256)",
+          "transferFrom(address,address,uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "@openzeppelin/contracts/token/ERC20/extensions/IERC20Permit.sol:IERC20Permit": {
+        "src": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Permit.sol:42",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)",
+          "nonces(address)",
+          "DOMAIN_SEPARATOR()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol:SafeERC20": {
+        "src": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol:19",
+        "version": {
+          "withMetadata": "3bbc8bbcb35e78461efe1d807e020216707f630deaf27977f6a55cce684a2739",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [
+          "@openzeppelin/contracts/utils/Address.sol:Address"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "@openzeppelin/contracts/utils/Address.sol:Address": {
+        "src": "@openzeppelin/contracts/utils/Address.sol:9",
+        "version": {
+          "withMetadata": "ac791ba99f8c8c4cec90c38313e985053cd3fe68916498358cbb6451bcbbf027",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "delegatecall",
+            "src": "@openzeppelin/contracts/utils/Address.sol:185"
+          },
+          {
+            "kind": "delegatecall",
+            "src": "@openzeppelin/contracts/utils/Address.sol:185"
+          }
+        ],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "contracts/cgateStaking.sol:IPancakeFactory": {
+        "src": "contracts/cgateStaking.sol:16",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "getPair(address,address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "contracts/cgateStaking.sol:IPancakePairContract": {
+        "src": "contracts/cgateStaking.sol:23",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "getReserves()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "contracts/cgateStaking.sol:IPancakeRouter": {
+        "src": "contracts/cgateStaking.sol:8",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "getAmountIn(uint256,uint256,uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "contracts/cgateStaking.sol:IUniswapV3Pool": {
+        "src": "contracts/cgateStaking.sol:30",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "slot0()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "contracts/cgateStaking.sol:StakingPoolV3": {
+        "src": "contracts/cgateStaking.sol:44",
+        "version": {
+          "withMetadata": "f41389fcae7b419b41080451f30aebc0b5eebf9af6b6bf62585202989fce9fdc",
+          "withoutMetadata": "7d0c02e1acc763c335d16450d5390c4852a991b9b97b599894f990b6483b5a9c",
+          "linkedWithoutMetadata": "7d0c02e1acc763c335d16450d5390c4852a991b9b97b599894f990b6483b5a9c"
+        },
+        "inherit": [
+          "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:ReentrancyGuardUpgradeable",
+          "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:Initializable"
+        ],
+        "libraries": [
+          "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol:SafeERC20"
+        ],
+        "methods": [
+          "initialize(address[])",
+          "setPoolAddress(address)",
+          "proposeOwnershipTransfer(address)",
+          "cancelOwnershipTransfer()",
+          "castVote(bool)",
+          "finalizeOwnershipTransfer()",
+          "getPair(address,address)",
+          "getReserves(address)",
+          "getPrice()",
+          "getPriceInverse()",
+          "getCurrentCgatePrice()",
+          "getTotalPoolsCount()",
+          "getPendingReward(uint256,uint256,address)",
+          "createStakingPool(uint256,address,address,uint256,uint256)",
+          "stake(uint256,uint256,address)",
+          "updateCurrentCgatePrice(uint256)",
+          "unStakeIndividual(uint256,uint256)",
+          "unStake(uint256)",
+          "claimIndividualReward(uint256,uint256)",
+          "claimReward(uint256)",
+          "setAdmin(address)",
+          "setRewardToken(uint256,address)",
+          "setRewardPercent(uint256,uint256)",
+          "setTimePeriod(uint256,uint256)",
+          "setReferralRewardPercent(uint256,uint256)",
+          "togglePoolStatus(uint256)",
+          "setSpecialReferrerRewardPercent(address,uint256)",
+          "getTotalPendingRewardsForPool(uint256,address)",
+          "withdrawEth(address payable)",
+          "withdrawDumpToken(address,address)",
+          "totalStakeCount(address,uint256)",
+          "totalUnstakeAllowed(address,uint256)",
+          "setRouter(address)",
+          "setFactory(address)",
+          "setCg8Address(address)",
+          "setUSDCAddress(address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "_initialized",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_uint8",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:63",
+              "retypedFrom": "bool"
+            },
+            {
+              "label": "_initializing",
+              "offset": 1,
+              "slot": "0",
+              "type": "t_bool",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:68"
+            },
+            {
+              "label": "_status",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_uint256",
+              "contract": "ReentrancyGuardUpgradeable",
+              "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:38"
+            },
+            {
+              "label": "__gap",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_array(t_uint256)49_storage",
+              "contract": "ReentrancyGuardUpgradeable",
+              "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:88"
+            },
+            {
+              "label": "admin",
+              "offset": 0,
+              "slot": "51",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:46"
+            },
+            {
+              "label": "poolIdCounter",
+              "offset": 0,
+              "slot": "52",
+              "type": "t_uint256",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:47"
+            },
+            {
+              "label": "oneYear",
+              "offset": 0,
+              "slot": "53",
+              "type": "t_uint256",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:48"
+            },
+            {
+              "label": "price",
+              "offset": 0,
+              "slot": "54",
+              "type": "t_uint256",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:49"
+            },
+            {
+              "label": "proposedOwner",
+              "offset": 0,
+              "slot": "55",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:51"
+            },
+            {
+              "label": "voters",
+              "offset": 0,
+              "slot": "56",
+              "type": "t_array(t_address)dyn_storage",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:52"
+            },
+            {
+              "label": "hasVoted",
+              "offset": 0,
+              "slot": "57",
+              "type": "t_mapping(t_address,t_bool)",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:53"
+            },
+            {
+              "label": "PANCAKE_ROUTER_ADDRESS",
+              "offset": 0,
+              "slot": "58",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:55"
+            },
+            {
+              "label": "CG8_TOKEN_ADDRESS",
+              "offset": 0,
+              "slot": "59",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:56"
+            },
+            {
+              "label": "USDC_TOKEN_ADDRESS",
+              "offset": 0,
+              "slot": "60",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:57"
+            },
+            {
+              "label": "PANCAKE_FACTORY_ADDRESS",
+              "offset": 0,
+              "slot": "61",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:58"
+            },
+            {
+              "label": "pools",
+              "offset": 0,
+              "slot": "62",
+              "type": "t_mapping(t_uint256,t_struct(Pool)1511_storage)",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:87"
+            },
+            {
+              "label": "userStakes",
+              "offset": 0,
+              "slot": "63",
+              "type": "t_mapping(t_address,t_mapping(t_uint256,t_array(t_struct(UserStake)1535_storage)dyn_storage))",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:88"
+            },
+            {
+              "label": "referrers",
+              "offset": 0,
+              "slot": "64",
+              "type": "t_mapping(t_address,t_address)",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:89"
+            },
+            {
+              "label": "specialReferrersPercents",
+              "offset": 0,
+              "slot": "65",
+              "type": "t_mapping(t_address,t_uint256)",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:90"
+            },
+            {
+              "label": "users",
+              "offset": 0,
+              "slot": "66",
+              "type": "t_mapping(t_address,t_struct(UserInfo)1522_storage)",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:91"
+            },
+            {
+              "label": "usersStakesPerPool",
+              "offset": 0,
+              "slot": "67",
+              "type": "t_mapping(t_address,t_mapping(t_uint256,t_uint256))",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:92"
+            },
+            {
+              "label": "signers",
+              "offset": 0,
+              "slot": "68",
+              "type": "t_mapping(t_address,t_bool)",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:93"
+            },
+            {
+              "label": "poolAddress",
+              "offset": 0,
+              "slot": "69",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:94"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_array(t_address)dyn_storage": {
+              "label": "address[]",
+              "numberOfBytes": "32"
+            },
+            "t_array(t_struct(UserStake)1535_storage)dyn_storage": {
+              "label": "struct StakingPoolV3.UserStake[]",
+              "numberOfBytes": "32"
+            },
+            "t_array(t_uint256)49_storage": {
+              "label": "uint256[49]",
+              "numberOfBytes": "1568"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_mapping(t_address,t_address)": {
+              "label": "mapping(address => address)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_bool)": {
+              "label": "mapping(address => bool)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_mapping(t_uint256,t_array(t_struct(UserStake)1535_storage)dyn_storage))": {
+              "label": "mapping(address => mapping(uint256 => struct StakingPoolV3.UserStake[]))",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_mapping(t_uint256,t_uint256))": {
+              "label": "mapping(address => mapping(uint256 => uint256))",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_struct(UserInfo)1522_storage)": {
+              "label": "mapping(address => struct StakingPoolV3.UserInfo)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_uint256)": {
+              "label": "mapping(address => uint256)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_uint256,t_array(t_struct(UserStake)1535_storage)dyn_storage)": {
+              "label": "mapping(uint256 => struct StakingPoolV3.UserStake[])",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_uint256,t_struct(Pool)1511_storage)": {
+              "label": "mapping(uint256 => struct StakingPoolV3.Pool)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_uint256,t_uint256)": {
+              "label": "mapping(uint256 => uint256)",
+              "numberOfBytes": "32"
+            },
+            "t_struct(Pool)1511_storage": {
+              "label": "struct StakingPoolV3.Pool",
+              "members": [
+                {
+                  "label": "timePeriod",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "stakeToken",
+                  "type": "t_address",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "rewardToken",
+                  "type": "t_address",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "rewardPercentPerStakedTokenPerYear",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "3"
+                },
+                {
+                  "label": "referralRewardPercent",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "4"
+                },
+                {
+                  "label": "isActive",
+                  "type": "t_bool",
+                  "offset": 0,
+                  "slot": "5"
+                },
+                {
+                  "label": "totalStakes",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "6"
+                }
+              ],
+              "numberOfBytes": "224"
+            },
+            "t_struct(UserInfo)1522_storage": {
+              "label": "struct StakingPoolV3.UserInfo",
+              "members": [
+                {
+                  "label": "totalStaked",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "activeStakes",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "totalRewardWithdrawnTillNow",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "referralIncomeWithdrawnTillNow",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "3"
+                },
+                {
+                  "label": "totalReferrers",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "4"
+                }
+              ],
+              "numberOfBytes": "160"
+            },
+            "t_struct(UserStake)1535_storage": {
+              "label": "struct StakingPoolV3.UserStake",
+              "members": [
+                {
+                  "label": "amount",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "lastWithdrawTimestamp",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "rewardWithdrawnTillNow",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "stakeTime",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "3"
+                },
+                {
+                  "label": "referrer",
+                  "type": "t_address",
+                  "offset": 0,
+                  "slot": "4"
+                },
+                {
+                  "label": "depositedValueInDollars",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "5"
+                }
+              ],
+              "numberOfBytes": "192"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            },
+            "t_uint8": {
+              "label": "uint8",
+              "numberOfBytes": "1"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      }
+    },
+    {
+      "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:Initializable": {
+        "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:58",
+        "inherit": [],
+        "libraries": [
+          "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:AddressUpgradeable"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "_initialized",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_uint8",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:63",
+              "retypedFrom": "bool"
+            },
+            {
+              "label": "_initializing",
+              "offset": 1,
+              "slot": "0",
+              "type": "t_bool",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:68"
+            }
+          ],
+          "types": {
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_uint8": {
+              "label": "uint8",
+              "numberOfBytes": "1"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:ReentrancyGuardUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:23",
+        "inherit": [
+          "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:Initializable"
+        ],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "_initialized",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_uint8",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:63",
+              "retypedFrom": "bool"
+            },
+            {
+              "label": "_initializing",
+              "offset": 1,
+              "slot": "0",
+              "type": "t_bool",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:68"
+            },
+            {
+              "label": "_status",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_uint256",
+              "contract": "ReentrancyGuardUpgradeable",
+              "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:38"
+            },
+            {
+              "label": "__gap",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_array(t_uint256)49_storage",
+              "contract": "ReentrancyGuardUpgradeable",
+              "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:88"
+            }
+          ],
+          "types": {
+            "t_array(t_uint256)49_storage": {
+              "label": "uint256[49]",
+              "numberOfBytes": "1568"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            },
+            "t_uint8": {
+              "label": "uint8",
+              "numberOfBytes": "1"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:AddressUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:9",
+        "version": {
+          "withMetadata": "64ffc306b0277a6292a801064609404f03e807169325f679f2583838ce69c813",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "delegatecall",
+            "src": "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:185"
+          },
+          {
+            "kind": "delegatecall",
+            "src": "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:185"
+          }
+        ],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "@openzeppelin/contracts/token/ERC20/IERC20.sol:IERC20": {
+        "src": "@openzeppelin/contracts/token/ERC20/IERC20.sol:9",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "totalSupply()",
+          "balanceOf(address)",
+          "transfer(address,uint256)",
+          "allowance(address,address)",
+          "approve(address,uint256)",
+          "transferFrom(address,address,uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "@openzeppelin/contracts/token/ERC20/extensions/IERC20Permit.sol:IERC20Permit": {
+        "src": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Permit.sol:42",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)",
+          "nonces(address)",
+          "DOMAIN_SEPARATOR()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol:SafeERC20": {
+        "src": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol:19",
+        "version": {
+          "withMetadata": "3bbc8bbcb35e78461efe1d807e020216707f630deaf27977f6a55cce684a2739",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [
+          "@openzeppelin/contracts/utils/Address.sol:Address"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "@openzeppelin/contracts/utils/Address.sol:Address": {
+        "src": "@openzeppelin/contracts/utils/Address.sol:9",
+        "version": {
+          "withMetadata": "ac791ba99f8c8c4cec90c38313e985053cd3fe68916498358cbb6451bcbbf027",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "delegatecall",
+            "src": "@openzeppelin/contracts/utils/Address.sol:185"
+          },
+          {
+            "kind": "delegatecall",
+            "src": "@openzeppelin/contracts/utils/Address.sol:185"
+          }
+        ],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "contracts/cgateStaking.sol:IPancakeFactory": {
+        "src": "contracts/cgateStaking.sol:16",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "getPair(address,address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "contracts/cgateStaking.sol:IPancakePairContract": {
+        "src": "contracts/cgateStaking.sol:23",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "getReserves()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "contracts/cgateStaking.sol:IPancakeRouter": {
+        "src": "contracts/cgateStaking.sol:8",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "getAmountIn(uint256,uint256,uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "contracts/cgateStaking.sol:IUniswapV3Pool": {
+        "src": "contracts/cgateStaking.sol:30",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "slot0()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "contracts/cgateStaking.sol:StakingPoolV3": {
+        "src": "contracts/cgateStaking.sol:43",
+        "version": {
+          "withMetadata": "642db0b18035b16c097117335f1e0bc665758e882d3cc05ce8df1fc1059ca331",
+          "withoutMetadata": "ebe14e6c2fe18794e4acd877de2e2f5db26ab4a53906a5c3792f4131afd69dfd",
+          "linkedWithoutMetadata": "ebe14e6c2fe18794e4acd877de2e2f5db26ab4a53906a5c3792f4131afd69dfd"
+        },
+        "inherit": [
+          "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:ReentrancyGuardUpgradeable",
+          "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:Initializable"
+        ],
+        "libraries": [
+          "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol:SafeERC20"
+        ],
+        "methods": [
+          "initialize(address[])",
+          "setPoolAddress(address)",
+          "proposeOwnershipTransfer(address)",
+          "cancelOwnershipTransfer()",
+          "castVote(bool)",
+          "finalizeOwnershipTransfer()",
+          "getPair(address,address)",
+          "getReserves(address)",
+          "getPrice()",
+          "getCurrentCgatePrice()",
+          "getTotalPoolsCount()",
+          "getPendingReward(uint256,uint256,address)",
+          "createStakingPool(uint256,address,address,uint256,uint256)",
+          "stake(uint256,uint256,address)",
+          "updateCurrentCgatePrice(uint256)",
+          "unStakeIndividual(uint256,uint256)",
+          "unStake(uint256)",
+          "claimIndividualReward(uint256,uint256)",
+          "claimReward(uint256)",
+          "setAdmin(address)",
+          "setRewardToken(uint256,address)",
+          "setRewardPercent(uint256,uint256)",
+          "setTimePeriod(uint256,uint256)",
+          "setReferralRewardPercent(uint256,uint256)",
+          "togglePoolStatus(uint256)",
+          "setSpecialReferrerRewardPercent(address,uint256)",
+          "getTotalPendingRewardsForPool(uint256,address)",
+          "withdrawEth(address payable)",
+          "withdrawDumpToken(address,address)",
+          "totalStakeCount(address,uint256)",
+          "totalUnstakeAllowed(address,uint256)",
+          "setRouter(address)",
+          "setFactory(address)",
+          "setCg8Address(address)",
+          "setUSDCAddress(address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "_initialized",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_uint8",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:63",
+              "retypedFrom": "bool"
+            },
+            {
+              "label": "_initializing",
+              "offset": 1,
+              "slot": "0",
+              "type": "t_bool",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:68"
+            },
+            {
+              "label": "_status",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_uint256",
+              "contract": "ReentrancyGuardUpgradeable",
+              "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:38"
+            },
+            {
+              "label": "__gap",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_array(t_uint256)49_storage",
+              "contract": "ReentrancyGuardUpgradeable",
+              "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:88"
+            },
+            {
+              "label": "admin",
+              "offset": 0,
+              "slot": "51",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:45"
+            },
+            {
+              "label": "poolIdCounter",
+              "offset": 0,
+              "slot": "52",
+              "type": "t_uint256",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:46"
+            },
+            {
+              "label": "oneYear",
+              "offset": 0,
+              "slot": "53",
+              "type": "t_uint256",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:47"
+            },
+            {
+              "label": "price",
+              "offset": 0,
+              "slot": "54",
+              "type": "t_uint256",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:48"
+            },
+            {
+              "label": "proposedOwner",
+              "offset": 0,
+              "slot": "55",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:50"
+            },
+            {
+              "label": "voters",
+              "offset": 0,
+              "slot": "56",
+              "type": "t_array(t_address)dyn_storage",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:51"
+            },
+            {
+              "label": "hasVoted",
+              "offset": 0,
+              "slot": "57",
+              "type": "t_mapping(t_address,t_bool)",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:52"
+            },
+            {
+              "label": "PANCAKE_ROUTER_ADDRESS",
+              "offset": 0,
+              "slot": "58",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:54"
+            },
+            {
+              "label": "CG8_TOKEN_ADDRESS",
+              "offset": 0,
+              "slot": "59",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:55"
+            },
+            {
+              "label": "USDC_TOKEN_ADDRESS",
+              "offset": 0,
+              "slot": "60",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:56"
+            },
+            {
+              "label": "PANCAKE_FACTORY_ADDRESS",
+              "offset": 0,
+              "slot": "61",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:57"
+            },
+            {
+              "label": "pools",
+              "offset": 0,
+              "slot": "62",
+              "type": "t_mapping(t_uint256,t_struct(Pool)1511_storage)",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:86"
+            },
+            {
+              "label": "userStakes",
+              "offset": 0,
+              "slot": "63",
+              "type": "t_mapping(t_address,t_mapping(t_uint256,t_array(t_struct(UserStake)1535_storage)dyn_storage))",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:87"
+            },
+            {
+              "label": "referrers",
+              "offset": 0,
+              "slot": "64",
+              "type": "t_mapping(t_address,t_address)",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:88"
+            },
+            {
+              "label": "specialReferrersPercents",
+              "offset": 0,
+              "slot": "65",
+              "type": "t_mapping(t_address,t_uint256)",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:89"
+            },
+            {
+              "label": "users",
+              "offset": 0,
+              "slot": "66",
+              "type": "t_mapping(t_address,t_struct(UserInfo)1522_storage)",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:90"
+            },
+            {
+              "label": "usersStakesPerPool",
+              "offset": 0,
+              "slot": "67",
+              "type": "t_mapping(t_address,t_mapping(t_uint256,t_uint256))",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:91"
+            },
+            {
+              "label": "signers",
+              "offset": 0,
+              "slot": "68",
+              "type": "t_mapping(t_address,t_bool)",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:92"
+            },
+            {
+              "label": "poolAddress",
+              "offset": 0,
+              "slot": "69",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:93"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_array(t_address)dyn_storage": {
+              "label": "address[]",
+              "numberOfBytes": "32"
+            },
+            "t_array(t_struct(UserStake)1535_storage)dyn_storage": {
+              "label": "struct StakingPoolV3.UserStake[]",
+              "numberOfBytes": "32"
+            },
+            "t_array(t_uint256)49_storage": {
+              "label": "uint256[49]",
+              "numberOfBytes": "1568"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_mapping(t_address,t_address)": {
+              "label": "mapping(address => address)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_bool)": {
+              "label": "mapping(address => bool)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_mapping(t_uint256,t_array(t_struct(UserStake)1535_storage)dyn_storage))": {
+              "label": "mapping(address => mapping(uint256 => struct StakingPoolV3.UserStake[]))",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_mapping(t_uint256,t_uint256))": {
+              "label": "mapping(address => mapping(uint256 => uint256))",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_struct(UserInfo)1522_storage)": {
+              "label": "mapping(address => struct StakingPoolV3.UserInfo)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_uint256)": {
+              "label": "mapping(address => uint256)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_uint256,t_array(t_struct(UserStake)1535_storage)dyn_storage)": {
+              "label": "mapping(uint256 => struct StakingPoolV3.UserStake[])",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_uint256,t_struct(Pool)1511_storage)": {
+              "label": "mapping(uint256 => struct StakingPoolV3.Pool)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_uint256,t_uint256)": {
+              "label": "mapping(uint256 => uint256)",
+              "numberOfBytes": "32"
+            },
+            "t_struct(Pool)1511_storage": {
+              "label": "struct StakingPoolV3.Pool",
+              "members": [
+                {
+                  "label": "timePeriod",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "stakeToken",
+                  "type": "t_address",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "rewardToken",
+                  "type": "t_address",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "rewardPercentPerStakedTokenPerYear",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "3"
+                },
+                {
+                  "label": "referralRewardPercent",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "4"
+                },
+                {
+                  "label": "isActive",
+                  "type": "t_bool",
+                  "offset": 0,
+                  "slot": "5"
+                },
+                {
+                  "label": "totalStakes",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "6"
+                }
+              ],
+              "numberOfBytes": "224"
+            },
+            "t_struct(UserInfo)1522_storage": {
+              "label": "struct StakingPoolV3.UserInfo",
+              "members": [
+                {
+                  "label": "totalStaked",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "activeStakes",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "totalRewardWithdrawnTillNow",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "referralIncomeWithdrawnTillNow",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "3"
+                },
+                {
+                  "label": "totalReferrers",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "4"
+                }
+              ],
+              "numberOfBytes": "160"
+            },
+            "t_struct(UserStake)1535_storage": {
+              "label": "struct StakingPoolV3.UserStake",
+              "members": [
+                {
+                  "label": "amount",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "lastWithdrawTimestamp",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "rewardWithdrawnTillNow",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "stakeTime",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "3"
+                },
+                {
+                  "label": "referrer",
+                  "type": "t_address",
+                  "offset": 0,
+                  "slot": "4"
+                },
+                {
+                  "label": "depositedValueInDollars",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "5"
+                }
+              ],
+              "numberOfBytes": "192"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            },
+            "t_uint8": {
+              "label": "uint8",
+              "numberOfBytes": "1"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      }
+    },
+    {
+      "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:Initializable": {
+        "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:58",
+        "inherit": [],
+        "libraries": [
+          "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:AddressUpgradeable"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "_initialized",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_uint8",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:63",
+              "retypedFrom": "bool"
+            },
+            {
+              "label": "_initializing",
+              "offset": 1,
+              "slot": "0",
+              "type": "t_bool",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:68"
+            }
+          ],
+          "types": {
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_uint8": {
+              "label": "uint8",
+              "numberOfBytes": "1"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:ReentrancyGuardUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:23",
+        "inherit": [
+          "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:Initializable"
+        ],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "_initialized",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_uint8",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:63",
+              "retypedFrom": "bool"
+            },
+            {
+              "label": "_initializing",
+              "offset": 1,
+              "slot": "0",
+              "type": "t_bool",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:68"
+            },
+            {
+              "label": "_status",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_uint256",
+              "contract": "ReentrancyGuardUpgradeable",
+              "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:38"
+            },
+            {
+              "label": "__gap",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_array(t_uint256)49_storage",
+              "contract": "ReentrancyGuardUpgradeable",
+              "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:88"
+            }
+          ],
+          "types": {
+            "t_array(t_uint256)49_storage": {
+              "label": "uint256[49]",
+              "numberOfBytes": "1568"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            },
+            "t_uint8": {
+              "label": "uint8",
+              "numberOfBytes": "1"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:AddressUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:9",
+        "version": {
+          "withMetadata": "64ffc306b0277a6292a801064609404f03e807169325f679f2583838ce69c813",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "delegatecall",
+            "src": "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:185"
+          },
+          {
+            "kind": "delegatecall",
+            "src": "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:185"
+          }
+        ],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "@openzeppelin/contracts/token/ERC20/IERC20.sol:IERC20": {
+        "src": "@openzeppelin/contracts/token/ERC20/IERC20.sol:9",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "totalSupply()",
+          "balanceOf(address)",
+          "transfer(address,uint256)",
+          "allowance(address,address)",
+          "approve(address,uint256)",
+          "transferFrom(address,address,uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "@openzeppelin/contracts/token/ERC20/extensions/IERC20Permit.sol:IERC20Permit": {
+        "src": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Permit.sol:42",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)",
+          "nonces(address)",
+          "DOMAIN_SEPARATOR()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol:SafeERC20": {
+        "src": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol:19",
+        "version": {
+          "withMetadata": "3bbc8bbcb35e78461efe1d807e020216707f630deaf27977f6a55cce684a2739",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [
+          "@openzeppelin/contracts/utils/Address.sol:Address"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "@openzeppelin/contracts/utils/Address.sol:Address": {
+        "src": "@openzeppelin/contracts/utils/Address.sol:9",
+        "version": {
+          "withMetadata": "ac791ba99f8c8c4cec90c38313e985053cd3fe68916498358cbb6451bcbbf027",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "delegatecall",
+            "src": "@openzeppelin/contracts/utils/Address.sol:185"
+          },
+          {
+            "kind": "delegatecall",
+            "src": "@openzeppelin/contracts/utils/Address.sol:185"
+          }
+        ],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "contracts/cgateStaking.sol:IPancakeFactory": {
+        "src": "contracts/cgateStaking.sol:16",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "getPair(address,address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "contracts/cgateStaking.sol:IPancakePairContract": {
+        "src": "contracts/cgateStaking.sol:23",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "getReserves()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "contracts/cgateStaking.sol:IPancakeRouter": {
+        "src": "contracts/cgateStaking.sol:8",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "getAmountIn(uint256,uint256,uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "contracts/cgateStaking.sol:IUniswapV3Pool": {
+        "src": "contracts/cgateStaking.sol:30",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "slot0()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "contracts/cgateStaking.sol:StakingPoolV3": {
+        "src": "contracts/cgateStaking.sol:43",
+        "version": {
+          "withMetadata": "642db0b18035b16c097117335f1e0bc665758e882d3cc05ce8df1fc1059ca331",
+          "withoutMetadata": "ebe14e6c2fe18794e4acd877de2e2f5db26ab4a53906a5c3792f4131afd69dfd",
+          "linkedWithoutMetadata": "ebe14e6c2fe18794e4acd877de2e2f5db26ab4a53906a5c3792f4131afd69dfd"
+        },
+        "inherit": [
+          "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:ReentrancyGuardUpgradeable",
+          "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:Initializable"
+        ],
+        "libraries": [
+          "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol:SafeERC20"
+        ],
+        "methods": [
+          "initialize(address[])",
+          "setPoolAddress(address)",
+          "proposeOwnershipTransfer(address)",
+          "cancelOwnershipTransfer()",
+          "castVote(bool)",
+          "finalizeOwnershipTransfer()",
+          "getPair(address,address)",
+          "getReserves(address)",
+          "getPrice()",
+          "getCurrentCgatePrice()",
+          "getTotalPoolsCount()",
+          "getPendingReward(uint256,uint256,address)",
+          "createStakingPool(uint256,address,address,uint256,uint256)",
+          "stake(uint256,uint256,address)",
+          "updateCurrentCgatePrice(uint256)",
+          "unStakeIndividual(uint256,uint256)",
+          "unStake(uint256)",
+          "claimIndividualReward(uint256,uint256)",
+          "claimReward(uint256)",
+          "setAdmin(address)",
+          "setRewardToken(uint256,address)",
+          "setRewardPercent(uint256,uint256)",
+          "setTimePeriod(uint256,uint256)",
+          "setReferralRewardPercent(uint256,uint256)",
+          "togglePoolStatus(uint256)",
+          "setSpecialReferrerRewardPercent(address,uint256)",
+          "getTotalPendingRewardsForPool(uint256,address)",
+          "withdrawEth(address payable)",
+          "withdrawDumpToken(address,address)",
+          "totalStakeCount(address,uint256)",
+          "totalUnstakeAllowed(address,uint256)",
+          "setRouter(address)",
+          "setFactory(address)",
+          "setCg8Address(address)",
+          "setUSDCAddress(address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "_initialized",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_uint8",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:63",
+              "retypedFrom": "bool"
+            },
+            {
+              "label": "_initializing",
+              "offset": 1,
+              "slot": "0",
+              "type": "t_bool",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:68"
+            },
+            {
+              "label": "_status",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_uint256",
+              "contract": "ReentrancyGuardUpgradeable",
+              "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:38"
+            },
+            {
+              "label": "__gap",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_array(t_uint256)49_storage",
+              "contract": "ReentrancyGuardUpgradeable",
+              "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:88"
+            },
+            {
+              "label": "admin",
+              "offset": 0,
+              "slot": "51",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:45"
+            },
+            {
+              "label": "poolIdCounter",
+              "offset": 0,
+              "slot": "52",
+              "type": "t_uint256",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:46"
+            },
+            {
+              "label": "oneYear",
+              "offset": 0,
+              "slot": "53",
+              "type": "t_uint256",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:47"
+            },
+            {
+              "label": "price",
+              "offset": 0,
+              "slot": "54",
+              "type": "t_uint256",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:48"
+            },
+            {
+              "label": "proposedOwner",
+              "offset": 0,
+              "slot": "55",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:50"
+            },
+            {
+              "label": "voters",
+              "offset": 0,
+              "slot": "56",
+              "type": "t_array(t_address)dyn_storage",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:51"
+            },
+            {
+              "label": "hasVoted",
+              "offset": 0,
+              "slot": "57",
+              "type": "t_mapping(t_address,t_bool)",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:52"
+            },
+            {
+              "label": "PANCAKE_ROUTER_ADDRESS",
+              "offset": 0,
+              "slot": "58",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:54"
+            },
+            {
+              "label": "CG8_TOKEN_ADDRESS",
+              "offset": 0,
+              "slot": "59",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:55"
+            },
+            {
+              "label": "USDC_TOKEN_ADDRESS",
+              "offset": 0,
+              "slot": "60",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:56"
+            },
+            {
+              "label": "PANCAKE_FACTORY_ADDRESS",
+              "offset": 0,
+              "slot": "61",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:57"
+            },
+            {
+              "label": "pools",
+              "offset": 0,
+              "slot": "62",
+              "type": "t_mapping(t_uint256,t_struct(Pool)1511_storage)",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:86"
+            },
+            {
+              "label": "userStakes",
+              "offset": 0,
+              "slot": "63",
+              "type": "t_mapping(t_address,t_mapping(t_uint256,t_array(t_struct(UserStake)1535_storage)dyn_storage))",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:87"
+            },
+            {
+              "label": "referrers",
+              "offset": 0,
+              "slot": "64",
+              "type": "t_mapping(t_address,t_address)",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:88"
+            },
+            {
+              "label": "specialReferrersPercents",
+              "offset": 0,
+              "slot": "65",
+              "type": "t_mapping(t_address,t_uint256)",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:89"
+            },
+            {
+              "label": "users",
+              "offset": 0,
+              "slot": "66",
+              "type": "t_mapping(t_address,t_struct(UserInfo)1522_storage)",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:90"
+            },
+            {
+              "label": "usersStakesPerPool",
+              "offset": 0,
+              "slot": "67",
+              "type": "t_mapping(t_address,t_mapping(t_uint256,t_uint256))",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:91"
+            },
+            {
+              "label": "signers",
+              "offset": 0,
+              "slot": "68",
+              "type": "t_mapping(t_address,t_bool)",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:92"
+            },
+            {
+              "label": "poolAddress",
+              "offset": 0,
+              "slot": "69",
+              "type": "t_address",
+              "contract": "StakingPoolV3",
+              "src": "contracts/cgateStaking.sol:93"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_array(t_address)dyn_storage": {
+              "label": "address[]",
+              "numberOfBytes": "32"
+            },
+            "t_array(t_struct(UserStake)1535_storage)dyn_storage": {
+              "label": "struct StakingPoolV3.UserStake[]",
+              "numberOfBytes": "32"
+            },
+            "t_array(t_uint256)49_storage": {
+              "label": "uint256[49]",
+              "numberOfBytes": "1568"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_mapping(t_address,t_address)": {
+              "label": "mapping(address => address)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_bool)": {
+              "label": "mapping(address => bool)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_mapping(t_uint256,t_array(t_struct(UserStake)1535_storage)dyn_storage))": {
+              "label": "mapping(address => mapping(uint256 => struct StakingPoolV3.UserStake[]))",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_mapping(t_uint256,t_uint256))": {
+              "label": "mapping(address => mapping(uint256 => uint256))",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_struct(UserInfo)1522_storage)": {
+              "label": "mapping(address => struct StakingPoolV3.UserInfo)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_uint256)": {
+              "label": "mapping(address => uint256)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_uint256,t_array(t_struct(UserStake)1535_storage)dyn_storage)": {
+              "label": "mapping(uint256 => struct StakingPoolV3.UserStake[])",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_uint256,t_struct(Pool)1511_storage)": {
+              "label": "mapping(uint256 => struct StakingPoolV3.Pool)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_uint256,t_uint256)": {
+              "label": "mapping(uint256 => uint256)",
+              "numberOfBytes": "32"
+            },
+            "t_struct(Pool)1511_storage": {
+              "label": "struct StakingPoolV3.Pool",
+              "members": [
+                {
+                  "label": "timePeriod",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "stakeToken",
+                  "type": "t_address",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "rewardToken",
+                  "type": "t_address",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "rewardPercentPerStakedTokenPerYear",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "3"
+                },
+                {
+                  "label": "referralRewardPercent",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "4"
+                },
+                {
+                  "label": "isActive",
+                  "type": "t_bool",
+                  "offset": 0,
+                  "slot": "5"
+                },
+                {
+                  "label": "totalStakes",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "6"
+                }
+              ],
+              "numberOfBytes": "224"
+            },
+            "t_struct(UserInfo)1522_storage": {
+              "label": "struct StakingPoolV3.UserInfo",
+              "members": [
+                {
+                  "label": "totalStaked",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "activeStakes",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "totalRewardWithdrawnTillNow",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "referralIncomeWithdrawnTillNow",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "3"
+                },
+                {
+                  "label": "totalReferrers",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "4"
+                }
+              ],
+              "numberOfBytes": "160"
+            },
+            "t_struct(UserStake)1535_storage": {
+              "label": "struct StakingPoolV3.UserStake",
+              "members": [
+                {
+                  "label": "amount",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "lastWithdrawTimestamp",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "rewardWithdrawnTillNow",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "stakeTime",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "3"
+                },
+                {
+                  "label": "referrer",
+                  "type": "t_address",
+                  "offset": 0,
+                  "slot": "4"
+                },
+                {
+                  "label": "depositedValueInDollars",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "5"
+                }
+              ],
+              "numberOfBytes": "192"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            },
+            "t_uint8": {
+              "label": "uint8",
+              "numberOfBytes": "1"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      }
+    },
+    {
+      "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:Initializable": {
+        "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:58",
+        "inherit": [],
+        "libraries": [
+          "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:AddressUpgradeable"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "_initialized",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_uint8",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:63",
+              "retypedFrom": "bool"
+            },
+            {
+              "label": "_initializing",
+              "offset": 1,
+              "slot": "0",
+              "type": "t_bool",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:68"
+            }
+          ],
+          "types": {
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_uint8": {
+              "label": "uint8",
+              "numberOfBytes": "1"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:ReentrancyGuardUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:23",
+        "inherit": [
+          "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:Initializable"
+        ],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "_initialized",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_uint8",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:63",
+              "retypedFrom": "bool"
+            },
+            {
+              "label": "_initializing",
+              "offset": 1,
+              "slot": "0",
+              "type": "t_bool",
+              "contract": "Initializable",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:68"
+            },
+            {
+              "label": "_status",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_uint256",
+              "contract": "ReentrancyGuardUpgradeable",
+              "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:38"
+            },
+            {
+              "label": "__gap",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_array(t_uint256)49_storage",
+              "contract": "ReentrancyGuardUpgradeable",
+              "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:88"
+            }
+          ],
+          "types": {
+            "t_array(t_uint256)49_storage": {
+              "label": "uint256[49]",
+              "numberOfBytes": "1568"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            },
+            "t_uint8": {
+              "label": "uint8",
+              "numberOfBytes": "1"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:AddressUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:9",
+        "version": {
+          "withMetadata": "64ffc306b0277a6292a801064609404f03e807169325f679f2583838ce69c813",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "delegatecall",
+            "src": "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:185"
+          },
+          {
+            "kind": "delegatecall",
+            "src": "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:185"
+          }
+        ],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "@openzeppelin/contracts/token/ERC20/IERC20.sol:IERC20": {
+        "src": "@openzeppelin/contracts/token/ERC20/IERC20.sol:9",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "totalSupply()",
+          "balanceOf(address)",
+          "transfer(address,uint256)",
+          "allowance(address,address)",
+          "approve(address,uint256)",
+          "transferFrom(address,address,uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "@openzeppelin/contracts/token/ERC20/extensions/IERC20Permit.sol:IERC20Permit": {
+        "src": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Permit.sol:42",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)",
+          "nonces(address)",
+          "DOMAIN_SEPARATOR()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol:SafeERC20": {
+        "src": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol:19",
+        "version": {
+          "withMetadata": "3bbc8bbcb35e78461efe1d807e020216707f630deaf27977f6a55cce684a2739",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [
+          "@openzeppelin/contracts/utils/Address.sol:Address"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "@openzeppelin/contracts/utils/Address.sol:Address": {
+        "src": "@openzeppelin/contracts/utils/Address.sol:9",
+        "version": {
+          "withMetadata": "ac791ba99f8c8c4cec90c38313e985053cd3fe68916498358cbb6451bcbbf027",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "delegatecall",
+            "src": "@openzeppelin/contracts/utils/Address.sol:185"
+          },
+          {
+            "kind": "delegatecall",
+            "src": "@openzeppelin/contracts/utils/Address.sol:185"
+          }
+        ],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "contracts/cgateStaking.sol:IPancakeFactory": {
+        "src": "contracts/cgateStaking.sol:16",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "getPair(address,address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "contracts/cgateStaking.sol:IPancakePairContract": {
+        "src": "contracts/cgateStaking.sol:23",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "getReserves()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "contracts/cgateStaking.sol:IPancakeRouter": {
+        "src": "contracts/cgateStaking.sol:8",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "getAmountIn(uint256,uint256,uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "contracts/cgateStaking.sol:IUniswapV3Pool": {
+        "src": "contracts/cgateStaking.sol:30",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "slot0()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.19"
+      },
+      "contracts/cgateStaking.sol:StakingPoolV3": {
         "src": "contracts/cgateStaking.sol:45",
         "version": {
           "withMetadata": "274ac0f5466e631a3ad4168003111648edb98f5eee0b4024b3013644753f62a7",

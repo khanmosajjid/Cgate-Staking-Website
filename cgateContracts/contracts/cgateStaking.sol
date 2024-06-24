@@ -28,18 +28,17 @@ interface IPancakePairContract {
 }
 
 interface IUniswapV3Pool {
-    function slot0()
-        external
-        view
-        returns (
-            uint160 sqrtPriceX96,
-            int24 tick,
-            uint16 observationIndex,
-            uint16 observationCardinality,
-            uint16 observationCardinalityNext,
-            uint8 feeProtocol,
-            bool unlocked
-        );
+    struct Slot0 {
+        uint160 sqrtPriceX96;
+        int24 tick;
+        uint16 observationIndex;
+        uint16 observationCardinality;
+        uint16 observationCardinalityNext;
+        uint32 feeProtocol;
+        bool unlocked;
+    }
+
+    function slot0() external view returns (Slot0 memory);
 }
 
 contract StakingPoolV3 is Initializable, ReentrancyGuardUpgradeable {
@@ -57,7 +56,7 @@ contract StakingPoolV3 is Initializable, ReentrancyGuardUpgradeable {
     address public CG8_TOKEN_ADDRESS;
     address public USDC_TOKEN_ADDRESS;
     address public PANCAKE_FACTORY_ADDRESS;
-    
+
     struct Pool {
         uint256 timePeriod;
         address stakeToken;
@@ -137,8 +136,7 @@ contract StakingPoolV3 is Initializable, ReentrancyGuardUpgradeable {
     // Function to get the pair contract address
     event Error(string message);
 
-
-    function setPoolAddress(address _poolAddress) external onlyAdmin{
+    function setPoolAddress(address _poolAddress) external onlyAdmin {
         poolAddress = _poolAddress;
     }
 
@@ -226,10 +224,33 @@ contract StakingPoolV3 is Initializable, ReentrancyGuardUpgradeable {
         return amount / 1 ether; // Assuming 1 token = 1 ether, adjust accordingly
     }
 
-    function getPrice() public view returns (uint256 ) {
+    function getPrice() public view returns (uint256) {
         IUniswapV3Pool pool = IUniswapV3Pool(poolAddress);
-        (uint160 sqrtPriceX96, , , , , , ) = pool.slot0();
-        return (uint256(sqrtPriceX96) ** 2 * 1e18) >> (96 * 2);
+        uint160 sqrtPriceX96 = pool.slot0().sqrtPriceX96;
+
+        // Converting sqrtPriceX96 to uint256 for calculation
+        uint256 sqrtPriceX96Uint = uint256(sqrtPriceX96);
+        // Calculate the price using the formula provided
+        uint256 price = (sqrtPriceX96Uint * sqrtPriceX96Uint * 1e18) /
+            (1 << 192);
+
+        return price;
+    }
+
+    function getPriceInverse() public view returns (uint256) {
+        IUniswapV3Pool pool = IUniswapV3Pool(poolAddress);
+        uint160 sqrtPriceX96 = pool.slot0().sqrtPriceX96;
+
+        // Converting sqrtPriceX96 to uint256 for calculation
+        uint256 sqrtPriceX96Uint = uint256(sqrtPriceX96);
+        // Calculate the price using the formula provided
+        uint256 price = (sqrtPriceX96Uint * sqrtPriceX96Uint * 1e18) /
+            (1 << 192);
+
+        // Calculate the inverse price
+        uint256 inversePrice = (1e36) / price;
+
+        return inversePrice;
     }
 
     function getCurrentCgatePrice() public view returns (uint256) {
@@ -317,8 +338,7 @@ contract StakingPoolV3 is Initializable, ReentrancyGuardUpgradeable {
                 rewardWithdrawnTillNow: 0,
                 stakeTime: block.timestamp,
                 referrer: referrer,
-                depositedValueInDollars: (_amount * getPrice()) /
-                    1e18
+                depositedValueInDollars: (_amount * getPriceInverse()) / 1e18
             })
         );
 

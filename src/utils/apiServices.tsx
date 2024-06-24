@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-const API_BASE_URL = "http://localhost:8000/api";
+// const API_BASE_URL = "http://localhost:8000/api";
+const API_BASE_URL = "http://api.cgate.app/api";
 
 import axios from "axios";
 
@@ -133,6 +134,48 @@ export const getSwapHistory = async (walletAddress, page = 1, limit = 10) => {
     return response.data;
   } catch (error) {
     console.error("Error getting deposit history:", error);
+    throw error;
+  }
+};
+
+export const addWithdrawHistory = async (
+  walletAddress,
+  withdrawAmount,
+  poolId,
+  transactionHash
+) => {
+  try {
+    const response = await axios.post(
+      `${API_BASE_URL}/history/addWithdrawHistory`,
+      {
+        walletAddress,
+        withdrawAmount,
+        poolId,
+        transactionHash,
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error adding withdraw history:", error);
+    throw error;
+  }
+};
+
+export const getWithdrawHistory = async (
+  walletAddress,
+  page = 1,
+  limit = 10
+) => {
+  try {
+    const response = await axios.get(
+      `${API_BASE_URL}/history/getWithdrawHistory`,
+      {
+        params: { walletAddress, page, limit },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error getting withdraw history:", error);
     throw error;
   }
 };

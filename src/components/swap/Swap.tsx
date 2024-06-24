@@ -118,6 +118,13 @@ const Swap: FunctionComponent = () => {
   const handleCg8ValueChange = async (e) => {
     console.log("in handle cg8 value change");
     let value = e.target.value;
+    if (value == "") {
+      console.log("empty value", value);
+      setCg8Value(0);
+      setUsdcValue(0);
+      return;
+    }
+    console.log("value is------->", value, typeof value);
     value = value.replace(/[^0-9.]/g, "").replace(/(\..*)\./g, "$1");
     if (value.includes(".")) {
       const parts = value.split(".");
@@ -138,7 +145,6 @@ const Swap: FunctionComponent = () => {
           USDC_CONTRACT,
           USDC_ABI
         );
-        console.log("allowance is------>", allowance);
 
         let res = await myContext?.getBestRoute(value, "CG8", 1);
         console.log("result of cg8 buy is----->", res?.inputAmount.toExact());
@@ -167,7 +173,7 @@ const Swap: FunctionComponent = () => {
           setIsApprove(true);
         }
       } else {
-        console.log("in buying usdc");
+        console.log("in buying cg8");
         const allowance: any = await checkAllowance(
           address,
           PANCAKE_TEST_ROUTER_CONTRACT,
@@ -175,9 +181,8 @@ const Swap: FunctionComponent = () => {
           USDC_ABI
         );
         console.log("allowance is---->", allowance);
-        
 
-        let res = await myContext?.getBestRoute(value,"CG8",0);
+        let res = await myContext?.getBestRoute(value, "CG8", 0);
         console.log("result of cg8 buy is----->", res?.inputAmount.toExact());
         const data3 = res?.outputAmount.toExact();
 
@@ -206,7 +211,12 @@ const Swap: FunctionComponent = () => {
   const handleUsdcValueChange = async (e) => {
     console.log("in handleUsdcValueChange");
     let value = e.target.value;
-    console.log("value and event is---->", value);
+   if (value == ""||parseInt(value)==0) {
+     console.log("empty value", value);
+     setCg8Value(0);
+     setUsdcValue(0);
+     return;
+   }
     value = value.replace(/[^0-9.]/g, "").replace(/(\..*)\./g, "$1");
     if (value.includes(".")) {
       const parts = value.split(".");
@@ -276,7 +286,7 @@ const Swap: FunctionComponent = () => {
 
       if (res2.status == "success") {
         toast.success("Transaction Successfull");
-        // const swap = await addSwapHistory(address, cg8Value, usdcValue);
+        const swap = await addSwapHistory(address, cg8Value, usdcValue);
 
         setCg8Value(0);
         setUsdcValue(0);
@@ -306,8 +316,8 @@ const Swap: FunctionComponent = () => {
 
       if (res2.status == "success") {
         toast.success("Transaction Successfull");
-        // const swap = await addSwapHistory(address, usdcValue, cg8Value);
-        // console.log("swap api response", swap);
+        const swap = await addSwapHistory(address, usdcValue, cg8Value);
+        console.log("swap api response", swap);
         setCg8Value(0);
         setUsdcValue(0);
         setLoader(false);

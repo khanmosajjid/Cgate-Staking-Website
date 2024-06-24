@@ -19,30 +19,7 @@ const SwapHistory = ({ setOpenHistory, setSetting }: swapHistoryProps) => {
     getHistory();
   }, []);
 
-  //   const swaps = [
-  //     {
-  //       wallet: "0xy543ca...8h432",
-  //       type: "USDC -> CG8",
-  //       amount: "10.00 USDC",
-  //       usd: "10.00",
-  //       datetime: "12 Sep 2023, 10:16",
-  //     },
-  //     {
-  //       wallet: "0x23edcr...1q432",
-  //       type: "USDC -> CG8",
-  //       amount: "10.00 USDC",
-  //       usd: "10.00",
-  //       datetime: "12 Sep 2023, 10:16",
-  //     },
-  //     {
-  //       wallet: "0x23edcr...1q432",
-  //       type: "USDC -> CG8",
-  //       amount: "10.00 USDC",
-  //       usd: "10.00",
-  //       datetime: "12 Sep 2023, 10:16",
-  //     },
-  //   ];
-
+ 
   return (
     <div className="bg-white  mt-10 ml-5  w-[90%] mx-auto p-6 rounded-xl shadow-md  absolute lg:left-[400px] lg:top-[100px] top-[100px] lg:w-[49%] md:mx-auto  border ">
       <div className="text-xl font-md mb-4">My swap history</div>

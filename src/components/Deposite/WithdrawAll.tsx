@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   totalStakeCountPerPool,
   withdraw,
@@ -13,12 +13,14 @@ import {
   withdrawPerStake,
   getMinAmountOut,
   getAmountOut,
-  getMinAmountIn
+  getMinAmountIn,
 } from "../../utils/web3Utils";
 import { TOKEN_CONTRACT, USDC_CONTRACT } from "../../constants/contracts";
 import { ThreeCircles } from "react-loader-spinner";
 import { useAccount } from "wagmi";
 import { useNavigate } from "react-router-dom";
+import { appContext } from "../../context/context.jsx";
+import { addWithdrawHistory } from "../../utils/apiServices.js";
 interface DepositCardProps {
   setOpenWithdrawCG8: (value: boolean) => void;
   poolId: string;
@@ -32,20 +34,12 @@ const WithdrawItem = ({
   poolId,
   stakeId,
   setOpenWithdrawCG8,
+  price
 }) => {
   const navigate = useNavigate();
-  const [cg8Price, setCg8Price] = useState<any>();
-  console.log("is allowd is----->",isAllowed)
-  const fetchClaimtHistory = async () => {
-    try {
-      let price: any = await getMinAmountIn("1");
-      price = parseFloat(price).toFixed(2);
-      setCg8Price(price);
-    } catch (e) {
-      console.log("error is--->", e);
-    }
-  };
-  fetchClaimtHistory();
+ ;
+  console.log("is allowd is----->", isAllowed);
+ 
   return (
     <>
       {amount > 0 ? (
@@ -57,14 +51,13 @@ const WithdrawItem = ({
             </p>
             <p className="md:text-xs text-lg md:text-gray-500">
               ~$
-              {parseFloat((amount * cg8Price).toFixed(2)).toLocaleString(
+              {parseFloat((amount * price).toFixed(2)).toLocaleString(
                 undefined,
                 {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2,
                 }
               )}
-            
             </p>
           </div>
           <div>
@@ -111,19 +104,12 @@ const WithdrawModal = ({
   currency,
   setOpenWithdrawCG8,
   poolId,
+  price
 }) => {
-   const { address, isConnected } = useAccount();
-  const [cg8Price, setCg8Price] = useState<any>();
-  const fetchClaimtHistory = async () => {
-    try {
-      let price: any = await getMinAmountIn("1");
-      price = parseFloat(price).toFixed(2);
-      setCg8Price(price);
-    } catch (e) {
-      console.log("error is--->", e);
-    }
-  };
-  fetchClaimtHistory();
+  const { address, isConnected } = useAccount();
+ 
+ 
+ 
   return (
     <>
       <div className="fixed inset-0  bg-opacity-50 overflow-y-auto h-full w-full flex justify-center items-center ">
@@ -190,6 +176,7 @@ const WithdrawModal = ({
                       poolId={poolId}
                       stakeId={index}
                       setOpenWithdrawCG8={setOpenWithdrawCG8}
+                      price={price}
                     />
                   ))}
                 </div>
@@ -206,14 +193,13 @@ const WithdrawModal = ({
                     <span className="md:text-xs text-[12px] text-gray-600">
                       <span className="md:hidden"> (</span>
                       ~$
-                      {parseFloat((total * cg8Price).toFixed(2)).toLocaleString(
+                      {parseFloat((total * price).toFixed(2)).toLocaleString(
                         undefined,
                         {
                           minimumFractionDigits: 2,
                           maximumFractionDigits: 2,
                         }
                       )}
-                    
                       <span className="md:hidden">)</span>
                     </span>
                   </div>
@@ -221,7 +207,19 @@ const WithdrawModal = ({
                     <button
                       className="w-full  bg-teal-600 hover:bg-teal-600 text-white py-2 px-3  rounded-2xl md:text-xs"
                       onClick={async () => {
-                        await withdraw(poolId);
+                        let res=await withdraw(poolId);
+                        console.log("result of withdraw is---->",res);
+                         if (res.status == "success") {
+                           
+                            let data={
+                               walletAddress:address,
+                             withdrawAmount:total,
+                             poolId:poolId,
+                             transactionHash:res?.transactionHash
+                            }
+                            let withdraw=await addWithdrawHistory(address,total,poolId,res?.transactionHash)
+                         }
+
                       }}
                     >
                       Withdraw all
@@ -243,17 +241,21 @@ const WithdrawAll = ({
   poolId,
   poolTime,
 }: DepositCardProps) => {
-  console.log(poolTime)
+  console.log(poolTime);
   const { address, isConnected } = useAccount();
   const [stakeCount, setStakeCount] = useState(0);
   const [userStakes, setUserStakes] = useState([]);
   const [totalAmountToWithdraw, setTotalAmountToWithdraw] = useState(0);
-
+    const [cg8Price, setCg8Price] = useState<any>();
+  const myContext = useContext<any>(appContext);
   useEffect(() => {
     const getPoolDetails = async () => {
+      const price = myContext?.trade?.outputAmount.toExact();
+      setCg8Price(price)
+      console.log("price of cgd in withdraw all is", price);
       loader = true;
       const poolDetails = await getPoolDetailsWithPoolId(address, poolId);
-      console.log("pool details is----->",poolDetails);
+      console.log("pool details is----->", poolDetails);
 
       let stakeTime = Number(poolDetails[0][0]) / (24 * 60 * 60);
 
@@ -266,11 +268,10 @@ const WithdrawAll = ({
       let amount: number = 0;
 
       for (let i = 0; i < Number(count); i++) {
-
-        const data: any = await getUserAllStakesForPool(address, poolId , i);
-        console.log("data is again---->",data);
+        const data: any = await getUserAllStakesForPool(address, poolId, i);
+        console.log("data is again---->", data);
         let time = daysBetweenEpochAndNow(Number(data[3]));
-       
+
         if (time >= stakeTime) {
           amount = amount + parseFloat(convertToEther(data[0]).toString());
 
@@ -297,6 +298,7 @@ const WithdrawAll = ({
         currency="CG8"
         setOpenWithdrawCG8={setOpenWithdrawCG8} // Pass the function to the modal
         poolId={poolId}
+        price={cg8Price}
       />
     </>
   );

@@ -33,10 +33,8 @@ const Frame: FunctionComponent = () => {
   const [amountToClaim, setAmountToClaim] = useState(0);
   const [totalDeposit, setTotalDeposit] = useState<any>();
   const [cg8Price, setCg8Price] = useState<any>();
-const myContext = useContext<any>(appContext);
+  const myContext = useContext<any>(appContext);
   const settingsRef = useRef(null);
-
-  
 
   const closeSettings = () => {
     setSetting(false);
@@ -46,7 +44,7 @@ const myContext = useContext<any>(appContext);
       try {
         if (address && address != undefined) {
           const price: any = myContext?.trade?.outputAmount.toExact();
-         
+
           setCg8Price(price);
           let cg8Balance: any = await cGateBalance(address);
           cg8Balance = parseFloat(cg8Balance)?.toFixed(2);
@@ -356,113 +354,6 @@ const myContext = useContext<any>(appContext);
           </div>
 
           {/* ---------------------------------------------------1st C A R D   E N D   H E R E  ------------------- */}
-
-          {/* -------------------------------------2nd C A R D (side)  S T A R T   H E R E  ------------------- */}
-          {/* <div className=" bg-colors-white w-[100%]   md:w-[421px] md:h-[440p] overflow-hidden flex flex-col items-center justify-start shadow-xl border rounded-2xl bg-white text-sm ">
-            <div className="self-stretch flex flex-col items-start justify-center py-1 px-6 border-b-[1px] border-solid border-tertiary">
-              <div className="self-stretch flex flex-row items-center justify-end gap-[10px]">
-                <div className="flex-1  text-xl leading-[40px] font-body-b1-regular text-heading">
-                  General CG8 stats
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-col items-center justify-start p-6 gap-[1px] mt-[-10px] text-neutral-800 font-body-b1-regular">
-              <div className="self-stretch flex flex-row items-center justify-start py-1 px-0 md:gap-[24px]">
-                <div className="flex-1    inline-block h-[25px] ">
-                  CG8 price
-                </div>
-                <div className="flex flex-row items-center justify-start gap-[5px] text-right text-sub-heading">
-                  <div className="relativ  ">${cg8Price} USDC</div>
-                </div>
-              </div>
-              <div className="self-stretch flex flex-row items-center justify-start py-1 px-0 gap-[24px]">
-                <div className="flex-1  inline-block h-[25px] ">Market cap</div>
-                <div className="flex flex-row items-start justify-start text-right">
-                  <div className="relativ  ">$ 1.09M</div>
-                </div>
-              </div>
-              <div className="self-stretch flex flex-row items-center justify-start py-1 px-0 gap-[24px]">
-                <div className="flex-1  inline-block h-[25px] mix-blend-normal">
-                  Token holders
-                </div>
-                <div className="flex flex-row items-start justify-start text-right text-sub-heading">
-                  <div className="relativ leading-[24px] ">5,621</div>
-                </div>
-              </div>
-              <div className="flex flex-row items-center justify-start py-1 px-0 gap-[24px]">
-                <div className=" leading-[24px]  md:w-[294px] h-[25px]  ">
-                  Monthly CG8 Trade volume
-                </div>
-                <div className="flex flex-row items-start justify-start text-right text-sub-heading">
-                  <div className="relativ">
-                    <p className="m-0 ">8.1M</p>
-                    <p className="m-0 text-xs  text-colors-neutral-600">
-                      (~$ 8.1M)
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="self-stretch flex flex-row items-center justify-start py-1 px-0 gap-[24px]">
-                <div className="flex-1   inline-block h-[25px] mix-blend-normal">
-                  <span>{`Sales tax `}</span>
-                  <span className="[text-decoration:underline] text-colors-primary-600">
-                    (?)
-                  </span>
-                </div>
-                <div className="flex flex-row items-start justify-start text-right text-sub-heading">
-                  <div className=" leading-[24px] ">0%-50%</div>
-                </div>
-              </div>
-              <div className="self-stretch flex flex-row items-center justify-start py-1 px-0 gap-[24px]">
-                <div className="flex-1  leading-[24px]  inline-block h-[25px] mix-blend-normal">
-                  Total staked CG8
-                </div>
-                <div className="flex flex-row items-start justify-start text-right text-sub-heading">
-                  <div className=" leading-[24px]">
-                    <p className="m-0">
-                      <span>
-                        <span className="">{totalDeposit}</span>
-                      </span>
-                    </p>
-                    <p className="m-0 text-xs text-slategray">
-                      <span>
-                        <span className="font-body-b1-regular">{` `}</span>
-                      </span>
-                      <span className="">(~${totalDeposit * cg8Price})</span>
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="self-stretch flex flex-row items-center justify-start py-1 px-0 gap-[24px]">
-                <div className="flex-1  leading-[24px] inline-block h-[25px] mix-blend-normal">
-                  Total rewards USDC
-                </div>
-                <div className="flex flex-row items-start justify-start text-right text-sub-heading">
-                  <div className=" leading-[24px]">
-                    <p className="m-0 ">1.00</p>
-                    <p className="m-0 text-xs  text-slategray">(~$ 1.00)</p>
-                  </div>
-                </div>
-              </div>
-              <div className="self-stretch flex flex-row items-center justify-start py-1 px-0 gap-[24px]">
-                <div className="flex-1  leading-[24px]  inline-block h-[25px] mix-blend-normal">
-                  Max CG8 transaction size
-                </div>
-                <div className="flex flex-row items-start justify-start text-right text-sub-heading">
-                  <div className=" leading-[24px] ">10,000</div>
-                </div>
-              </div>
-              <div className="self-stretch flex flex-row items-center justify-start py-1 px-0 gap-[24px]">
-                <div className="flex-1  leading-[24px] mix-blend-normal">
-                  Highest staking APR
-                </div>
-                <div className="w-6 flex flex-row items-start justify-start text-right text-sub-heading">
-                  <div className="flex-1  leading-[24px]">5%</div>
-                </div>
-              </div>
-            </div>
-          </div> */}
-          {/* -------------------------------------2nd C A R D (side)  E N D  H E R E  ------------------- */}
         </div>
       </div>
       {openHistoryPrice ? (

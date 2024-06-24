@@ -377,8 +377,7 @@ const Deposite: React.FC = () => {
               <div className="md:grid md:grid-cols-2 gap-6 grid grid-cols-1 md:px-6 px-4 pb-4 ">
                 {pools?.map((value: any, idx: any) => (
                   <>
-                    {console.log("pool value is---->", value)}
-                    {console.log("pool index is------>", idx)}
+                  
                     {value[5] ? (
                       <div
                         key={idx}
@@ -1001,12 +1000,12 @@ const Deposite: React.FC = () => {
                 const res: any = await claimRewardForPool(poolId);
                 setTransactionHash(res.transactionHash);
                 if (res.status == "success") {
-                  // const claim = await addClaimHistory(
-                  //   address,
-                  //   claimAmount,
-                  //   poolId,
-                  //   res?.transactionHash
-                  // );
+                  const claim = await addClaimHistory(
+                    address,
+                    claimAmount,
+                    poolId,
+                    res?.transactionHash
+                  );
 
                   toast.success("Transaction Successfull");
 

@@ -1,11 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useAccount } from "wagmi";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { getDepositHistory } from "../../utils/apiServices";
-import { getMinAmountOut,getAmountOut,getMinAmountIn} from "../../utils/web3Utils";
-import { USDC_CONTRACT,TOKEN_CONTRACT } from "../../constants/contracts";
-
+import {
+  getMinAmountOut,
+  getAmountOut,
+  getMinAmountIn,
+} from "../../utils/web3Utils";
+import { USDC_CONTRACT, TOKEN_CONTRACT } from "../../constants/contracts";
+import { appContext } from "../../context/context.jsx";
 interface DepositeHistoryProps {
   setOpenDepositeHistory: (value: boolean) => void;
 }
@@ -18,6 +22,7 @@ type DepositeType = {
 };
 
 const DepositeHistory = ({ setOpenDepositeHistory }: DepositeHistoryProps) => {
+  const myContext = useContext<any>(appContext);
   const { address, isConnected } = useAccount();
   const [depositData, setDepositData] = useState<any>();
   const [cg8Price, setCg8Price] = useState<any>();
@@ -26,9 +31,9 @@ const DepositeHistory = ({ setOpenDepositeHistory }: DepositeHistoryProps) => {
     const fetchDepositHistory = async () => {
       try {
         if (address) {
-         let price: any = await getMinAmountIn("1");
-         price = parseFloat(price).toFixed(2);
-         setCg8Price(price);
+          const price = myContext?.trade?.outputAmount.toExact();
+          
+          setCg8Price(price);
           const data = await getDepositHistory(address);
           console.log("data of deposit history is--->", data);
           setDepositData(data);
@@ -105,7 +110,7 @@ const DepositeHistory = ({ setOpenDepositeHistory }: DepositeHistoryProps) => {
                   {entry.depositAmount}
                   {" CG8"}
                   <p className="md:text-xs ">
-                    ~({entry.depositAmount * cg8Price}) {" USDC"}
+                    ~({(entry.depositAmount * cg8Price).toFixed(5)}) {" USDC"}
                   </p>
                 </div>
 
