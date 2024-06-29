@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-const API_BASE_URL = "http://localhost:8000/api";
-// const API_BASE_URL = "http://api.cgate.app/api";
+// const API_BASE_URL = "http://localhost:8000/api";
+const API_BASE_URL = "http://api.cgate.app/api";
 
 import axios from "axios";
 
