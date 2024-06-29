@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.8;
+
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
@@ -87,12 +88,15 @@ contract StakingPoolV3 is Initializable, ReentrancyGuardUpgradeable {
     mapping(uint256 => Pool) public pools;
     mapping(address => mapping(uint256 => UserStake[])) public userStakes;
     mapping(address => address) public referrers;
+
     mapping(address => uint256) public specialReferrersPercents;
     mapping(address => UserInfo) public users;
     mapping(address => mapping(uint256 => uint256)) public usersStakesPerPool;
     mapping(address => bool) public signers;
     address public poolAddress;
-
+    mapping(address => mapping(uint256 => address[])) public referrals; // Update referrals mapping to include pool ID
+    mapping(address => mapping(address => mapping(uint256 => uint256))) public referrerRewards; // Update referrer rewards mapping to include pool ID
+   mapping(address => mapping(uint256 => address)) public poolReferrers;
     event OwnershipTransferProposed(address indexed newOwner);
     event VoteCasted(address indexed voter, bool approve);
 
@@ -132,9 +136,6 @@ contract StakingPoolV3 is Initializable, ReentrancyGuardUpgradeable {
         require(pools[poolId].isActive, "Pool Is Not Active");
         _;
     }
-
-    // Function to get the pair contract address
-    event Error(string message);
 
     function setPoolAddress(address _poolAddress) external onlyAdmin {
         poolAddress = _poolAddress;
@@ -193,7 +194,6 @@ contract StakingPoolV3 is Initializable, ReentrancyGuardUpgradeable {
         }
     }
 
-    // Function to get the pair contract address
     function getPair(
         address tokenA,
         address tokenB
@@ -205,7 +205,6 @@ contract StakingPoolV3 is Initializable, ReentrancyGuardUpgradeable {
         return pair;
     }
 
-    // Function to get the reserves from the pair contract
     function getReserves(
         address pair
     ) public view returns (uint112 reserve0, uint112 reserve1) {
@@ -214,12 +213,10 @@ contract StakingPoolV3 is Initializable, ReentrancyGuardUpgradeable {
         return (reserveA, reserveB);
     }
 
-    // Function to convert amount to Wei (if necessary)
     function convertToWei(uint256 amount) internal pure returns (uint256) {
         return amount * 1 ether; // Assuming 1 token = 1 ether, adjust accordingly
     }
 
-    // Function to convert amount to Ether
     function convertToEther(uint256 amount) internal pure returns (uint256) {
         return amount / 1 ether; // Assuming 1 token = 1 ether, adjust accordingly
     }
@@ -228,7 +225,6 @@ contract StakingPoolV3 is Initializable, ReentrancyGuardUpgradeable {
         IUniswapV3Pool pool = IUniswapV3Pool(poolAddress);
         uint160 sqrtPriceX96 = pool.slot0().sqrtPriceX96;
 
-        // Converting sqrtPriceX96 to uint256 for calculation
         uint256 sqrtPriceX96Uint = uint256(sqrtPriceX96);
         // Calculate the price using the formula provided
         uint256 price = (sqrtPriceX96Uint * sqrtPriceX96Uint * 1e18) /
@@ -241,13 +237,11 @@ contract StakingPoolV3 is Initializable, ReentrancyGuardUpgradeable {
         IUniswapV3Pool pool = IUniswapV3Pool(poolAddress);
         uint160 sqrtPriceX96 = pool.slot0().sqrtPriceX96;
 
-        // Converting sqrtPriceX96 to uint256 for calculation
         uint256 sqrtPriceX96Uint = uint256(sqrtPriceX96);
-        // Calculate the price using the formula provided
+
         uint256 price = (sqrtPriceX96Uint * sqrtPriceX96Uint * 1e18) /
             (1 << 192);
 
-        // Calculate the inverse price
         uint256 inversePrice = (1e36) / price;
 
         return inversePrice;
@@ -282,9 +276,6 @@ contract StakingPoolV3 is Initializable, ReentrancyGuardUpgradeable {
         Pool storage pool = pools[poolId];
         uint256 currentTime = block.timestamp;
 
-        // if (currentTime < userStake.stakeTime + pool.timePeriod) {
-        //         return 0;
-        // }
         uint256 stakedTime = currentTime - userStake.lastWithdrawTimestamp;
         uint256 reward = ((userStake.depositedValueInDollars * stakedTime) *
             pool.rewardPercentPerStakedTokenPerYear) /
@@ -351,10 +342,19 @@ contract StakingPoolV3 is Initializable, ReentrancyGuardUpgradeable {
                 .totalRewardWithdrawnTillNow,
             referralIncomeWithdrawnTillNow: users[msg.sender]
                 .referralIncomeWithdrawnTillNow,
-            totalReferrers: 0
+            totalReferrers: users[msg.sender].totalReferrers
         });
+
+        if (referrer != address(0)) {
+            // Record referral
+            if (poolReferrers[msg.sender][poolId] == address(0)) {
+                poolReferrers[msg.sender][poolId] = referrer;
+                referrals[referrer][poolId].push(msg.sender);
+                users[referrer].totalReferrers += 1;
+            }
+        }
+
         usersStakesPerPool[msg.sender][poolId] += _amount;
-        users[referrer].totalReferrers += 1;
     }
 
     function updateCurrentCgatePrice(uint256 newPrice) public onlyAdmin {
@@ -459,19 +459,19 @@ contract StakingPoolV3 is Initializable, ReentrancyGuardUpgradeable {
                         userStake.referrer
                     ];
                 }
-                if ((reward * refRewardPercent) / 10000 > 0) {
+                uint256 refReward = (reward * refRewardPercent) / 10000;
+                if (refReward > 0) {
                     require(
                         IERC20(pool.rewardToken).transfer(
                             userStake.referrer,
-                            (reward * refRewardPercent) / 10000
+                            refReward
                         ),
                         "Referral Reward transfer failed"
                     );
+                    referrerRewards[userStake.referrer][msg.sender][poolId] += refReward; // Update referrer rewards record
                 }
 
-                users[userStake.referrer].referralIncomeWithdrawnTillNow +=
-                    (reward * refRewardPercent) /
-                    10000;
+                users[userStake.referrer].referralIncomeWithdrawnTillNow += refReward;
             }
             users[msg.sender].totalRewardWithdrawnTillNow += reward;
 
@@ -506,18 +506,19 @@ contract StakingPoolV3 is Initializable, ReentrancyGuardUpgradeable {
                             userStake.referrer
                         ];
                     }
-                    if ((reward * refRewardPercent) / 10000 > 0) {
+                    uint256 refReward = (reward * refRewardPercent) / 10000;
+                    if (refReward > 0) {
                         require(
                             IERC20(pool.rewardToken).transfer(
                                 userStake.referrer,
-                                (reward * refRewardPercent) / 10000
+                                refReward
                             ),
                             "Referral Reward transfer failed"
                         );
+                        referrerRewards[userStake.referrer][msg.sender][poolId] += refReward; // Update referrer rewards record
                         users[userStake.referrer]
                             .referralIncomeWithdrawnTillNow +=
-                            (reward * refRewardPercent) /
-                            10000;
+                            refReward;
                     }
                 }
                 users[msg.sender].totalRewardWithdrawnTillNow += reward;
