@@ -42,7 +42,7 @@ interface IUniswapV3Pool {
     function slot0() external view returns (Slot0 memory);
 }
 
-contract StakingPoolV3 is Initializable, ReentrancyGuardUpgradeable {
+contract StakingPoolV4 is Initializable, ReentrancyGuardUpgradeable {
     using SafeERC20 for IERC20;
     address public admin;
     uint256 private poolIdCounter;
@@ -96,7 +96,7 @@ contract StakingPoolV3 is Initializable, ReentrancyGuardUpgradeable {
     address public poolAddress;
     mapping(address => mapping(uint256 => address[])) public referrals; // Update referrals mapping to include pool ID
     mapping(address => mapping(address => mapping(uint256 => uint256))) public referrerRewards; // Update referrer rewards mapping to include pool ID
-    mapping(address => mapping(uint256 => address)) public poolReferrers;
+   mapping(address => mapping(uint256 => address)) public poolReferrers;
     event OwnershipTransferProposed(address indexed newOwner);
     event VoteCasted(address indexed voter, bool approve);
 
@@ -346,7 +346,7 @@ contract StakingPoolV3 is Initializable, ReentrancyGuardUpgradeable {
         });
 
         if (referrer != address(0)) {
-            
+            // Record referral
             if (poolReferrers[msg.sender][poolId] == address(0)) {
                 poolReferrers[msg.sender][poolId] = referrer;
                 referrals[referrer][poolId].push(msg.sender);
@@ -651,29 +651,5 @@ contract StakingPoolV3 is Initializable, ReentrancyGuardUpgradeable {
 
     function setUSDCAddress(address _usdcAddress) external onlyAdmin {
         USDC_TOKEN_ADDRESS = _usdcAddress;
-    }
-
-    // New Functions
-
-    function getTotalReferralRewards(address user) external view returns (uint256) {
-        uint256 totalReferralRewards = 0;
-        for (uint256 poolId = 0; poolId < poolIdCounter; poolId++) {
-            for (uint256 i = 0; i < referrals[user][poolId].length; i++) {
-                totalReferralRewards += referrerRewards[user][referrals[user][poolId][i]][poolId];
-            }
-        }
-        return totalReferralRewards;
-    }
-
-    function getReferrals(address user, uint256 poolId) external view returns (address[] memory) {
-        return referrals[user][poolId];
-    }
-
-    function getTotalReferralRewardByReferrer(address user, address referrer) external view returns (uint256) {
-        uint256 totalReferralReward = 0;
-        for (uint256 poolId = 0; poolId < poolIdCounter; poolId++) {
-            totalReferralReward += referrerRewards[referrer][user][poolId];
-        }
-        return totalReferralReward;
     }
 }

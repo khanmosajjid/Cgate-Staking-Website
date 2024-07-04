@@ -18,7 +18,22 @@ const SwapHistory = ({ setOpenHistory, setSetting }: swapHistoryProps) => {
     };
     getHistory();
   }, []);
+  
+ function formatDate(isoString) {
+   const date = new Date(isoString);
 
+   const options:any = {
+     year: "numeric",
+     month: "long",
+     day: "numeric",
+     hour: "2-digit",
+     minute: "2-digit",
+     second: "2-digit",
+     timeZoneName: "short",
+   };
+
+   return date.toLocaleString("en-US", options);
+ }
  
   return (
     <div className="bg-white  mt-10 ml-5  w-[90%] mx-auto p-6 rounded-xl shadow-md  absolute lg:left-[400px] lg:top-[100px] top-[100px] lg:w-[49%] md:mx-auto  border ">
@@ -53,10 +68,10 @@ const SwapHistory = ({ setOpenHistory, setSetting }: swapHistoryProps) => {
             </span>
             <span>USDC-CG8</span>
             <div className="block">
-              <span className="block">{swap?.outAmount}</span>
+              <span className="block">{swap?.outAmount.toFixed(2)}</span>
               {/* <span className="text-xs">~${(swap?.inAmount)?.toFixed(2)}</span> */}
             </div>
-            <span>{swap?.dateTime}</span>
+            <span>{formatDate(swap?.dateTime)}</span>
           </div>
         </div>
       ))}

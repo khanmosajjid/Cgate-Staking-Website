@@ -60,6 +60,7 @@ const DepositeCG8: React.FC<DepositCardProps> = ({
       const days = Number(data[0]) / (24 * 60 * 60);
       setPoolId(data[10]);
       setPoolTime(days?.toFixed(0));
+      console.log("pool time is----->", days?.toFixed(0));
       const ref = localStorage.getItem("refAddress");
       if (ref) {
         setReferrer(ref);
@@ -158,6 +159,7 @@ const DepositeCG8: React.FC<DepositCardProps> = ({
 
       // transactionHash;
       console.log("res of deposit is--->", res);
+      
       // return;
       if (res.status == "success") {
         setTransactionId(res?.transactionHash);
@@ -166,7 +168,8 @@ const DepositeCG8: React.FC<DepositCardProps> = ({
           stakeAmount,
           poolId,
           res?.transactionHash,
-          referrer
+          referrer,
+          poolTime
         );
 
         toast.success("Transaction Successfull");

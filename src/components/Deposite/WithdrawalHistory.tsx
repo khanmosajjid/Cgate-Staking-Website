@@ -47,6 +47,22 @@ const WithdrawalHistory = ({
     console.log("Downloading CSV...");
   };
 
+  function formatDate(isoString) {
+    const date = new Date(isoString);
+
+    const options:any = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      timeZoneName: "short",
+    };
+
+    return date.toLocaleString("en-US", options);
+  }
+
   return (
     <div className="fixed inset-0 bg-gray-300 bg-opacity-50 flex justify-center  items-center p-4 px-2 ">
       <div className="bg-[#F5F6FE] rounded-xl shadow-lg overflow-auto md:w-[700px] w-[99%] p-4">
@@ -95,15 +111,15 @@ const WithdrawalHistory = ({
               >
                 <div>
                   <span className="md:block font-semibold md:font-normal">
-                    {item.withdrawAmount}
+                    {item.withdrawAmount.toFixed(2)} CG8
                   </span>
 
-                  <span className="md:text-xs font-semibold md:font-normal ml-2 md:ml-0">
-                    (~${(cg8Price * item.withdrawAmount).toFixed(2)})
+                  <span className="md:text-xs text-gray-600 md:font-normal ml-2 md:ml-0">
+                    ~${(cg8Price * item.withdrawAmount).toFixed(2)}
                   </span>
                 </div>
                 <span className="md:mr-20 font-light md:font-normal">
-                  {item.withdrawDate}
+                  {formatDate(item.withdrawDate)}
                 </span>
               </div>
             ))}

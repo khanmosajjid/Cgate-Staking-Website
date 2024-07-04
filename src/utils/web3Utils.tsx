@@ -375,7 +375,7 @@ export const getMaxTransactionAmount = async () => {
     data = data.toString();
 
     data = convertToEther(data);
-    data=addCommasToNumbers(data)
+    data = addCommasToNumbers(data);
 
     return data;
   } catch (e) {
@@ -652,7 +652,6 @@ export const withdraw = async (poolId) => {
       toast.success("Transaction Successfull");
 
       emitter.emit("loading", true);
-      
     } else {
       toast.error("Transaction Failed");
       emitter.emit("loading", true);
@@ -777,3 +776,51 @@ export async function addCommasToNumbers(number) {
   // Format the number with commas for thousands separators
   return parsedNumber.toLocaleString();
 }
+export const getReferralsOfUser = async (address) => {
+  try {
+    // Fetch total pools count
+    const totalPoolsCount = await getTotalPoolsCount();
+
+    // Initialize an array to hold all referrals
+    const allReferrals = [];
+
+    // Iterate over each pool and get referrals for the user
+    for (let poolId = 0; poolId < totalPoolsCount; poolId++) {
+      const data:any = await readContract({
+        address: STAKING_CONTRACT,
+        abi: StakingABI,
+        functionName: "getReferrals",
+        args: [address, poolId],
+      });
+
+      // Add the referrals for the current pool to the allReferrals array
+      allReferrals.push(...data);
+    }
+
+    // Calculate total referral rewards for each referral
+    const referralRewards = [];
+    for (const referral of allReferrals) {
+      const reward = await getTotalReferralRewardsByReferrer(address, referral);
+      referralRewards.push({ referral, reward });
+    }
+
+    return referralRewards;
+  } catch (e) {
+    console.log("error in getReferralsOfUser is--->", e);
+  }
+};
+
+export const getTotalReferralRewardsByReferrer = async (referrer, referral) => {
+  try {
+    const data = await readContract({
+      address: STAKING_CONTRACT,
+      abi: StakingABI,
+      functionName: "getTotalReferralRewardByReferrer",
+      args: [referral,referrer],
+    });
+
+    return data;
+  } catch (e) {
+    console.log("error in getTotalReferralRewardsByReferrer is--->", e);
+  }
+};

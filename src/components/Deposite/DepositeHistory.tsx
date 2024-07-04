@@ -32,7 +32,7 @@ const DepositeHistory = ({ setOpenDepositeHistory }: DepositeHistoryProps) => {
       try {
         if (address) {
           const price = myContext?.trade?.outputAmount.toExact();
-          
+
           setCg8Price(price);
           const data = await getDepositHistory(address);
           console.log("data of deposit history is--->", data);
@@ -44,6 +44,22 @@ const DepositeHistory = ({ setOpenDepositeHistory }: DepositeHistoryProps) => {
     };
     fetchDepositHistory();
   }, [address]);
+
+  function formatDate(isoString) {
+    const date = new Date(isoString);
+
+    const options:any = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      timeZoneName: "short",
+    };
+
+    return date.toLocaleString("en-US", options);
+  }
 
   const downloadCSV = () => {
     const csvContent =
@@ -92,43 +108,42 @@ const DepositeHistory = ({ setOpenDepositeHistory }: DepositeHistoryProps) => {
           </svg>
         </span>
       </div>
-      <div className=" gap-4 mt-5 pr-10 pl-5 ">
-        <div className="md:flex justify-between bg-[#F5F6FE] p-3 px-5  rounded-3xl md:w-[600px] hidden">
-          <div className="font-medium mr-6">Amount</div>
-          <div className="font-medium">Deposited on date/time</div>
-          <div className="font-medium">Maturity on date/time</div>
-        </div>
-        <div className="">
-          {depositData?.map((entry, idx) => (
-            <>
-              <div className="md:flex justify-between py-5 px-3 ">
-                <div
-                  key={idx + "amount"}
-                  className="md:block flex text-[16px] font-semibold"
-                >
-                  <span className="md:hidden mr-1">Amount: </span>{" "}
-                  {entry.depositAmount}
-                  {" CG8"}
-                  <p className="md:text-xs ">
-                    ~({(entry.depositAmount * cg8Price).toFixed(5)}) {" USDC"}
-                  </p>
-                </div>
-
-                <div key={idx + "date"} className="block text-sm ">
-                  <span className="text-sm md:hidden">Deposited on: </span>{" "}
-                  {entry.depositDate}
-                </div>
-
-                <div key={idx + "maturitydate"} className="block text-sm">
-                  <span className="text-sm md:hidden">Maturity on: </span>{" "}
-                  {entry.maturitydatetime}
-                </div>
-              </div>
-              <hr />
-            </>
-          ))}
+      <div className="gap-4 mt-5 pr-10 pl-5">
+        <div className="bg-[#F5F6FE] p-3 px-5 rounded-3xl md:w-[600px]">
+          <table className="w-full table-auto">
+            <thead>
+              <tr className="bg-[#F5F6FE]">
+                <th className="font-medium p-3 text-left">Amount</th>
+                <th className="font-medium p-3 text-left">
+                  Deposited on date/time
+                </th>
+                <th className="font-medium p-3 text-left">
+                  Maturity on date/time
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {depositData?.map((entry, idx) => (
+                <tr key={idx} className="border-t">
+                  <td className="p-3 text-[16px]">
+                    {entry.depositAmount.toFixed(2)} CG8
+                    <p className="text-xs text-gray-600">
+                      ~${(entry.depositAmount * cg8Price).toFixed(2)} USDC
+                    </p>
+                  </td>
+                  <td className="p-3 text-sm">
+                    {formatDate(entry.depositDate)}
+                  </td>
+                  <td className="p-3 text-sm">
+                    {formatDate(entry.maturityDate)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
+
       <button
         onClick={downloadCSV}
         className="bg-teal-600 hover:bg-blue-700 text-white font-light text-sm md:py-2 p-4 md:w-[224px] w-full py-4 rounded-3xl mt-5"

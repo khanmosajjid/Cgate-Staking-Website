@@ -8,7 +8,7 @@ import bg from "../../assets/Master-bg.svg";
 
 import { fallback } from "viem";
 import { useAccount } from "wagmi";
-import { userDetails, convertToEther } from "../../utils/web3Utils";
+import { userDetails, convertToEther,getReferralsOfUser } from "../../utils/web3Utils";
 import { useLocation } from "react-router-dom";
 
 const Referral: FunctionComponent = () => {
@@ -19,6 +19,7 @@ const Referral: FunctionComponent = () => {
   const [referrerReward, setReferralReward] = useState<any>(0);
   const settingsRef = useRef(null);
   const [copied, setCopied] = useState(false);
+  const [referrals, setReferrals] = useState([]);
 
   const referralLink = `${window.location.origin}${window.location.pathname}?ref=${address}`;
   const query = new URLSearchParams(location.search);
@@ -36,6 +37,9 @@ const Referral: FunctionComponent = () => {
       }
       if (isConnected) {
         const user: any = await userDetails(address);
+        const referralData = await getReferralsOfUser(address);
+         setReferrals(referralData);
+        console.log("referral are---->", referralData);
         console.log("user details---->", user);
         const res: any = convertToEther(Number(user[1]));
         const ref: any = convertToEther(Number(user[3]));
@@ -44,7 +48,7 @@ const Referral: FunctionComponent = () => {
         setTotalReferrer(Number(user[4]));
       }
     })();
-    // getPoolsCount();
+    
   }, [address]);
   const copyToClipboard = async () => {
     try {
@@ -235,7 +239,6 @@ const Referral: FunctionComponent = () => {
               <h1 className="text-4xl font-semibold mt-4">
                 ${referrerReward} USDC
               </h1>
-             
             </div>
           </div>
         </div>
@@ -310,106 +313,44 @@ const Referral: FunctionComponent = () => {
               </svg>
             </button>
           </div>
-          <div className="self-stretch flex flex-col  items-start justify-start gap-[4px] text-sm text-neutral-800">
-            <div className="self-stretch rounded-3xl items-center bg-[#F5F6FE] flex flex-row justify-start gap-[24px]">
-              <div className="flex-1 md:flex flex-col items-start justify-start hidden">
-                <div className="self-stretch overflow-hidden flex flex-row items-start justify-start p-3 text-base text-black">
-                  <div className="relative leading-[14px] font-medium">
+          <div className="self-stretch flex flex-col items-start justify-start gap-[4px] text-sm text-neutral-800">
+            <table className="self-stretch table-auto text-left text-sm">
+              <thead className="bg-[#F5F6FE]">
+                <tr>
+                  <th className="p-3 text-base text-black leading-[14px] font-medium">
                     Wallet
-                  </div>
-                </div>
-              </div>
-              <div className="flex-1 md:flex  items-start justify-start hidden">
-                <div className="self-stretch overflow-hidden flex flex-row items-start justify-start p-3 text-base text-black">
-                  <div className="relative leading-[24px] font-medium">
+                  </th>
+                  <th className="p-3 text-base text-black leading-[24px] font-medium">
                     Collected rewards
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="self-stretch md:flex flex flex-col-reverse md:flex-row text-left md:items-center justify-start md:gap-[24px] text-sm">
-              <div className="flex-1 flex flex-col items-start justify-start">
-                <div className="self-stretch overflow-hidden flex flex-row items-center justify-start p-3 md:gap-[8px] text-base text-black">
-                  <div className="h-component-small flex flex-col items-start justify-center md:gap-[4px] ">
-                    <div className="relative leading-[10px]">
-                      0xy543ca...8h432576
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="flex-1 flex flex-col items-start justify-start">
-                <div className="self-stretch overflow-hidden flex flex-row items-center justify-start p-3 md:gap-[8px] text-base text-basic-black">
-                  <div className="h-component-small flex flex-col items-start justify-center gap-[4px]">
-                    <div className="relative flex md:block font-semibold md:font-normal">
-                      <p className="m-0 leading-[24px]">
-                        <span className="md:hidden">Collected</span> 10.00 USDC
-                      </p>
-                      <p className="m-0 md:text-xs md:leading-[16px] leading-[24px]">
-                        ~$10.00
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {referrals.map((referral, index) => (
+                  <tr
+                    key={index}
+                    className="border-b border-greys-blue-gray-200"
+                  >
+                    <td className="p-3">
+                      <div className="leading-[10px]">{referral.referral}</div>
+                    </td>
+                    <td className="p-3">
+                      <div className="font-semibold leading-[24px]">
+                   
+                        <p className="m-0 text-xs leading-[16px]">
+                          ~$ {convertToEther(referral.reward.toString())} USDC
+                        </p>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
 
-            <div className="self-stretch relative bg-gray-200 box-border h-1px border-[1px] border-solid border-gray-200" />
-            <div className="self-stretch md:flex flex flex-col-reverse md:flex-row text-left md:items-center justify-start md:gap-[24px] text-sm">
-              <div className="flex-1 flex flex-col items-start justify-start">
-                <div className="self-stretch overflow-hidden flex flex-row items-center justify-start p-3 md:gap-[8px] text-base text-black">
-                  <div className="h-component-small flex flex-col items-start justify-center md:gap-[4px] ">
-                    <div className="relative leading-[10px]">
-                      0xy543ca...8h432576
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="flex-1 flex flex-col items-start justify-start">
-                <div className="self-stretch overflow-hidden flex flex-row items-center justify-start p-3 md:gap-[8px] text-base text-basic-black">
-                  <div className="h-component-small flex flex-col items-start justify-center gap-[4px]">
-                    <div className="relative flex md:block font-semibold md:font-normal">
-                      <p className="m-0 leading-[24px]">
-                        <span className="md:hidden">Collected</span> 10.00 USDC
-                      </p>
-                      <p className="m-0 md:text-xs md:leading-[16px] leading-[24px]">
-                        (~$10.00)
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="self-stretch relative bg-greys-blue-gray-200 box-border h-px border-[1px] border-solid border-greys-blue-gray-200" />
-            <div className="self-stretch md:flex flex flex-col-reverse md:flex-row text-left md:items-center justify-start md:gap-[24px] text-sm">
-              <div className="flex-1 flex flex-col items-start justify-start">
-                <div className="self-stretch overflow-hidden flex flex-row items-center justify-start p-3 md:gap-[8px] text-base text-black">
-                  <div className="h-component-small flex flex-col items-start justify-center md:gap-[4px] ">
-                    <div className="relative leading-[10px]">
-                      0xy543ca...8h432576
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="flex-1 flex flex-col items-start justify-start">
-                <div className="self-stretch overflow-hidden flex flex-row items-center justify-start p-3 md:gap-[8px] text-base text-basic-black">
-                  <div className="h-component-small flex flex-col items-start justify-center gap-[4px]">
-                    <div className="relative flex md:block font-semibold md:font-normal">
-                      <p className="m-0 leading-[24px]">
-                        <span className="md:hidden">Collected</span> 10.00 USDC
-                      </p>
-                      <p className="m-0 md:text-xs md:leading-[16px] leading-[24px]">
-                        (~$10.00)
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
             <div className="self-stretch relative bg-greys-blue-gray-200 box-border h-px border-[1px] border-solid border-greys-blue-gray-200" />
           </div>
           <div className="self-stretch  text-gray-600 text-sm mt-3">
-            Referred by: 0xy543ca...8h432576
+            Referred by: {address}
           </div>
         </div>
       ) : (

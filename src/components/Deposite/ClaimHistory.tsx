@@ -45,6 +45,24 @@ const ClaimHistory = ({ setOpenClaimHistory }: ClaimHistoryProps) => {
     link.click();
   };
 
+
+   function formatDate(isoString) {
+     const date = new Date(isoString);
+
+     const options:any = {
+       year: "numeric",
+       month: "long",
+       day: "numeric",
+       hour: "2-digit",
+       minute: "2-digit",
+       second: "2-digit",
+       timeZoneName: "short",
+     };
+
+     return date.toLocaleString("en-US", options);
+   }
+
+
   return (
     <div className="bg-white p-5 rounded-lg shadow-md lg:w-[570px]  py-8 ml-2 w-[380px]">
       <div className="flex justify-between items-center  ">
@@ -100,7 +118,7 @@ const ClaimHistory = ({ setOpenClaimHistory }: ClaimHistoryProps) => {
                 </div>
 
                 <div key={idx + "date"} className="block">
-                  {entry?.claimDate}
+                  {formatDate(entry?.claimDate)}
                 </div>
               </div>
               <hr />
