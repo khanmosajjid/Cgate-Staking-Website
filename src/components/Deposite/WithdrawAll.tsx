@@ -36,8 +36,9 @@ const WithdrawItem = ({
   setOpenWithdrawCG8,
   price
 }) => {
+   const { address, isConnected } = useAccount();
   const navigate = useNavigate();
- ;
+ 
   console.log("is allowd is----->", isAllowed);
  
   return (
@@ -72,6 +73,12 @@ const WithdrawItem = ({
               className="mt-1 md:mt-0 bg-teal-600 hover:bg-teal-700 text-white text-[12px] py-1.5 px-5 rounded-2xl"
               onClick={async () => {
                 let res = await withdrawPerStake(poolId, amount, stakeId);
+                let withdraw = await addWithdrawHistory(
+                  address,
+                  amount,
+                  poolId,
+                  res?.transactionHash
+                );
                 console.log("res is----->", res);
                 if (res.status == "success") {
                   setOpenWithdrawCG8(false);

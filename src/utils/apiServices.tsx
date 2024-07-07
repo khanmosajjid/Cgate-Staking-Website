@@ -1,8 +1,26 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // const API_BASE_URL = "http://localhost:8000/api";
 const API_BASE_URL = "https://api.cgate.app/api";
+const BSC_API_KEY = "MF2AM8D1Q77SX1TTFACVHMUKUC8BN4GB6Y";
+import { TOKEN_CONTRACT } from "../constants/contracts";
 
 import axios from "axios";
+
+export const getTokenHoldersCount = async () => {
+  try {
+    const response = await axios.get(
+      `https://api.bscscan.com/api?module=token&action=tokenholderlist&contractaddress=${TOKEN_CONTRACT}&page=1&offset=10&apikey=${BSC_API_KEY}`
+    );
+
+    // Extract the number of holders from the response
+    const holders = response.data.result;
+    console.log("token holders are------>", holders);
+    return holders.length; // Assuming the API returns an array of holders
+  } catch (error) {
+    console.error("Error fetching token holders:", error);
+    return null;
+  }
+};
 
 export async function loginUser(
   walletAddress,
@@ -46,7 +64,7 @@ export const addDepositHistory = async (
         poolId,
         transactionHash,
         referrer,
-        maturitydate
+        maturitydate,
       }
     );
     return response.data;
@@ -175,6 +193,19 @@ export const getWithdrawHistory = async (
         params: { walletAddress, page, limit },
       }
     );
+    return response.data;
+  } catch (error) {
+    console.error("Error getting withdraw history:", error);
+    throw error;
+  }
+};
+export const getAllPoolRewards = async (
+ 
+) => {
+  try {
+    const response = await axios.get(
+      `${API_BASE_URL}/history/getPoolRewards`);
+      console.log("get pool rewards", response.data);
     return response.data;
   } catch (error) {
     console.error("Error getting withdraw history:", error);

@@ -767,6 +767,24 @@ export const isPoolActive = async (poolId) => {
     return false;
   }
 };
+export const totalTokenSupply = async () => {
+  try {
+    // emitter.emit("loading", true);
+    const data: any = await readContract({
+      address: TOKEN_CONTRACT,
+      abi: TokenABI,
+      functionName: "totalSupply",
+      args: [],
+    });
+    console.log("total token supply is ---->>>", data);
+
+    return convertToEther(data);
+  } catch (e) {
+    const detailsIndex = e?.message.indexOf("Details:");
+    const detailsPart = e?.message.substring(detailsIndex);
+    return false;
+  }
+};
 export async function addCommasToNumbers(number) {
   const parsedNumber = parseFloat(number);
 
@@ -786,7 +804,7 @@ export const getReferralsOfUser = async (address) => {
 
     // Iterate over each pool and get referrals for the user
     for (let poolId = 0; poolId < totalPoolsCount; poolId++) {
-      const data:any = await readContract({
+      const data: any = await readContract({
         address: STAKING_CONTRACT,
         abi: StakingABI,
         functionName: "getReferrals",
@@ -816,11 +834,45 @@ export const getTotalReferralRewardsByReferrer = async (referrer, referral) => {
       address: STAKING_CONTRACT,
       abi: StakingABI,
       functionName: "getTotalReferralRewardByReferrer",
-      args: [referral,referrer],
+      args: [referral, referrer],
     });
 
     return data;
   } catch (e) {
     console.log("error in getTotalReferralRewardsByReferrer is--->", e);
+  }
+};
+
+export const getHighestAPR = async () => {
+  try {
+    let highestApr = 0;
+    let totalStakes=0;
+    let poolDetails = [];
+    const totalPools = await getTotalPoolsCount();
+    for (let i = 0; i < totalPools; i++) {
+      const data: any = await readContract({
+        address: STAKING_CONTRACT,
+        abi: StakingABI,
+        functionName: "pools",
+        args: [i],
+      });
+      console.log("pool details is---->", data);
+      let apr = data[3].toString();
+      let poolStaked = data[6].toString();
+      console.log("pool staked is ----->", poolStaked);
+      poolStaked = convertToEther(poolStaked);
+      totalStakes += parseFloat(poolStaked);
+      apr = apr / 100;
+
+      if (apr > highestApr) {
+        highestApr = apr;
+        console.log("highest apr is------>", highestApr);
+      }
+    }
+    poolDetails.push(highestApr);
+    poolDetails.push(totalStakes);
+    return poolDetails;
+  } catch (e) {
+    console.log("error in get highest apr", e);
   }
 };

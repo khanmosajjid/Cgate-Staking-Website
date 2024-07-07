@@ -5,15 +5,16 @@ import X from "./assets/X.svg";
 import arrow from "./assets/arrow-up-line.svg";
 import graph from "./assets/Line Graph.png";
 import {
-  getAmountOut,
-  getMinAmountIn,
   userDetails,
   convertToEther,
   getMaxTransactionAmount,
+  totalTokenSupply,
+  getHighestAPR,
 } from "../../utils/web3Utils";
 import { TOKEN_CONTRACT, USDC_CONTRACT } from "../../constants/contracts";
 import { appContext } from "../../context/context.jsx";
 import { useAccount } from "wagmi";
+import { getTokenHoldersCount,getAllPoolRewards } from "../../utils/apiServices.js";
 
 interface HistoryCardProp {
   setopenHistoryPrice: (value: boolean) => void;
@@ -35,11 +36,14 @@ const HistoricalPrice = ({
   const [week, setWeek] = useState(false);
   const [month, setMonth] = useState(false);
   const [year, setYear] = useState(false);
-  const [showHistory, setShowHistory] = useState(false);
+  const [marketCap, setMarketCap] = useState(0);
   const myContext = useContext<any>(appContext);
   const { isConnected, address } = useAccount();
   const [totalDeposit, setTotalDeposit] = useState<any>();
   const [maxTransactionAmount, setMaxTransactionAmount] = useState<any>();
+  const [holdersCount, setHoldersCount] = useState(null);
+  const [highestAPR, setHighestAPR] = useState(null);
+  const [poolReward,setPoolReward]=useState(null);
 
   useEffect(() => {
     const getCG8Balance = async () => {
@@ -48,10 +52,23 @@ const HistoricalPrice = ({
       setCg8Price(price);
       const user: any = await userDetails(address);
       const res: any = convertToEther(Number(user[1]));
-      setTotalDeposit(parseFloat(res).toFixed(2));
+      
       const maxAmount = await getMaxTransactionAmount();
       setMaxTransactionAmount(maxAmount);
-      console.log("maxAmount is", maxAmount);
+
+      const totalSupply: any = await totalTokenSupply();
+      const marketCaps = totalSupply * price;
+
+      setMarketCap(marketCaps);
+      const count = await getTokenHoldersCount();
+      setHoldersCount(count);
+      const poolDetails = await getHighestAPR();
+      console.log("pool details is----->", poolDetails);
+      setHighestAPR(poolDetails[0]);
+      setTotalDeposit(poolDetails[1]);
+      const poolRewards=await getAllPoolRewards();
+      
+      setPoolReward(poolRewards?.totalClaimAmount);
     };
     getCG8Balance();
   }, [address]);
@@ -288,7 +305,7 @@ const HistoricalPrice = ({
               Market cap
             </div>
             <div className="flex flex-row items-start justify-start text-right">
-              <div className="relative  ">$0</div>
+              <div className="relative  ">${marketCap.toFixed(2)}</div>
             </div>
           </div>
           <div className="self-stretch flex flex-row items-center justify-start py-1 px-0 gap-[24px]">
@@ -296,7 +313,7 @@ const HistoricalPrice = ({
               Token holders
             </div>
             <div className="flex flex-row items-start justify-start text-right text-sub-heading">
-              <div className="relative leading-[24px] ">0</div>
+              <div className="relative leading-[24px] ">{holdersCount}</div>
             </div>
           </div>
           <div className="flex flex-row items-center justify-start py-1 px-0 gap-[24px]">
@@ -315,7 +332,9 @@ const HistoricalPrice = ({
               Highest staking APR
             </div>
             <div className="w-6 flex flex-row items-start justify-start text-right text-sub-heading">
-              <div className="flex-1 relative leading-[24px]">5%</div>
+              <div className="flex-1 relative leading-[24px]">
+                {highestAPR}%
+              </div>
             </div>
           </div>
           <div className="self-stretch flex flex-row items-center justify-start py-1 px-0 gap-[24px]">
@@ -331,7 +350,9 @@ const HistoricalPrice = ({
                 </p>
                 <p className="m-0 text-xs ">
                   <span></span>
-                  <span className="">~${totalDeposit * cg8Price}</span>
+                  <span className="">
+                    ~${(totalDeposit * cg8Price)?.toFixed(2)}
+                  </span>
                 </p>
               </div>
             </div>
@@ -342,8 +363,8 @@ const HistoricalPrice = ({
             </div>
             <div className="flex flex-row items-start justify-start text-right text-sub-heading">
               <div className="relative leading-[24px]">
-                <p className="m-0 ">1.00 USDC</p>
-                <p className="m-0 text-xs  text-slategray">~$1.00</p>
+                <p className="m-0 ">~${poolReward?.toFixed(2)} USDC</p>
+            
               </div>
             </div>
           </div>
@@ -352,7 +373,9 @@ const HistoricalPrice = ({
               Max CG8 trans. size
             </div>
             <div className="flex flex-row items-start justify-start text-right text-sub-heading">
-              <div className="relative leading-[24px] ">{maxTransactionAmount} CG8</div>
+              <div className="relative leading-[24px] ">
+                {maxTransactionAmount} CG8
+              </div>
             </div>
           </div>
         </div>

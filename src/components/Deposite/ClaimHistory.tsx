@@ -110,11 +110,9 @@ const ClaimHistory = ({ setOpenClaimHistory }: ClaimHistoryProps) => {
                   key={idx + "amount"}
                   className="md:block flex text-[16px] font-semibold leading-6"
                 >
-                  {entry?.claimAmount.toFixed(2)}
-                  {" CG8"}
-                  <p className="md:text-xs text-[16px] font-semibold">
-                    ~({(entry?.claimAmount * cg8Price).toFixed(2)}) {" USDC"}
-                  </p>
+                  ~${entry?.claimAmount.toFixed(2)}
+                  {" USDC"}
+                
                 </div>
 
                 <div key={idx + "date"} className="block">

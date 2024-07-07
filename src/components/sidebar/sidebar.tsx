@@ -8,7 +8,7 @@ import twt from "../../assets/twt.svg"; // Import your icon
 import vertor2 from "../../assets/Vector2.svg"; // Import
 
 import cg8 from "../../assets/CG8.svg";
-import {appContext} from '../../context/context.jsx'
+import { appContext } from "../../context/context.jsx";
 const Sidebar = () => {
   // const [state, setState] = useState(true);
   const location = useLocation(); // Added line
@@ -16,13 +16,16 @@ const Sidebar = () => {
   const myContext = useContext<any>(appContext);
   useEffect(() => {
     const getCG8Balance = async () => {
-      console.log(myContext)
+   
       const price = myContext?.trade?.outputAmount.toExact();
-      //  let price = myContext
-      //  price = parseFloat(price).toFixed(2);
-       setCg8Price(price);
+
+      setCg8Price(price);
     };
-    getCG8Balance();
+
+    const interval = setInterval(getCG8Balance, 500);
+
+    // Cleanup the interval on component unmount
+    return () => clearInterval(interval);
   }, [myContext]);
   let colorhome = "#475568";
   let colordashboard = "#475568";

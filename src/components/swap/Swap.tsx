@@ -120,8 +120,8 @@ const Swap: FunctionComponent = () => {
     let value = e.target.value;
     if (value == "") {
       console.log("empty value", value);
-      setCg8Value(0);
-      setUsdcValue(0);
+      setCg8Value("");
+      setUsdcValue("");
       return;
     }
     console.log("value is------->", value, typeof value);
@@ -161,8 +161,8 @@ const Swap: FunctionComponent = () => {
         setUsdcValue(Number(data3));
         if (parseFloat(data3) > parseFloat(usdcBalance.toString())) {
           setInsufficientUSDC(true);
-          setCg8Value(0.0);
-          setUsdcValue(0.0);
+          setCg8Value("");
+          setUsdcValue("");
           return;
         } else {
           setInsufficientUSDC(false);
@@ -190,8 +190,8 @@ const Swap: FunctionComponent = () => {
         if (data3 > cg8Balance) {
           setInsufficientUSDC(false);
           setInsufficientCG8(true);
-          setCg8Value(0.0);
-          setUsdcValue(0.0);
+          setCg8Value("");
+          setUsdcValue("");
           return;
         } else {
           setInsufficientCG8(false);
@@ -213,8 +213,8 @@ const Swap: FunctionComponent = () => {
     let value = e.target.value;
    if (value == ""||parseInt(value)==0) {
      console.log("empty value", value);
-     setCg8Value(0);
-     setUsdcValue(0);
+     setCg8Value("");
+     setUsdcValue("");
      return;
    }
     value = value.replace(/[^0-9.]/g, "").replace(/(\..*)\./g, "$1");
@@ -242,8 +242,8 @@ const Swap: FunctionComponent = () => {
         setCg8Value(data2);
         if (value > usdcBalance) {
           setInsufficientUSDC(true);
-          setCg8Value(0.0);
-          setUsdcValue(0.0);
+          setCg8Value("");
+          setUsdcValue("");
           return;
         } else {
           setInsufficientUSDC(false);
@@ -261,8 +261,8 @@ const Swap: FunctionComponent = () => {
         setCg8Value(data2);
         if (value > cg8Balance) {
           setInsufficientCG8(true);
-          setCg8Value(0.0);
-          setUsdcValue(0.0);
+          setCg8Value("");
+          setUsdcValue("");
           return;
         } else {
           setInsufficientCG8(false);
@@ -283,27 +283,27 @@ const Swap: FunctionComponent = () => {
       setLoader(true);
       let res1 = await myContext?.getBestRoute(usdcValue, "USDC", 0);
       let res2 = await myContext?.swap(address, res1);
-
+      console.log("res of cg8 buy is---->",res2)
       if (res2.status == "success") {
         toast.success("Transaction Successfull");
         const swap = await addSwapHistory(address, cg8Value, usdcValue);
 
-        setCg8Value(0);
-        setUsdcValue(0);
+        setCg8Value("");
+        setUsdcValue("");
         setLoader(false);
         window.location.reload();
       } else {
         toast.error("Transaction Failed");
         setLoader(false);
-        setCg8Value(0);
-        setUsdcValue(0);
-        // window.location.reload();
+        setCg8Value("");
+        setUsdcValue("");
+        
       }
     } catch (e) {
       setLoader(false);
-      setCg8Value(0);
-      setUsdcValue(0);
-      // window.location.reload();
+      setCg8Value("");
+      setUsdcValue("");
+     
     }
   };
   const buyUSDC = async () => {
@@ -318,21 +318,21 @@ const Swap: FunctionComponent = () => {
         toast.success("Transaction Successfull");
         const swap = await addSwapHistory(address, usdcValue, cg8Value);
         console.log("swap api response", swap);
-        setCg8Value(0);
-        setUsdcValue(0);
+        setCg8Value("");
+        setUsdcValue("");
         setLoader(false);
         window.location.reload();
       } else {
         toast.error("Transaction Failed");
         setLoader(false);
-        setCg8Value(0);
-        setUsdcValue(0);
+        setCg8Value("");
+        setUsdcValue("");
         // window.location.reload();
       }
     } catch (e) {
       setLoader(false);
-      setCg8Value(0);
-      setUsdcValue(0);
+      setCg8Value("");
+      setUsdcValue("");
       // window.location.reload();
     }
   };
