@@ -675,7 +675,7 @@ export const withdraw = async (poolId) => {
     }
     console.log("after transactin finished", res);
     emitter.emit("loading", false);
-    window.location.reload();
+    // window.location.reload();
     return res;
   } catch (e) {
     console.log("error is---->", e, typeof e.message);
@@ -708,7 +708,7 @@ export const withdrawPerStake = async (poolId, amount, stakeId) => {
       toast.success("Transaction Successful");
 
       emitter.emit("loading", true);
-      window.location.reload();
+      // window.location.reload();
     } else {
       toast.error("Transaction Failed");
       emitter.emit("loading", true);

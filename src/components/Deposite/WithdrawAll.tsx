@@ -73,18 +73,22 @@ const WithdrawItem = ({
               className="mt-1 md:mt-0 bg-teal-600 hover:bg-teal-700 text-white text-[12px] py-1.5 px-5 rounded-2xl"
               onClick={async () => {
                 let res = await withdrawPerStake(poolId, amount, stakeId);
-                let withdraw = await addWithdrawHistory(
-                  address,
-                  amount,
-                  poolId,
-                  res?.transactionHash
-                );
+                
                 console.log("res is----->", res);
+
                 if (res.status == "success") {
+                  let withdraw = await addWithdrawHistory(
+                    address,
+                    amount,
+                    poolId,
+                    res?.transactionHash
+                  );
+                  console.log("withdrw result is---->", withdraw);
                   setOpenWithdrawCG8(false);
+                  
                 }
                 // window.location.reload();
-                navigate("/deposit");
+                // navigate("/deposit");
               }}
             >
               Withdraw
@@ -215,18 +219,22 @@ const WithdrawModal = ({
                       className="w-full  bg-teal-600 hover:bg-teal-600 text-white py-2 px-3  rounded-2xl md:text-xs"
                       onClick={async () => {
                         let res=await withdraw(poolId);
-                        console.log("result of withdraw is---->",res);
-                         if (res.status == "success") {
-                           
-                            let data={
-                               walletAddress:address,
-                             withdrawAmount:total,
-                             poolId:poolId,
-                             transactionHash:res?.transactionHash
-                            }
-                            let withdraw=await addWithdrawHistory(address,total,poolId,res?.transactionHash)
-                         }
-
+                        // console.log("result of withdraw is---->",res);
+                        if (res.status == "success") {
+                          // let data = {
+                          //   walletAddress: address,
+                          //   withdrawAmount: total,
+                          //   poolId: poolId,
+                          //   transactionHash: res?.transactionHash,
+                          // };
+                          let withdraw = await addWithdrawHistory(
+                            address,
+                            total,
+                            poolId,
+                            res?.transactionHash
+                          );
+                          console.log("withdraw all result is", withdraw);
+                        }
                       }}
                     >
                       Withdraw all

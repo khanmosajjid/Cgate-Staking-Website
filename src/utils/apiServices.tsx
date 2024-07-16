@@ -165,6 +165,13 @@ export const addWithdrawHistory = async (
   transactionHash
 ) => {
   try {
+    console.log(
+      "add withdraw history data is----->",
+      walletAddress,
+      withdrawAmount,
+      poolId,
+      transactionHash
+    );
     const response = await axios.post(
       `${API_BASE_URL}/history/addWithdrawHistory`,
       {
