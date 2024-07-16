@@ -62,7 +62,8 @@ const HistoricalPrice = ({
       const marketCaps = totalSupply * price;
 
       setMarketCap(marketCaps);
-      const count = await getTotalHoldersCount();
+      let count = await getTotalHoldersCount();
+      count =parseInt(count.toString())+13
       setHoldersCount(count);
       const poolDetails = await getHighestAPR();
       console.log("pool details is----->", poolDetails);
