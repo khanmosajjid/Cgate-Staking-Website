@@ -384,6 +384,23 @@ export const getMaxTransactionAmount = async () => {
   }
 };
 
+export const getTotalHoldersCount = async () => {
+  try {
+    const data = await readContract({
+      address: TOKEN_CONTRACT,
+      abi: TokenABI,
+      functionName: "holdersCount",
+      args: [],
+    });
+   
+
+    return data;
+  } catch (e) {
+    console.log("error in---->", e);
+    return 0;
+  }
+};
+
 export const buyCG8 = async (
   amountIn: any,
   tokenA: any,
@@ -785,7 +802,7 @@ export const totalTokenSupply = async () => {
     return false;
   }
 };
-export async function addCommasToNumbers(number) {
+export  function addCommasToNumbers(number) {
   const parsedNumber = parseFloat(number);
 
   if (isNaN(parsedNumber)) {
@@ -847,7 +864,7 @@ export const getHighestAPR = async () => {
   try {
     let highestApr = 0;
     let totalStakes=0;
-    let poolDetails = [];
+    const poolDetails = [];
     const totalPools = await getTotalPoolsCount();
     for (let i = 0; i < totalPools; i++) {
       const data: any = await readContract({

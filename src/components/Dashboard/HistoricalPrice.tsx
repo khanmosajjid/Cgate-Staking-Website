@@ -10,6 +10,8 @@ import {
   getMaxTransactionAmount,
   totalTokenSupply,
   getHighestAPR,
+  addCommasToNumbers,
+  getTotalHoldersCount
 } from "../../utils/web3Utils";
 import { TOKEN_CONTRACT, USDC_CONTRACT } from "../../constants/contracts";
 import { appContext } from "../../context/context.jsx";
@@ -60,7 +62,7 @@ const HistoricalPrice = ({
       const marketCaps = totalSupply * price;
 
       setMarketCap(marketCaps);
-      const count = await getTokenHoldersCount();
+      const count = await getTotalHoldersCount();
       setHoldersCount(count);
       const poolDetails = await getHighestAPR();
       console.log("pool details is----->", poolDetails);
@@ -305,7 +307,9 @@ const HistoricalPrice = ({
               Market cap
             </div>
             <div className="flex flex-row items-start justify-start text-right">
-              <div className="relative  ">${marketCap.toFixed(2)}</div>
+              <div className="relative  ">
+                ${addCommasToNumbers(marketCap.toFixed(2))}
+              </div>
             </div>
           </div>
           <div className="self-stretch flex flex-row items-center justify-start py-1 px-0 gap-[24px]">
@@ -364,7 +368,6 @@ const HistoricalPrice = ({
             <div className="flex flex-row items-start justify-start text-right text-sub-heading">
               <div className="relative leading-[24px]">
                 <p className="m-0 ">~${poolReward?.toFixed(2)} USDC</p>
-            
               </div>
             </div>
           </div>

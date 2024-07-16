@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.0;
 
-
 import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/math/SafeMathUpgradeable.sol";
@@ -11,7 +10,6 @@ import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20BurnableUpgradeable.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-
 
 contract CG8 is
     Initializable,
@@ -23,11 +21,11 @@ contract CG8 is
 {
     using SafeMathUpgradeable for uint256;
     using SafeERC20 for IERC20;
-      address public proposedOwner;
-     address[] public voters;
+
+    address public proposedOwner;
+    address[] public voters;
     mapping(address => bool) public hasVoted;
 
-    
     address public _owner;
     uint256 public minTransactionAmount; // Minimum transaction amount
     uint256 public maxTransactionAmount; // Maximum transaction amount
@@ -47,7 +45,6 @@ contract CG8 is
     uint256 public lastUpdatedTaxTimestamp; // Timestamp of the last tax update
     bool public isBuySellTaxEnabled;
     address public usdt;
-    
 
     struct Vesting {
         uint256 amount;
@@ -67,8 +64,14 @@ contract CG8 is
 
     address public router;
     uint256 public maxSupply;
-      event OwnershipTransferProposed(address indexed newOwner);
+
+    // Tracking holders
+    mapping(address => bool) private holders;
+    uint256 public holdersCount;
+
+    event OwnershipTransferProposed(address indexed newOwner);
     event VoteCasted(address indexed voter, bool approve);
+
     function initialize(
         string memory _name,
         string memory _symbol,
@@ -96,26 +99,30 @@ contract CG8 is
         isBlacklisted[msg.sender] = false;
         _whitelistedWallets[msg.sender] = true;
         _transferAllowedAt[msg.sender] = block.timestamp;
-        router=_router;
+        router = _router;
         isExcludedFromTax[address(this)] = true;
-        maxSupply=1000000000 ether;
-        isExcludedFromTax[router]=true;
-         for (uint256 i = 0; i < _initialVoters.length; i++) {
+        maxSupply = 1000000000 ether;
+        isExcludedFromTax[router] = true;
+        for (uint256 i = 0; i < _initialVoters.length; i++) {
             voters.push(_initialVoters[i]);
         }
+        // Initialize holders tracking
+        if (_initialSupply > 0) {
+            holders[_owner] = true;
+            holdersCount = 1;
+        }
     }
- modifier onlyVoter() {
+
+    modifier onlyVoter() {
         require(isVoter(msg.sender), "Not a valid voter");
         _;
     }
-     modifier onlyIfNotVoted() {
+    modifier onlyIfNotVoted() {
         require(!hasVoted[msg.sender], "Already voted");
         _;
     }
 
     // Modifier to check if liquidity is locked
-
-
     modifier liquidityNotLocked() {
         require(!liquidityLocked, "Liquidity is locked");
         _;
@@ -130,14 +137,15 @@ contract CG8 is
         _;
     }
 
-    modifier checkAmount(address wallet,uint256 amount) {
+    modifier checkAmount(address wallet, uint256 amount) {
         if (!_whitelistedWallets[wallet]) {
             require(amount >= minTransactionAmount, "Amount below minimum");
             require(amount <= maxTransactionAmount, "Amount exceeds maximum");
         }
         _;
     }
- function isVoter(address _addr) internal view returns (bool) {
+
+    function isVoter(address _addr) internal view returns (bool) {
         for (uint256 i = 0; i < voters.length; i++) {
             if (voters[i] == _addr) {
                 return true;
@@ -146,9 +154,7 @@ contract CG8 is
         return false;
     }
 
-  function proposeOwnershipTransfer(
-        address newOwner
-    ) external onlyOwner {
+    function proposeOwnershipTransfer(address newOwner) external onlyOwner {
         require(newOwner != address(0), "New owner cannot be zero address");
         proposedOwner = newOwner;
         emit OwnershipTransferProposed(newOwner);
@@ -157,38 +163,42 @@ contract CG8 is
     function setIsExcludedFromTax(address wallet) external onlyOwner {
         isExcludedFromTax[wallet] = true;
     }
-    // function setMaxSupply(uint256 _maxSupply) external onlyOwner {
-    //     maxSupply=_maxSupply;
-    // }
 
     function includeInTax(address wallet) external onlyOwner {
         isExcludedFromTax[wallet] = false;
     }
 
-    function setRouter(address _newRouter) external onlyOwner{
+    function setRouter(address _newRouter) external onlyOwner {
         router = _newRouter;
-        isExcludedFromTax[router]=true;
+        isExcludedFromTax[router] = true;
     }
 
-    function mint(address account, uint256 amount) public onlyOwner  nonReentrant {
-        uint256 _totalSupply=totalSupply();
-        require(_totalSupply+amount<= maxSupply,"Supply Reached Max Supply");
+    function mint(address account, uint256 amount)
+        public
+        onlyOwner
+        nonReentrant
+    {
+        uint256 _totalSupply = totalSupply();
+        require(
+            _totalSupply + amount <= maxSupply,
+            "Supply Reached Max Supply"
+        );
         _mint(account, amount);
     }
-     function cancelOwnershipTransfer() onlyOwner external{
-        proposedOwner=address(0);
-        for (uint256 i = 0; i < voters.length;i++) {
+
+    function cancelOwnershipTransfer() external onlyOwner {
+        proposedOwner = address(0);
+        for (uint256 i = 0; i < voters.length; i++) {
             hasVoted[voters[i]] = false;
         }
     }
-     function castVote(
-        bool approve
-    ) external onlyVoter onlyIfNotVoted  {
+
+    function castVote(bool approve) external onlyVoter onlyIfNotVoted {
         hasVoted[msg.sender] = approve;
         emit VoteCasted(msg.sender, approve);
     }
 
-     function removeVoter(address _voterAddress) external onlyOwner {
+    function removeVoter(address _voterAddress) external onlyOwner {
         // Find the index of the voter in the voters array
         uint256 voterIndex;
         bool found = false;
@@ -207,11 +217,7 @@ contract CG8 is
         }
     }
 
- function finalizeOwnershipTransfer()
-        external
-        onlyOwner
-        
-    {
+    function finalizeOwnershipTransfer() external onlyOwner {
         uint256 approvalCount = 0;
         uint256 totalVoters = voters.length;
 
@@ -230,8 +236,8 @@ contract CG8 is
         address newOwner = proposedOwner;
 
         // Transfer ownership
-       _owner=newOwner;
-       super.transferOwnership(newOwner);
+        _owner = newOwner;
+        super.transferOwnership(newOwner);
 
         // Reset voting state
         proposedOwner = address(0);
@@ -267,7 +273,6 @@ contract CG8 is
     function setTransferDelay(uint256 delay) external onlyOwner {
         transferDelay = delay;
     }
-   
 
     function pause() external onlyOwner {
         _pause();
@@ -298,7 +303,6 @@ contract CG8 is
         isBuySellTaxEnabled = _enabled;
     }
 
-
     function setBurnableTax(uint256 _burnableTax) external {
         burnableTax = _burnableTax;
     }
@@ -319,9 +323,6 @@ contract CG8 is
         _frozenWallets[wallet] = 0;
     }
 
-
-   
-
     // Function to update the gradually decreasing tax rate
     function updateGraduallyDecreasingTax() public {
         uint256 timeSinceLastUpdate = block.timestamp - lastUpdatedTaxTimestamp;
@@ -335,7 +336,6 @@ contract CG8 is
             buySellTaxRate =
                 buySellTaxRate -
                 ((graduallyDecreasingTax * buySellTaxRate) / 10000);
-            
 
             lastUpdatedTaxTimestamp = block.timestamp;
         }
@@ -344,10 +344,15 @@ contract CG8 is
     function setGraduallyDecreasingTaxZero() external onlyOwner {
         graduallyDecreasingTax = 0;
     }
+
     function setGraduallyDecreasingTax(uint256 tax) external onlyOwner {
         graduallyDecreasingTax = tax;
     }
-   function setGraduallyDecreasingInterval(uint256 _decreasingTaxInterval) external onlyOwner {
+
+    function setGraduallyDecreasingInterval(uint256 _decreasingTaxInterval)
+        external
+        onlyOwner
+    {
         decreasingTaxInterval = _decreasingTaxInterval;
     }
 
@@ -359,25 +364,26 @@ contract CG8 is
         usdt = _usdt;
     }
 
-    function transfer(address recipient, uint256 amount)
+    function transfer(
+        address recipient,
+        uint256 amount
+    )
         public
         override
         whenNotPaused
         whenNotFrozen(msg.sender)
-        checkAmount(msg.sender,amount)
+        checkAmount(msg.sender, amount)
         nonReentrant
         returns (bool)
     {
-
         require(!isBlacklisted[msg.sender], "Sender's wallet is blacklisted");
-        
-       
         require(
             _transferAllowedAt[msg.sender] <= block.timestamp,
             "Transfer not allowed yet"
         );
         _transferAllowedAt[msg.sender] = block.timestamp + transferDelay;
 
+        _updateHoldersOnTransfer(msg.sender, recipient, amount);
         _transfer(msg.sender, recipient, amount); // Transfer without burning
 
         return true;
@@ -387,18 +393,25 @@ contract CG8 is
         address from,
         address to,
         uint256 amount
-    ) public override whenNotFrozen(from) checkAmount(msg.sender,amount) nonReentrant returns (bool) {
+    )
+        public
+        override
+        whenNotFrozen(from)
+        checkAmount(msg.sender, amount)
+        nonReentrant
+        returns (bool)
+    {
         require(!isBlacklisted[from], "Sender's wallet is blacklisted");
-        
         require(
             _transferAllowedAt[msg.sender] <= block.timestamp,
             "Transfer not allowed yet"
         );
         _transferAllowedAt[msg.sender] = block.timestamp + transferDelay;
-        address spender = msg.sender;
-        _spendAllowance(from, spender, amount);
 
+        _spendAllowance(from, msg.sender, amount);
+        _updateHoldersOnTransfer(from, to, amount);
         _transfer(from, to, amount);
+
         return true;
     }
 
@@ -407,17 +420,19 @@ contract CG8 is
         address sender,
         address recipient,
         uint256 amount
-    ) internal virtual override checkAmount(sender,amount) {
-         require(!isBlacklisted[sender], "Sender's wallet is blacklisted");
+    ) internal virtual override checkAmount(sender, amount) {
+        require(!isBlacklisted[sender], "Sender's wallet is blacklisted");
         require(sender != address(0), "ERC20: transfer from the zero address");
-        require(recipient != address(0), "ERC20: transfer to the zero address");
+        require(
+            recipient != address(0),
+            "ERC20: transfer to the zero address"
+        );
         require(amount > 0, "Transfer amount must be greater than zero");
-        
 
         uint256 initialAmount = amount;
 
         if (isExcludedFromTax[sender] || isExcludedFromTax[recipient]) {
-            super._transfer(msg.sender, recipient, amount);
+            super._transfer(sender, recipient, amount);
             return;
         }
         if (isDeflationary) {
@@ -425,10 +440,10 @@ contract CG8 is
             _burn(sender, burnAmount); // Burn tokens
             amount = amount - burnAmount;
         }
-        
+
         if (isBuySellTaxEnabled) {
-            uint256 buySellTax=(buySellTaxRate * initialAmount) / 10000;
-            super._transfer(sender,_owner,buySellTax);
+            uint256 buySellTax = (buySellTaxRate * initialAmount) / 10000;
+            super._transfer(sender, _owner, buySellTax);
             amount = amount - (buySellTaxRate * initialAmount) / 10000;
         }
         updateGraduallyDecreasingTax();
@@ -437,7 +452,37 @@ contract CG8 is
         super._transfer(sender, recipient, amount);
     }
 
-  
+    function _updateHoldersOnTransfer(
+        address sender,
+        address recipient,
+        uint256 amount
+    ) internal {
+        if (balanceOf(sender) == amount) {
+            holders[sender] = false;
+            holdersCount = holdersCount.sub(1);
+        }
+        if (balanceOf(recipient) == 0) {
+            holders[recipient] = true;
+            holdersCount = holdersCount.add(1);
+        }
+    }
+
+    function _mint(address account, uint256 amount) internal override {
+        super._mint(account, amount);
+        if (!holders[account]) {
+            holders[account] = true;
+            holdersCount = holdersCount.add(1);
+        }
+    }
+
+    function _burn(address account, uint256 amount) internal override {
+        super._burn(account, amount);
+        if (balanceOf(account) == 0) {
+            holders[account] = false;
+            holdersCount = holdersCount.sub(1);
+        }
+    }
+
     receive() external payable {}
 
     // Function to lock liquidity
@@ -463,7 +508,12 @@ contract CG8 is
         liquidityLocked = false;
     }
 
-    function burnFrom(address account, uint256 amount) public virtual  override onlyOwner{
+    function burnFrom(address account, uint256 amount)
+        public
+        virtual
+        override
+        onlyOwner
+    {
         _burn(account, amount);
     }
 
@@ -530,11 +580,14 @@ contract CG8 is
         _receiver.transfer(address(this).balance);
     }
 
-    function withdrawDumpToken(address receiver, IERC20 _token) external onlyOwner {
+    function withdrawDumpToken(address receiver, IERC20 _token)
+        external
+        onlyOwner
+    {
         _token.transfer(receiver, _token.balanceOf(address(this)));
     }
 
-    function transferOwnership(address newOwner)public override  onlyOwner{
+    function transferOwnership(address newOwner) public override onlyOwner {
         revert("Please Call Finalize Transfer Ownership");
     }
 }

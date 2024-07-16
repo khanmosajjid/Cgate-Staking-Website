@@ -43,6 +43,19 @@
             {
                 "indexed": true,
                 "internalType": "address",
+                "name": "newOwner",
+                "type": "address"
+            }
+        ],
+        "name": "OwnershipTransferProposed",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
+                "internalType": "address",
                 "name": "previousOwner",
                 "type": "address"
             },
@@ -106,6 +119,44 @@
         ],
         "name": "Unpaused",
         "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "voter",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "bool",
+                "name": "approve",
+                "type": "bool"
+            }
+        ],
+        "name": "VoteCasted",
+        "type": "event"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "name": "_frozenWallets",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
     },
     {
         "inputs": [],
@@ -287,6 +338,39 @@
     },
     {
         "inputs": [],
+        "name": "buySellTaxRate",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "cancelOwnershipTransfer",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "bool",
+                "name": "approve",
+                "type": "bool"
+            }
+        ],
+        "name": "castVote",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
         "name": "claim",
         "outputs": [],
         "stateMutability": "nonpayable",
@@ -343,16 +427,23 @@
         "type": "function"
     },
     {
-        "inputs": [],
-        "name": "decreasingTaxRate",
-        "outputs": [
+        "inputs": [
             {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
+                "internalType": "bool",
+                "name": "_enabled",
+                "type": "bool"
             }
         ],
-        "stateMutability": "view",
+        "name": "disableBuySellTax",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "finalizeOwnershipTransfer",
+        "outputs": [],
+        "stateMutability": "nonpayable",
         "type": "function"
     },
     {
@@ -376,6 +467,38 @@
     {
         "inputs": [],
         "name": "graduallyDecreasingTax",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "name": "hasVoted",
+        "outputs": [
+            {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "holdersCount",
         "outputs": [
             {
                 "internalType": "uint256",
@@ -444,6 +567,16 @@
                 "internalType": "uint256",
                 "name": "_initialSupply",
                 "type": "uint256"
+            },
+            {
+                "internalType": "address",
+                "name": "_router",
+                "type": "address"
+            },
+            {
+                "internalType": "address[]",
+                "name": "_initialVoters",
+                "type": "address[]"
             }
         ],
         "name": "initialize",
@@ -472,7 +605,7 @@
     },
     {
         "inputs": [],
-        "name": "isDecreasingTaxEnabled",
+        "name": "isBuySellTaxEnabled",
         "outputs": [
             {
                 "internalType": "bool",
@@ -588,6 +721,19 @@
     },
     {
         "inputs": [],
+        "name": "maxSupply",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
         "name": "maxTransactionAmount",
         "outputs": [
             {
@@ -680,6 +826,32 @@
         "inputs": [
             {
                 "internalType": "address",
+                "name": "newOwner",
+                "type": "address"
+            }
+        ],
+        "name": "proposeOwnershipTransfer",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "proposedOwner",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
                 "name": "_user",
                 "type": "address"
             }
@@ -703,10 +875,36 @@
         "type": "function"
     },
     {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_voterAddress",
+                "type": "address"
+            }
+        ],
+        "name": "removeVoter",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
         "inputs": [],
         "name": "renounceOwnership",
         "outputs": [],
         "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "router",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
         "type": "function"
     },
     {
@@ -730,7 +928,7 @@
                 "type": "uint256"
             }
         ],
-        "name": "setDecreasingTaxRate",
+        "name": "setBuySellTaxRate",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
@@ -744,6 +942,32 @@
             }
         ],
         "name": "setDeflationary",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_decreasingTaxInterval",
+                "type": "uint256"
+            }
+        ],
+        "name": "setGraduallyDecreasingInterval",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "tax",
+                "type": "uint256"
+            }
+        ],
+        "name": "setGraduallyDecreasingTax",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
@@ -790,6 +1014,19 @@
             }
         ],
         "name": "setMinTransactionAmount",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_newRouter",
+                "type": "address"
+            }
+        ],
+        "name": "setRouter",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
@@ -1057,17 +1294,36 @@
     {
         "inputs": [
             {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "name": "voters",
+        "outputs": [
+            {
                 "internalType": "address",
-                "name": "_receiver",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "receiver",
                 "type": "address"
             },
             {
-                "internalType": "address",
+                "internalType": "contract IERC20",
                 "name": "_token",
                 "type": "address"
             }
         ],
-        "name": "withdrawDumpedTokens",
+        "name": "withdrawDumpToken",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"

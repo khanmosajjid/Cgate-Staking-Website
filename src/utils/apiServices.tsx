@@ -53,7 +53,7 @@ export const addDepositHistory = async (
   poolId,
   transactionHash,
   referrer,
-  maturitydate
+  maturityDate
 ) => {
   try {
     const response = await axios.post(
@@ -64,7 +64,7 @@ export const addDepositHistory = async (
         poolId,
         transactionHash,
         referrer,
-        maturitydate,
+        maturityDate,
       }
     );
     return response.data;

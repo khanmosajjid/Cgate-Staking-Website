@@ -31,7 +31,7 @@ module.exports = {
     smartchain: {
       url: "https://bsc-dataseed.binance.org/",
       chainId: 56,
-      // gasLimit: 500000,
+     
       accounts: [
         "5cad2c01e5061002106df3f4a26801e2c6bbac0cd7b8557040f514835d9b36b0",
       ],

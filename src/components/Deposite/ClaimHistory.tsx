@@ -4,7 +4,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 import { getClaimHistory } from "../../utils/apiServices";
-import {getAmountOut,getMinAmountIn } from "../../utils/web3Utils";
+import { getAmountOut, getMinAmountIn } from "../../utils/web3Utils";
 
 interface ClaimHistoryProps {
   setOpenClaimHistory: (value: boolean) => void;
@@ -16,12 +16,12 @@ const ClaimHistory = ({ setOpenClaimHistory }: ClaimHistoryProps) => {
   const [cg8Price, setCg8Price] = useState<any>();
 
   useEffect(() => {
-    const fetchClaimtHistory = async () => {
+    const fetchClaimHistory = async () => {
       try {
         if (address) {
-           let price: any = await getMinAmountIn("1");
-           price = parseFloat(price).toFixed(2);
-           setCg8Price(price);
+          let price: any = await getMinAmountIn("1");
+          price = parseFloat(price).toFixed(2);
+          setCg8Price(price);
           const data = await getClaimHistory(address);
           console.log("data of claim history is--->", data);
           setClaimData(data);
@@ -30,8 +30,9 @@ const ClaimHistory = ({ setOpenClaimHistory }: ClaimHistoryProps) => {
         console.log("error is--->", e);
       }
     };
-    fetchClaimtHistory();
+    fetchClaimHistory();
   }, [address]);
+
   const downloadCSV = () => {
     const csvContent =
       "data:text/csv;charset=utf-8," +
@@ -45,27 +46,25 @@ const ClaimHistory = ({ setOpenClaimHistory }: ClaimHistoryProps) => {
     link.click();
   };
 
+  function formatDate(isoString) {
+    const date = new Date(isoString);
 
-   function formatDate(isoString) {
-     const date = new Date(isoString);
+    const options: any = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      timeZoneName: "short",
+    };
 
-     const options:any = {
-       year: "numeric",
-       month: "long",
-       day: "numeric",
-       hour: "2-digit",
-       minute: "2-digit",
-       second: "2-digit",
-       timeZoneName: "short",
-     };
-
-     return date.toLocaleString("en-US", options);
-   }
-
+    return date.toLocaleString("en-US", options);
+  }
 
   return (
-    <div className="bg-white p-5 rounded-lg shadow-md lg:w-[570px]  py-8 ml-2 w-[380px]">
-      <div className="flex justify-between items-center  ">
+    <div className="bg-white p-5 rounded-lg shadow-md lg:w-[570px] py-8 ml-2 w-[380px]">
+      <div className="flex justify-between items-center">
         <h1 className="text-lg">My claim history</h1>
         <span
           className="cursor-pointer text-2xl"
@@ -97,32 +96,35 @@ const ClaimHistory = ({ setOpenClaimHistory }: ClaimHistoryProps) => {
           </svg>
         </span>
       </div>
-      <div className=" gap-4 mt-5 lg:pr-10 pr-9 pl-5 lg:w-[500px] w-full">
-        <div className="md:flex justify-between bg-[#F5F6FE] p-3 lg:pr-24  rounded-3xl lg:w-[500px] w-[99%] hidden">
-          <div className="font-medium">Amount</div>
-          <div className="font-medium">Claim date/time</div>
-        </div>
-        <div className="">
-          {claimData?.map((entry, idx) => (
-            <>
-              <div className="md:flex justify-between py-5 mr-9 text-[16px] leading-6">
-                <div
-                  key={idx + "amount"}
-                  className="md:block flex text-[16px] font-semibold leading-6"
-                >
-                  ~${entry?.claimAmount.toFixed(2)}
-                  {" USDC"}
-                
-                </div>
-
-                <div key={idx + "date"} className="block">
+      <div className="mt-5 lg:pr-10 pr-9 pl-5 lg:w-[500px] w-full">
+        <table className="min-w-full bg-white border-collapse">
+          <thead>
+            <tr>
+              <th className="py-2 px-4 border-b border-gray-200 bg-[#F5F6FE] font-medium text-left">
+                Amount
+              </th>
+              <th className="py-2 px-4 border-b border-gray-200 bg-[#F5F6FE] font-medium text-left">
+                Claim date/time
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {claimData?.map((entry, idx) => (
+              <tr key={idx} className="text-left">
+                <td className="py-2 px-4 border-b border-gray-200 text-left">
+                  {entry?.claimAmount.toFixed(2)} USDC
+                  <div className="text-xs text-gray-500">
+                    ~$
+                    {entry?.claimAmount.toFixed(2)}
+                  </div>
+                </td>
+                <td className="py-2 px-4 border-b border-gray-200 text-left">
                   {formatDate(entry?.claimDate)}
-                </div>
-              </div>
-              <hr />
-            </>
-          ))}
-        </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
       <button
         onClick={downloadCSV}

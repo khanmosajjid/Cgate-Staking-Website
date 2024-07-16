@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/nehashukla/Desktop/tusharProjects/CG8/CGateFrontend/cgate-master/cgateContracts/contracts/cgateStaking.sol": {
-      "lastModificationDate": 1719918729626,
-      "contentHash": "02965aa08e2b24a51bd4357bfbfdb5e0",
+      "lastModificationDate": 1719923521670,
+      "contentHash": "34c7958cd5f1636890617ccba2e76052",
       "sourceName": "contracts/cgateStaking.sol",
       "solcConfig": {
         "version": "0.8.19",
@@ -421,8 +421,8 @@
       ]
     },
     "/Users/nehashukla/Desktop/tusharProjects/CG8/CGateFrontend/cgate-master/cgateContracts/contracts/cgateToken.sol": {
-      "lastModificationDate": 1714560039630,
-      "contentHash": "0e01b08c0026215955ef6fb343c39d0f",
+      "lastModificationDate": 1721125227493,
+      "contentHash": "2ad064a1f46beee87f98563d3e929d66",
       "sourceName": "contracts/cgateToken.sol",
       "solcConfig": {
         "version": "0.8.19",

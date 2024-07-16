@@ -48,7 +48,7 @@ const DepositeHistory = ({ setOpenDepositeHistory }: DepositeHistoryProps) => {
   function formatDate(isoString) {
     const date = new Date(isoString);
 
-    const options:any = {
+    const options: any = {
       year: "numeric",
       month: "long",
       day: "numeric",
@@ -126,9 +126,12 @@ const DepositeHistory = ({ setOpenDepositeHistory }: DepositeHistoryProps) => {
               {depositData?.map((entry, idx) => (
                 <tr key={idx} className="border-t">
                   <td className="p-3 text-[16px]">
-                    {entry.depositAmount.toFixed(2)} CG8
+                    <span className="inline-block whitespace-nowrap">
+                      {entry.depositAmount.toFixed(2)} CG8
+                    </span>
+
                     <p className="text-xs text-gray-600">
-                      ~${(entry.depositAmount * cg8Price).toFixed(2)} USDC
+                      ~${(entry.depositAmount * cg8Price).toFixed(2)}
                     </p>
                   </td>
                   <td className="p-3 text-sm">

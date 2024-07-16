@@ -1,8 +1,8 @@
 const { ethers, upgrades } = require("hardhat");
 
 async function main() {
-  const proxyAddress = "0x76337C72555fAcdB385D22234C0770175c72A9d5"; // Specify the address of your existing proxy contract
-  const newImplementation = await ethers.getContractFactory("StakingPoolV3");
+  const proxyAddress = "0xcf28Bd157c43fEA7CfDc5B8E2B480e1CF9aC66dA"; // Specify the address of your existing proxy contract
+  const newImplementation = await ethers.getContractFactory("CG8");
 
   // Upgrade the proxy contract
   const upgradedProxy = await upgrades.upgradeProxy(
