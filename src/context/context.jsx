@@ -94,7 +94,7 @@ const ContextProvider = ({ children }) => {
       swapFrom = bscTokens.usdc;
       swapTo = a;
     }
-    console.log("swap from and to is---->", swapFrom, swapTo);
+    // console.log("swap from and to is---->", swapFrom, swapTo);
 
     const amount = CurrencyAmount.fromRawAmount(swapFrom, _amount * 10 ** 18);
     const [v2Pools, v3Pools] = await Promise.all([
@@ -122,7 +122,7 @@ const ContextProvider = ({ children }) => {
       quoteProvider,
       quoterOptimization: true,
     });
-    console.log("trade is------>", trade);
+    // console.log("trade is------>", trade);
     return trade;
   }, []);
 
@@ -187,9 +187,13 @@ const ContextProvider = ({ children }) => {
   useEffect(() => {
     try {
       getBestRoute(1,"CG8", 0).then((trade) => {
-        console.log("trade in my context is----->",trade);
+     
         setTrade(trade);
       });
+      const interval = setInterval(getBestRoute, 500);
+
+      // Cleanup the interval on component unmount
+      return () => clearInterval(interval);
     } catch (e) {
       console.log("error in route e---->", e);
     }

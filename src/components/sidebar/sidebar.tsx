@@ -18,6 +18,7 @@ const Sidebar = () => {
     const getCG8Balance = async () => {
    
       const price = myContext?.trade?.outputAmount.toExact();
+      
 
       setCg8Price(price);
     };

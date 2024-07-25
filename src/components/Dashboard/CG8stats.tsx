@@ -115,17 +115,7 @@ const CG8stats = ({ setOpenCG8Details, setSetting }: HistoryCardProp) => {
             <div className="relative leading-[24px] ">5,621</div>
           </div>
         </div>
-        <div className="flex flex-row items-center justify-start py-1 px-0 gap-[24px]">
-          <div className="flex-1 relative inline-block h-[25px] mix-blend-normal">
-            Monthly CG8 Trade volume
-          </div>
-          <div className="flex flex-row items-start justify-start text-right text-sub-heading">
-            <div className="relative">
-              <p className="m-0 ">8.1M</p>
-              <p className="m-0 text-xs  text-neutral-600">~$ 8.1M</p>
-            </div>
-          </div>
-        </div>
+     
         <div className="self-stretch flex flex-row items-center justify-start py-1 px-0 gap-[24px]">
           <div className="flex-1 relative leading-[24px] mix-blend-normal">
             Highest staking APR

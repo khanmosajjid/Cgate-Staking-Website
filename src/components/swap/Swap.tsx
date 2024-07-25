@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FunctionComponent, useEffect, useState } from "react";
-import { useRef, useContext } from "react";
+import { useRef, useContext, useCallback } from "react";
 import { ethers } from "ethers";
 import bg from "../../assets/Master-bg.svg";
 import logo from "./assets/coin.svg";
@@ -13,7 +13,7 @@ import gas from "./assets/gas-station-fill.svg";
 import Settings from "./Settings";
 import SwapHistory from "./SwapHistory";
 import { toast } from "react-toastify";
-
+import { debounce } from "lodash"; 
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useAccount } from "wagmi";
 import {
@@ -58,6 +58,8 @@ const Swap: FunctionComponent = () => {
   const [insufficientLiquidity, setInsufficientLiquidity] = useState(false);
   const myContext = useContext<any>(appContext);
   const settingsRef: any = useRef(null);
+   const latestUsdcValue = useRef("");
+   const latestCg8Value = useRef("");
 
   const closeSettings = () => {
     setSetting(false);
@@ -65,23 +67,10 @@ const Swap: FunctionComponent = () => {
   };
 
   const toggleBuySell = async () => {
-    console.log("buy sell toggle");
+    
     setIsCg8cBuy(!isCg8Buy);
-    if (!isCg8Buy) {
-      const newCg8Value = await getAmountOut(
-        usdcValue,
-        USDC_CONTRACT,
-        TOKEN_CONTRACT
-      );
-      setCg8Value(newCg8Value.toFixed(2));
-    } else {
-      const newUsdcValue = await getAmountOut(
-        cg8Value,
-        TOKEN_CONTRACT,
-        USDC_CONTRACT
-      );
-      setUsdcValue(newUsdcValue.toFixed(2));
-    }
+    console.log("buy sell toggle", isCg8Buy);
+   
     setCg8Value(0);
     setUsdcValue(0);
   };
@@ -115,168 +104,174 @@ const Swap: FunctionComponent = () => {
     getCG8Balance();
   }, [isConnected, address, myContext]);
 
-  const handleCg8ValueChange = async (e) => {
-    console.log("in handle cg8 value change");
-    let value = e.target.value;
-    if (value == "") {
-      console.log("empty value", value);
-      setCg8Value("");
-      setUsdcValue("");
-      return;
-    }
-    console.log("value is------->", value, typeof value);
-    value = value.replace(/[^0-9.]/g, "").replace(/(\..*)\./g, "$1");
-    if (value.includes(".")) {
-      const parts = value.split(".");
-      if (parts[1] && parts[1].length > 2) {
-        value = parts[0] + "." + parts[1].slice(0, 2);
-      }
-    }
+ const debouncedHandleCg8ValueChange = useCallback(
+   debounce(async (value) => {
+     // Ensure we're using the latest value
+     value = latestCg8Value.current;
 
-    setCg8Value(value);
+     console.log("Debounced function called with CG8 value:", value);
 
-    try {
-      // console.log("data for checkin allowance is----->", data1);
+     if (value === "" || Number(value) === 0) {
+       console.log("empty CG8 value", value);
+       setUsdcValue("");
+       return;
+     }
 
-      if (isCg8Buy) {
-        const allowance: any = await checkAllowance(
-          address,
-          PANCAKE_TEST_ROUTER_CONTRACT,
-          USDC_CONTRACT,
-          USDC_ABI
-        );
+     try {
+       const allowance = await checkAllowance(
+         address,
+         PANCAKE_TEST_ROUTER_CONTRACT,
+         TOKEN_CONTRACT,
+         USDC_ABI
+       );
 
-        let res = await myContext?.getBestRoute(value, "CG8", 1);
-        console.log("result of cg8 buy is----->", res?.inputAmount.toExact());
-        const data3 = res?.inputAmount.toExact();
+       if (isCg8Buy) {
+         let res = await myContext?.getBestRoute(value, "CG8", 1);
+         console.log("result of USDC buy is----->", res?.inputAmount.toExact());
+         const data3 = res?.inputAmount.toExact();
 
-        console.log("data 3 is--->", data3, typeof data3);
-        if (parseFloat(data3) == 0) {
-          console.log("here--->");
-          setInsufficientLiquidity(true);
-        } else {
-          setInsufficientLiquidity(false);
-        }
+         setUsdcValue(data3);
+         if (Number(value) > cg8Balance) {
+           setInsufficientCG8(true);
+           setUsdcValue("");
+           return;
+         } else {
+           setInsufficientCG8(false);
+         }
+         setIsApprove(Number(allowance) >= Number(value));
+       } else {
+         let res = await myContext?.getBestRoute(value, "CG8", 0);
+         console.log("result of CG8 buy is----->", res?.outputAmount.toExact());
+         const data3 = res?.outputAmount.toExact();
 
-        setUsdcValue(Number(data3));
-        if (parseFloat(data3) > parseFloat(usdcBalance.toString())) {
-          setInsufficientUSDC(true);
-          setCg8Value("");
-          setUsdcValue("");
-          return;
-        } else {
-          setInsufficientUSDC(false);
-        }
-        if (parseFloat(allowance) < parseFloat(data3)) {
-          setIsApprove(false);
-        } else {
-          setIsApprove(true);
-        }
-      } else {
-        console.log("in buying cg8");
-        const allowance: any = await checkAllowance(
-          address,
-          PANCAKE_TEST_ROUTER_CONTRACT,
-          TOKEN_CONTRACT,
-          USDC_ABI
-        );
-        console.log("allowance is---->", allowance);
+         setUsdcValue(data3);
+         if (Number(data3) > usdcBalance) {
+           setInsufficientUSDC(true);
+           setUsdcValue("");
+           return;
+         } else {
+           setInsufficientUSDC(false);
+         }
+         setIsApprove(Number(allowance) >= Number(data3));
+       }
+     } catch (e) {
+       console.log("error is---->", e);
+     }
+   }, 300),
+   [
+     /* dependencies */
+   ]
+ );
 
-        let res = await myContext?.getBestRoute(value, "CG8", 0);
-        console.log("result of cg8 buy is----->", res?.inputAmount.toExact());
-        const data3 = res?.outputAmount.toExact();
+ const handleCg8ValueChange = (e) => {
+   console.log("in handleCg8ValueChanged", e.target.value);
+   let value = e.target.value;
 
-        setUsdcValue(data3);
-        if (data3 > cg8Balance) {
-          setInsufficientUSDC(false);
-          setInsufficientCG8(true);
-          setCg8Value("");
-          setUsdcValue("");
-          return;
-        } else {
-          setInsufficientCG8(false);
-          setInsufficientUSDC(false);
-        }
-        if (parseFloat(allowance) < parseFloat(data3)) {
-          setIsApprove(false);
-        } else {
-          setIsApprove(true);
-        }
-      }
-    } catch (e) {
-      console.log("error is---->", e);
-    }
-  };
+   value = value.replace(/[^0-9.]/g, "").replace(/(\..*)\./g, "$1");
+   if (value.includes(".")) {
+     const parts = value.split(".");
+     if (parts[1] && parts[1].length > 2) {
+       value = parts[0] + "." + parts[1].slice(0, 2);
+     }
+   }
 
-  const handleUsdcValueChange = async (e) => {
-    console.log("in handleUsdcValueChange");
-    let value = e.target.value;
-   if (value == ""||parseInt(value)==0) {
+   setCg8Value(value);
+   latestCg8Value.current = value; // Update the ref with the latest value
+
+   if (value === "" || Number(value) === 0) {
+     console.log("empty CG8 value", value);
+     setUsdcValue("");
+     debouncedHandleCg8ValueChange.cancel(); // Cancel any pending debounced calls
+   } else {
+     debouncedHandleCg8ValueChange(value);
+   }
+ };
+
+
+ const debouncedHandleValueChange = useCallback(
+   debounce(async (value) => {
+     // Ensure we're using the latest value
+     value = latestUsdcValue.current;
+
+     console.log("Debounced function called with value:", value);
+
+     if (value === "" || Number(value) === 0) {
+       console.log("empty value", value);
+       setCg8Value("");
+       return;
+     }
+
+     try {
+       const allowance = await checkAllowance(
+         address,
+         PANCAKE_TEST_ROUTER_CONTRACT,
+         USDC_CONTRACT,
+         USDC_ABI
+       );
+
+       if (isCg8Buy) {
+         let res = await myContext?.getBestRoute(value, "USDC", 0);
+         console.log("result of cg8 buy is----->", res?.inputAmount.toExact());
+         const data2 = res?.outputAmount.toExact();
+
+         setCg8Value(data2);
+         if (Number(value) > usdcBalance) {
+           setInsufficientUSDC(true);
+           setCg8Value("");
+           return;
+         } else {
+           setInsufficientUSDC(false);
+         }
+         setIsApprove(Number(allowance) >= Number(value));
+       } else {
+         console.log("value of usdc is----->", value, typeof value);
+         let res = await myContext?.getBestRoute(value, "USDC", 1);
+
+         console.log("result of cg8 sell is----->", res?.inputAmount.toExact());
+         const data2 = res?.inputAmount.toExact();
+         console.log("data 2 is------>", data2);
+         setCg8Value(data2);
+         if (Number(value) > cg8Balance) {
+           setInsufficientCG8(true);
+           setCg8Value("");
+           return;
+         } else {
+           setInsufficientCG8(false);
+         }
+         setIsApprove(Number(allowance) >= Number(value));
+       }
+     } catch (e) {
+       console.log("error is---->", e);
+     }
+   }, 300),
+   [
+     /* dependencies */
+   ]
+ );
+
+ const handleUsdcValueChange = (e) => {
+   console.log("in handleUsdcValueChanged", e.target.value);
+   let value = e.target.value;
+
+   value = value.replace(/[^0-9.]/g, "").replace(/(\..*)\./g, "$1");
+   if (value.includes(".")) {
+     const parts = value.split(".");
+     if (parts[1] && parts[1].length > 2) {
+       value = parts[0] + "." + parts[1].slice(0, 2);
+     }
+   }
+
+   setUsdcValue(value);
+   latestUsdcValue.current = value; // Update the ref with the latest value
+
+   if (value === "" || Number(value) === 0) {
      console.log("empty value", value);
      setCg8Value("");
-     setUsdcValue("");
-     return;
+     debouncedHandleValueChange.cancel(); // Cancel any pending debounced calls
+   } else {
+     debouncedHandleValueChange(value);
    }
-    value = value.replace(/[^0-9.]/g, "").replace(/(\..*)\./g, "$1");
-    if (value.includes(".")) {
-      const parts = value.split(".");
-      if (parts[1] && parts[1].length > 2) {
-        value = parts[0] + "." + parts[1].slice(0, 2);
-      }
-    }
-    setUsdcValue(value);
-
-    try {
-      const allowance: any = await checkAllowance(
-        address,
-        PANCAKE_TEST_ROUTER_CONTRACT,
-        USDC_CONTRACT,
-        USDC_ABI
-      );
-
-      if (isCg8Buy) {
-        let res = await myContext?.getBestRoute(value, "USDC", 0);
-        console.log("result of cg8 buy is----->", res?.inputAmount.toExact());
-        const data2 = res?.outputAmount.toExact();
-
-        setCg8Value(data2);
-        if (value > usdcBalance) {
-          setInsufficientUSDC(true);
-          setCg8Value("");
-          setUsdcValue("");
-          return;
-        } else {
-          setInsufficientUSDC(false);
-        }
-        if (allowance < value) {
-          setIsApprove(false);
-        } else {
-          setIsApprove(true);
-        }
-      } else {
-        let res = await myContext?.getBestRoute(value, "USDC", 1);
-        console.log("result of cg8 buy is----->", res?.inputAmount.toExact());
-        const data2 = res?.inputAmount.toExact();
-        console.log("data 2 is------>", data2);
-        setCg8Value(data2);
-        if (value > cg8Balance) {
-          setInsufficientCG8(true);
-          setCg8Value("");
-          setUsdcValue("");
-          return;
-        } else {
-          setInsufficientCG8(false);
-        }
-        if (allowance < value) {
-          setIsApprove(false);
-        } else {
-          setIsApprove(true);
-        }
-      }
-    } catch (e) {
-      console.log("error is---->", e);
-    }
-  };
+ };
 
   const buyCgate = async () => {
     try {

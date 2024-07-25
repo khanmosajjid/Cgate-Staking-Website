@@ -321,17 +321,7 @@ const HistoricalPrice = ({
               <div className="relative leading-[24px] ">{holdersCount}</div>
             </div>
           </div>
-          <div className="flex flex-row items-center justify-start py-1 px-0 gap-[24px]">
-            <div className="flex-1 relative inline-block h-[25px] mix-blend-normal">
-              Monthly CG8 Trade volume
-            </div>
-            <div className="flex flex-row items-start justify-start text-right text-sub-heading">
-              <div className="relative">
-                <p className="m-0 ">0</p>
-                <p className="m-0 text-xs ">~$0</p>
-              </div>
-            </div>
-          </div>
+        
           <div className="self-stretch flex flex-row items-center justify-start py-1 px-0 gap-[24px]">
             <div className="flex-1 relative leading-[24px] mix-blend-normal">
               Highest staking APR
