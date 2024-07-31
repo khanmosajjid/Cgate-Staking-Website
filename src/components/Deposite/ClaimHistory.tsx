@@ -37,7 +37,9 @@ const ClaimHistory = ({ setOpenClaimHistory }: ClaimHistoryProps) => {
     const csvContent =
       "data:text/csv;charset=utf-8," +
       "Amount,Date/Time\n" +
-      claimData?.map((e) => `${e?.claimAmount},${e?.datetime}`).join("\n");
+      claimData
+        ?.map((e) => `${e?.claimAmount},${formatDate(e?.claimDate)}`)
+        .join("\n");
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
@@ -59,7 +61,7 @@ const ClaimHistory = ({ setOpenClaimHistory }: ClaimHistoryProps) => {
       timeZoneName: "short",
     };
 
-    return date.toLocaleString("en-US", options);
+    return date.toLocaleString("en-US", options).replace(/,/g, " ");
   }
 
   return (

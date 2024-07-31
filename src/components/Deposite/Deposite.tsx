@@ -24,13 +24,9 @@ import {
   getUsdcBalance,
   approveToken,
   convertToEther,
-  getUserStakePerPool,
   cGateBalance,
   claimRewardForPool,
-  withdraw,
-  getMinAmountOut,
-  getMinAmountIn,
-  addCommasToNumbers,
+
 } from "../../utils/web3Utils.js";
 import { useAccount } from "wagmi";
 import { STAKING_CONTRACT, TOKEN_CONTRACT } from "../../constants/contracts";

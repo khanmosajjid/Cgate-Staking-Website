@@ -5,9 +5,11 @@ import { getWithdrawHistory } from "../../utils/apiServices";
 import { useEffect, useState, useContext } from "react";
 import { useAccount } from "wagmi";
 import { appContext } from "../../context/context.jsx";
+
 interface WithdrawalHistoryProps {
   setOpenWithdrawHistory: (value: boolean) => void;
 }
+
 type WithdrawalType = {
   amount: string;
   amount2: string;
@@ -15,42 +17,52 @@ type WithdrawalType = {
   maturitydatetime: string;
 };
 
+const ITEMS_PER_PAGE = 3;
+
 const WithdrawalHistory = ({
   setOpenWithdrawHistory,
 }: WithdrawalHistoryProps) => {
   const { address } = useAccount();
-  const [withdrawData, setWithdrawData] = useState<any>();
+  const [withdrawData, setWithdrawData] = useState<any[]>([]);
   const [cg8Price, setCg8Price] = useState<any>();
-   const myContext = useContext<any>(appContext);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const myContext = useContext<any>(appContext);
 
-
-   useEffect(() => {
-     const fetchClaimtHistory = async () => {
-       try {
-         if (address) {
-              const price = myContext?.trade?.outputAmount.toExact();
-
-           setCg8Price(price);
-           const data = await getWithdrawHistory(address);
-           console.log("data of withdraw history is--->", data);
-           setWithdrawData(data);
-         }
-       } catch (e) {
-         console.log("error is--->", e);
-       }
-     };
-     fetchClaimtHistory();
-   }, [address]);
+  useEffect(() => {
+    const fetchWithdrawHistory = async () => {
+      try {
+        if (address) {
+          const price = myContext?.trade?.outputAmount.toExact();
+          setCg8Price(price);
+          const data = await getWithdrawHistory(address);
+          console.log("data of withdraw history is--->", data);
+          setWithdrawData(data);
+        }
+      } catch (e) {
+        console.log("error is--->", e);
+      }
+    };
+    fetchWithdrawHistory();
+  }, [address]);
 
   const downloadCSV = () => {
-    // Logic to download the CSV file
-    console.log("Downloading CSV...");
+    const csvContent =
+      "data:text/csv;charset=utf-8," +
+      "Amount,Withdraw Date/Time\n" +
+      withdrawData
+        ?.map((e) => `${e.withdrawAmount},${formatDate(e.withdrawDate)}`)
+        .join("\n");
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "Withdraw_history.csv");
+    document.body.appendChild(link);
+    link.click();
   };
 
-  function formatDate(isoString) {
+  function formatDate(isoString: string) {
     const date = new Date(isoString);
-
-    const options:any = {
+    const options: any = {
       year: "numeric",
       month: "long",
       day: "numeric",
@@ -59,20 +71,30 @@ const WithdrawalHistory = ({
       second: "2-digit",
       timeZoneName: "short",
     };
-
-    return date.toLocaleString("en-US", options);
+    return date.toLocaleString("en-US", options).replace(/,/g, " ");
   }
 
+  const handleNextPage = () => {
+    setCurrentPage((prev) => prev + 1);
+  };
+
+  const handlePreviousPage = () => {
+    setCurrentPage((prev) => prev - 1);
+  };
+
+  const paginatedData = withdrawData.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
   return (
-    <div className="fixed inset-0 bg-gray-300 bg-opacity-50 flex justify-center  items-center p-4 px-2 ">
-      <div className="bg-[#F5F6FE] rounded-xl shadow-lg overflow-auto md:w-[700px] w-[99%] p-4">
+    <div className="fixed inset-0 bg-gray-300 bg-opacity-50 flex justify-center items-center p-4">
+      <div className="bg-white rounded-xl shadow-lg overflow-auto md:w-[700px] w-full max-w-[700px] p-6">
         <div className="flex justify-between items-center p-4 border-b">
-          <h2 className="text-[16px]">My withdrawal history</h2>
+          <h2 className="text-lg font-semibold">My Withdrawal History</h2>
           <button
-            onClick={() => {
-              /* close modal function */
-              setOpenWithdrawHistory(false); //
-            }}
+            onClick={() => setOpenWithdrawHistory(false)}
+            className="text-gray-600 hover:text-gray-800"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -84,55 +106,79 @@ const WithdrawalHistory = ({
               <path
                 d="M17 1L1 17"
                 stroke="#475568"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
               <path
                 d="M1 1L17 17"
                 stroke="#475568"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
           </button>
         </div>
         <div className="p-4">
-          <div className="md:flex justify-between mb-2 hidden bg-white rounded-3xl p-3">
-            <span className="font-">Amount</span>
-            <span className="font- md:mr-20">Withdraw date/time</span>
-          </div>
-          <div className=" overflow-y-scroll md:h-[180px]">
-            {withdrawData?.map((item, index) => (
-              <div
-                key={index}
-                className="md:flex justify-between py-2 border-b md:mx-4 mb-2"
-              >
-                <div>
-                  <span className="md:block font-semibold md:font-normal">
-                    {item.withdrawAmount.toFixed(2)} CG8
-                  </span>
-
-                  <span className="md:text-xs text-gray-600 md:font-normal ml-2 md:ml-0">
-                    ~${(cg8Price * item.withdrawAmount).toFixed(2)}
-                  </span>
-                </div>
-                <span className="md:mr-20 font-light md:font-normal">
-                  {formatDate(item.withdrawDate)}
-                </span>
-              </div>
-            ))}
-          </div>
-          <div className="flex  mt-4">
-            <button
-              className="bg-teal-600 rounded-3xl text-gray-200 px-8 py-2 text-sm  hover:bg-green-600 transition duration-300"
-              onClick={downloadCSV}
-            >
-              Download in CSV
-            </button>
+          <div className="bg-gray-50 p-4 rounded-xl shadow-inner">
+            <table className="w-full table-auto">
+              <thead>
+                <tr>
+                  <th className="font-medium p-3 text-left">Amount</th>
+                  <th className="font-medium p-3 text-left">
+                    Withdraw Date/Time
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {paginatedData.map((entry, idx) => (
+                  <tr key={idx} className="border-t">
+                    <td className="p-3 text-[16px]">
+                      <span className="inline-block whitespace-nowrap">
+                        {entry.withdrawAmount.toFixed(2)} CG8
+                      </span>
+                      <p className="text-xs text-gray-600">
+                        ~${(entry.withdrawAmount * cg8Price).toFixed(2)}
+                      </p>
+                    </td>
+                    <td className="p-3 text-sm">
+                      {formatDate(entry.withdrawDate)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
+        <div className="flex justify-between items-center mt-4">
+          <button
+            onClick={handlePreviousPage}
+            disabled={currentPage === 1}
+            className={`bg-gray-300 text-gray-700 font-light text-sm py-2 px-4 rounded-3xl ${
+              currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+          >
+            Previous
+          </button>
+          <button
+            onClick={handleNextPage}
+            disabled={currentPage * ITEMS_PER_PAGE >= withdrawData.length}
+            className={`bg-gray-300 text-gray-700 font-light text-sm py-2 px-4 rounded-3xl ${
+              currentPage * ITEMS_PER_PAGE >= withdrawData.length
+                ? "opacity-50 cursor-not-allowed"
+                : ""
+            }`}
+          >
+            Next
+          </button>
+        </div>
+        <button
+          onClick={downloadCSV}
+          className="bg-teal-600 hover:bg-teal-700 text-white font-light text-sm py-2 px-4 w-full rounded-3xl mt-5"
+        >
+          Download in CSV
+        </button>
       </div>
     </div>
   );

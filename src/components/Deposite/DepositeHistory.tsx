@@ -3,13 +3,8 @@
 import { useAccount } from "wagmi";
 import { useEffect, useState, useContext } from "react";
 import { getDepositHistory } from "../../utils/apiServices";
-import {
-  getMinAmountOut,
-  getAmountOut,
-  getMinAmountIn,
-} from "../../utils/web3Utils";
-import { USDC_CONTRACT, TOKEN_CONTRACT } from "../../constants/contracts";
 import { appContext } from "../../context/context.jsx";
+
 interface DepositeHistoryProps {
   setOpenDepositeHistory: (value: boolean) => void;
 }
@@ -21,18 +16,20 @@ type DepositeType = {
   maturitydatetime: string;
 };
 
+const ITEMS_PER_PAGE = 3;
+
 const DepositeHistory = ({ setOpenDepositeHistory }: DepositeHistoryProps) => {
   const myContext = useContext<any>(appContext);
   const { address, isConnected } = useAccount();
-  const [depositData, setDepositData] = useState<any>();
+  const [depositData, setDepositData] = useState<any[]>([]);
   const [cg8Price, setCg8Price] = useState<any>();
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   useEffect(() => {
     const fetchDepositHistory = async () => {
       try {
         if (address) {
           const price = myContext?.trade?.outputAmount.toExact();
-
           setCg8Price(price);
           const data = await getDepositHistory(address);
           console.log("data of deposit history is--->", data);
@@ -45,9 +42,8 @@ const DepositeHistory = ({ setOpenDepositeHistory }: DepositeHistoryProps) => {
     fetchDepositHistory();
   }, [address]);
 
-  function formatDate(isoString) {
+  function formatDate(isoString: string) {
     const date = new Date(isoString);
-
     const options: any = {
       year: "numeric",
       month: "long",
@@ -57,15 +53,16 @@ const DepositeHistory = ({ setOpenDepositeHistory }: DepositeHistoryProps) => {
       second: "2-digit",
       timeZoneName: "short",
     };
-
-    return date.toLocaleString("en-US", options);
+    return date.toLocaleString("en-US", options).replace(/,/g, " ");
   }
 
   const downloadCSV = () => {
     const csvContent =
       "data:text/csv;charset=utf-8," +
-      "Amount,Date/Time\n" +
-      depositData?.map((e) => `${e.depositAmount},${e.depositDat}`).join("\n");
+      "Amount,Deposit Date/Time ,Maturity Date/Time\n" +
+      depositData
+        ?.map((e) => `${e.depositAmount},${formatDate(e.depositDate)},${formatDate(e.maturityDate)}`)
+        .join("\n");
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
@@ -73,6 +70,19 @@ const DepositeHistory = ({ setOpenDepositeHistory }: DepositeHistoryProps) => {
     document.body.appendChild(link);
     link.click();
   };
+
+  const handleNextPage = () => {
+    setCurrentPage((prev) => prev + 1);
+  };
+
+  const handlePreviousPage = () => {
+    setCurrentPage((prev) => prev - 1);
+  };
+
+  const paginatedData = depositData.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
 
   return (
     <div className="bg-white md:p-5 rounded-lg shadow-md md:w-[700px] w-[390px] py-8 md:px-8 p-4 ">
@@ -123,13 +133,12 @@ const DepositeHistory = ({ setOpenDepositeHistory }: DepositeHistoryProps) => {
               </tr>
             </thead>
             <tbody>
-              {depositData?.map((entry, idx) => (
+              {paginatedData.map((entry, idx) => (
                 <tr key={idx} className="border-t">
                   <td className="p-3 text-[16px]">
                     <span className="inline-block whitespace-nowrap">
                       {entry.depositAmount.toFixed(2)} CG8
                     </span>
-
                     <p className="text-xs text-gray-600">
                       ~${(entry.depositAmount * cg8Price).toFixed(2)}
                     </p>
@@ -145,6 +154,29 @@ const DepositeHistory = ({ setOpenDepositeHistory }: DepositeHistoryProps) => {
             </tbody>
           </table>
         </div>
+      </div>
+
+      <div className="flex justify-between items-center mt-4">
+        <button
+          onClick={handlePreviousPage}
+          disabled={currentPage === 1}
+          className={`bg-gray-300 text-gray-700 font-light text-sm py-2 px-4 rounded-3xl ${
+            currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+        >
+          Previous
+        </button>
+        <button
+          onClick={handleNextPage}
+          disabled={currentPage * ITEMS_PER_PAGE >= depositData.length}
+          className={`bg-gray-300 text-gray-700 font-light text-sm py-2 px-4 rounded-3xl ${
+            currentPage * ITEMS_PER_PAGE >= depositData.length
+              ? "opacity-50 cursor-not-allowed"
+              : ""
+          }`}
+        >
+          Next
+        </button>
       </div>
 
       <button

@@ -241,8 +241,6 @@ export const userDetails = async (address) => {
       functionName: "users",
       args: [address],
     });
-
-    console.log("user data is---->", data);
     return data;
   } catch (e) {
     console.log("error is---->", e);
@@ -775,8 +773,6 @@ export const isPoolActive = async (poolId) => {
       functionName: "pools",
       args: [poolId],
     });
-    console.log("pool is active ---->>>", data);
-
     return data[5];
   } catch (e) {
     const detailsIndex = e?.message.indexOf("Details:");

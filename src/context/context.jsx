@@ -87,15 +87,17 @@ const ContextProvider = ({ children }) => {
   //Trade Type 0->Exact input  1->ExactOutput
 
   const getBestRoute = useCallback(async (_amount, _swapFrom, tradeType) => {
+
     if (_swapFrom == "CG8") {
+      
       swapFrom = a;
       swapTo = bscTokens.usdc;
     } else {
       swapFrom = bscTokens.usdc;
       swapTo = a;
     }
-    // console.log("swap from and to is---->", swapFrom, swapTo);
-
+    console.log("swap from and to is---->", swapFrom, swapTo);
+  
     const amount = CurrencyAmount.fromRawAmount(swapFrom, _amount * 10 ** 18);
     const [v2Pools, v3Pools] = await Promise.all([
       SmartRouter.getV2CandidatePools({
@@ -122,9 +124,51 @@ const ContextProvider = ({ children }) => {
       quoteProvider,
       quoterOptimization: true,
     });
-    // console.log("trade is------>", trade);
+    console.log("trade is------>", trade);
     return trade;
   }, []);
+
+   const getBestPriceRoute = useCallback(async (_amount=1, _swapFrom, tradeType) => {
+     if (_swapFrom == "CG8") {
+       swapFrom = a;
+       swapTo = bscTokens.usdc;
+     } else {
+       swapFrom = bscTokens.usdc;
+       swapTo = a;
+     }
+   
+     if (_amount == undefined) {
+       _amount = 1;
+     }
+     const amount = CurrencyAmount.fromRawAmount(swapFrom, _amount * 10 ** 18);
+     const [v2Pools, v3Pools] = await Promise.all([
+       SmartRouter.getV2CandidatePools({
+         onChainProvider: () => publicClient,
+         v2SubgraphProvider: () => v2SubgraphClient,
+         v3SubgraphProvider: () => v3SubgraphClient,
+         currencyA: swapFrom,
+         currencyB: swapTo,
+       }),
+       SmartRouter.getV3CandidatePools({
+         onChainProvider: () => publicClient,
+         subgraphProvider: () => v3SubgraphClient,
+         currencyA: amount.currency,
+         currencyB: swapTo,
+         subgraphFallback: false,
+       }),
+     ]);
+     const pools = [...v2Pools, ...v3Pools];
+     const trade = await SmartRouter.getBestTrade(amount, swapTo, tradeType, {
+       gasPriceWei: () => publicClient.getGasPrice(),
+       maxHops: 2,
+       maxSplits: 2,
+       poolProvider: SmartRouter.createStaticPoolProvider(pools),
+       quoteProvider,
+       quoterOptimization: true,
+     });
+   
+     return trade;
+   }, []);
 
   const swapCallParams = (_address, _trade) => {
     console.log("in call params", _address);
@@ -186,13 +230,11 @@ const ContextProvider = ({ children }) => {
 
   useEffect(() => {
     try {
-      getBestRoute(1,"CG8", 0).then((trade) => {
-     
+      getBestPriceRoute(1,"CG8",0).then((trade) => {
         setTrade(trade);
       });
-      const interval = setInterval(getBestRoute, 500);
+      const interval = setInterval(getBestPriceRoute, 500);
 
-      // Cleanup the interval on component unmount
       return () => clearInterval(interval);
     } catch (e) {
       console.log("error in route e---->", e);

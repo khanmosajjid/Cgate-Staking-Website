@@ -16,7 +16,7 @@ import {
 import { TOKEN_CONTRACT, USDC_CONTRACT } from "../../constants/contracts";
 import { appContext } from "../../context/context.jsx";
 import { useAccount } from "wagmi";
-import { getTokenHoldersCount,getAllPoolRewards } from "../../utils/apiServices.js";
+import { getAllUserDetails } from "../../utils/apiServices.js";
 
 interface HistoryCardProp {
   setopenHistoryPrice: (value: boolean) => void;
@@ -69,9 +69,21 @@ const HistoricalPrice = ({
       console.log("pool details is----->", poolDetails);
       setHighestAPR(poolDetails[0]);
       setTotalDeposit(poolDetails[1]);
-      const poolRewards=await getAllPoolRewards();
+      const userdetails=await getAllUserDetails();
+     let amnt:any=0;
+      for (let i = 0; i < userdetails.length; i++) {
+        const user=await userDetails(userdetails[i].walletAddress)
+          amnt += Number(user[2]);
+     
+           console.log("amnt for user i is", i, "---->", amnt);
+
+        
+      }
+    
       
-      setPoolReward(poolRewards?.totalClaimAmount);
+      
+      
+      setPoolReward(parseFloat(convertToEther(amnt).toString()).toFixed(2));
     };
     getCG8Balance();
   }, [address]);
@@ -358,7 +370,7 @@ const HistoricalPrice = ({
             </div>
             <div className="flex flex-row items-start justify-start text-right text-sub-heading">
               <div className="relative leading-[24px]">
-                <p className="m-0 ">~${poolReward?.toFixed(2)} USDC</p>
+                <p className="m-0 ">~${poolReward} USDC</p>
               </div>
             </div>
           </div>
