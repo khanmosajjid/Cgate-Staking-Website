@@ -9,12 +9,7 @@ interface DepositeHistoryProps {
   setOpenDepositeHistory: (value: boolean) => void;
 }
 
-type DepositeType = {
-  amount: string;
-  amount2: string;
-  datetime: string;
-  maturitydatetime: string;
-};
+
 
 const ITEMS_PER_PAGE = 3;
 
@@ -31,8 +26,16 @@ const DepositeHistory = ({ setOpenDepositeHistory }: DepositeHistoryProps) => {
         if (address) {
           const price = myContext?.trade?.outputAmount.toExact();
           setCg8Price(price);
-          const data = await getDepositHistory(address);
+          let data = await getDepositHistory(address);
           console.log("data of deposit history is--->", data);
+
+          // Sort the deposit data by date in descending order
+          data = data.sort(
+            (a: any, b: any) =>
+              new Date(b.depositDate).getTime() -
+              new Date(a.depositDate).getTime()
+          );
+
           setDepositData(data);
         }
       } catch (e) {
@@ -61,7 +64,12 @@ const DepositeHistory = ({ setOpenDepositeHistory }: DepositeHistoryProps) => {
       "data:text/csv;charset=utf-8," +
       "Amount,Deposit Date/Time ,Maturity Date/Time\n" +
       depositData
-        ?.map((e) => `${e.depositAmount},${formatDate(e.depositDate)},${formatDate(e.maturityDate)}`)
+        ?.map(
+          (e) =>
+            `${e.depositAmount},${formatDate(e.depositDate)},${formatDate(
+              e.maturityDate
+            )}`
+        )
         .join("\n");
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
@@ -87,7 +95,7 @@ const DepositeHistory = ({ setOpenDepositeHistory }: DepositeHistoryProps) => {
   return (
     <div className="bg-white md:p-5 rounded-lg shadow-md md:w-[700px] w-[390px] py-8 md:px-8 p-4 ">
       <div className="flex justify-between items-center px-4 ">
-        <h1 className="text-lg">My Deposit history</h1>
+        <h1 className="text-lg">My deposit history</h1>
         <span
           className="cursor-pointer text-2xl"
           onClick={() => {

@@ -297,11 +297,13 @@ const HistoricalPrice = ({
               </div>
             </div>
           </div>
-          <img
-            className="self-stretch relative lg:max-w-full overflow-hidden lg:h-[237px] w-[98%] mx-auto shrink-0 object-cover"
-            alt=""
-            src={graph}
-          />
+          <iframe
+            id="dextools-widget"
+            title="DEXTools Trading Chart"
+            width="500"
+            height="400"
+            src="https://www.dextools.io/widget-chart/en/bnb/pe-light/0xde52250c41f1fc5ae1f50a51d1f367fb05c4f7dd?theme=light&chartType=2&chartResolution=30&drawingToolbars=false"
+          ></iframe>
         </div>
       ) : (
         <div className="flex flex-col  justify-start p-2 gap-[3px]  bg-[#F5F6FE]  text-colors-neutral-800 font-light w-[98%]">
@@ -333,7 +335,7 @@ const HistoricalPrice = ({
               <div className="relative leading-[24px] ">{holdersCount}</div>
             </div>
           </div>
-        
+
           <div className="self-stretch flex flex-row items-center justify-start py-1 px-0 gap-[24px]">
             <div className="flex-1 relative leading-[24px] mix-blend-normal">
               Highest staking APR

@@ -137,13 +137,10 @@ const Swap: FunctionComponent = () => {
             USDC_CONTRACT,
             USDC_ABI
           );
-          console.log("latestCg8Value.current", latestCg8Value.current);
-          console.log("value is----->", value);
+          console.log("allowance is---->",allowance);
+        
           let res = await myContext?.getBestRoute(value, "CG8", 0);
-          console.log(
-            "result of cg8 buy is----->",
-            res?.outputAmount.toExact()
-          );
+          
           if (latestCg8Value.current == "") {
             return;
           }
@@ -165,6 +162,7 @@ const Swap: FunctionComponent = () => {
           } else {
             setInsufficientUSDC(false);
           }
+
           setIsApprove(parseFloat(allowance) >= parseFloat(data3));
         } else {
           const allowance = await checkAllowance(
@@ -173,12 +171,10 @@ const Swap: FunctionComponent = () => {
             TOKEN_CONTRACT,
             USDC_ABI
           );
+             console.log("allowance is---->", allowance);
 
           let res = await myContext?.getBestRoute(value, "CG8", 0);
-          console.log(
-            "result of cg8 sell is----->",
-            res?.outputAmount.toExact()
-          );
+        
           const data3 = res?.outputAmount.toExact();
 
           setUsdcValue(data3);
@@ -245,7 +241,7 @@ const Swap: FunctionComponent = () => {
           USDC_CONTRACT,
           USDC_ABI
         );
-        console.log("is cg8 buy is----->", isCg8Buy);
+        console.log("allowance is----->", allowance);
         if (isCg8Buy) {
           let res = await myContext?.getBestRoute(value, "USDC", 0);
           console.log("result of cg8 buy is----->", res?.inputAmount.toExact());

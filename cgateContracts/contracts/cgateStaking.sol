@@ -303,59 +303,63 @@ contract StakingPoolV3 is Initializable, ReentrancyGuardUpgradeable {
         poolIdCounter++;
     }
 
-    function stake(
-        uint256 poolId,
-        uint256 _amount,
-        address referrer
-    ) external isValidPool(poolId) isActivePool(poolId) {
-        require(_amount > 0, "Amount must be greater than 0");
-        require(msg.sender != referrer, "You can't refer yourself");
-        Pool storage pool = pools[poolId];
+   function stake(
+    uint256 poolId,
+    uint256 _amount,
+    address referrer
+) external isValidPool(poolId) isActivePool(poolId) {
+    require(_amount > 0, "Amount must be greater than 0");
+    require(msg.sender != referrer, "You can't refer yourself");
+    Pool storage pool = pools[poolId];
 
-        // Transfer tokens from the user to this contract for staking
-        require(
-            IERC20(pool.stakeToken).transferFrom(
-                msg.sender,
-                address(this),
-                _amount
-            ),
-            "Token transfer failed"
-        );
+    // Transfer tokens from the user to this contract for staking
+    require(
+        IERC20(pool.stakeToken).transferFrom(
+            msg.sender,
+            address(this),
+            _amount
+        ),
+        "Token transfer failed"
+    );
 
-        userStakes[msg.sender][poolId].push(
-            UserStake({
-                amount: _amount,
-                lastWithdrawTimestamp: block.timestamp,
-                rewardWithdrawnTillNow: 0,
-                stakeTime: block.timestamp,
-                referrer: referrer,
-                depositedValueInDollars: (_amount * getPriceInverse()) / 1e18
-            })
-        );
-
-        pools[poolId].totalStakes += _amount;
-
-        users[msg.sender] = UserInfo({
-            totalStaked: users[msg.sender].totalStaked + _amount,
-            activeStakes: users[msg.sender].activeStakes + _amount,
-            totalRewardWithdrawnTillNow: users[msg.sender]
-                .totalRewardWithdrawnTillNow,
-            referralIncomeWithdrawnTillNow: users[msg.sender]
-                .referralIncomeWithdrawnTillNow,
-            totalReferrers: users[msg.sender].totalReferrers
-        });
-
-        if (referrer != address(0)) {
-            
-            if (poolReferrers[msg.sender][poolId] == address(0)) {
-                poolReferrers[msg.sender][poolId] = referrer;
-                referrals[referrer][poolId].push(msg.sender);
-                users[referrer].totalReferrers += 1;
-            }
+    // Check if referrer is provided and not already in this specific stake
+    if (referrer != address(0)) {
+        if (poolReferrers[msg.sender][poolId] == address(0)) {
+            poolReferrers[msg.sender][poolId] = referrer;
         }
 
-        usersStakesPerPool[msg.sender][poolId] += _amount;
+        // Always track the referrer for each stake
+        referrals[referrer][poolId].push(msg.sender);
+        users[referrer].totalReferrers += 1;
     }
+
+    // Add the user's stake
+    userStakes[msg.sender][poolId].push(
+        UserStake({
+            amount: _amount,
+            lastWithdrawTimestamp: block.timestamp,
+            rewardWithdrawnTillNow: 0,
+            stakeTime: block.timestamp,
+            referrer: referrer,
+            depositedValueInDollars: (_amount * getPriceInverse()) / 1e18
+        })
+    );
+
+    pools[poolId].totalStakes += _amount;
+
+    users[msg.sender] = UserInfo({
+        totalStaked: users[msg.sender].totalStaked + _amount,
+        activeStakes: users[msg.sender].activeStakes + _amount,
+        totalRewardWithdrawnTillNow: users[msg.sender]
+            .totalRewardWithdrawnTillNow,
+        referralIncomeWithdrawnTillNow: users[msg.sender]
+            .referralIncomeWithdrawnTillNow,
+        totalReferrers: users[msg.sender].totalReferrers
+    });
+
+    usersStakesPerPool[msg.sender][poolId] += _amount;
+}
+
 
     function updateCurrentCgatePrice(uint256 newPrice) public onlyAdmin {
         price = newPrice;

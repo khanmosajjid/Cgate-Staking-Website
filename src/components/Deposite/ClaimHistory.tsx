@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 import { getClaimHistory } from "../../utils/apiServices";
 import { getAmountOut, getMinAmountIn } from "../../utils/web3Utils";
@@ -10,10 +9,13 @@ interface ClaimHistoryProps {
   setOpenClaimHistory: (value: boolean) => void;
 }
 
+const ITEMS_PER_PAGE = 3; // Number of items to show per page
+
 const ClaimHistory = ({ setOpenClaimHistory }: ClaimHistoryProps) => {
   const { address } = useAccount();
-  const [claimData, setClaimData] = useState<any>();
+  const [claimData, setClaimData] = useState<any[]>([]);
   const [cg8Price, setCg8Price] = useState<any>();
+  const [currentPage, setCurrentPage] = useState<number>(1); // State for current page
 
   useEffect(() => {
     const fetchClaimHistory = async () => {
@@ -22,8 +24,14 @@ const ClaimHistory = ({ setOpenClaimHistory }: ClaimHistoryProps) => {
           let price: any = await getMinAmountIn("1");
           price = parseFloat(price).toFixed(2);
           setCg8Price(price);
-          const data = await getClaimHistory(address);
-          console.log("data of claim history is--->", data);
+          let data = await getClaimHistory(address);
+
+          // Sort the claim data by date in descending order
+          data = data.sort(
+            (a: any, b: any) =>
+              new Date(b.claimDate).getTime() - new Date(a.claimDate).getTime()
+          );
+
           setClaimData(data);
         }
       } catch (e) {
@@ -48,7 +56,7 @@ const ClaimHistory = ({ setOpenClaimHistory }: ClaimHistoryProps) => {
     link.click();
   };
 
-  function formatDate(isoString) {
+  function formatDate(isoString: string) {
     const date = new Date(isoString);
 
     const options: any = {
@@ -63,6 +71,21 @@ const ClaimHistory = ({ setOpenClaimHistory }: ClaimHistoryProps) => {
 
     return date.toLocaleString("en-US", options).replace(/,/g, " ");
   }
+
+  // Handle pagination
+  const handleNextPage = () => {
+    setCurrentPage((prev) => prev + 1);
+  };
+
+  const handlePreviousPage = () => {
+    setCurrentPage((prev) => prev - 1);
+  };
+
+  // Calculate the paginated data
+  const paginatedData = claimData.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
 
   return (
     <div className="bg-white p-5 rounded-lg shadow-md lg:w-[570px] py-8 ml-2 w-[380px]">
@@ -111,7 +134,7 @@ const ClaimHistory = ({ setOpenClaimHistory }: ClaimHistoryProps) => {
             </tr>
           </thead>
           <tbody>
-            {claimData?.map((entry, idx) => (
+            {paginatedData?.map((entry, idx) => (
               <tr key={idx} className="text-left">
                 <td className="py-2 px-4 border-b border-gray-200 text-left">
                   {entry?.claimAmount.toFixed(2)} USDC
@@ -128,6 +151,31 @@ const ClaimHistory = ({ setOpenClaimHistory }: ClaimHistoryProps) => {
           </tbody>
         </table>
       </div>
+
+      {/* Pagination controls */}
+      <div className="flex justify-between items-center mt-4">
+        <button
+          onClick={handlePreviousPage}
+          disabled={currentPage === 1}
+          className={`bg-gray-300 text-gray-700 font-light text-sm py-2 px-4 rounded-3xl ${
+            currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+        >
+          Previous
+        </button>
+        <button
+          onClick={handleNextPage}
+          disabled={currentPage * ITEMS_PER_PAGE >= claimData.length}
+          className={`bg-gray-300 text-gray-700 font-light text-sm py-2 px-4 rounded-3xl ${
+            currentPage * ITEMS_PER_PAGE >= claimData.length
+              ? "opacity-50 cursor-not-allowed"
+              : ""
+          }`}
+        >
+          Next
+        </button>
+      </div>
+
       <button
         onClick={downloadCSV}
         className="bg-teal-600 hover:bg-blue-700 text-white font-light text-sm md:py-2 md:w-[224px] px-4 rounded-3xl mt-5 w-full py-4"

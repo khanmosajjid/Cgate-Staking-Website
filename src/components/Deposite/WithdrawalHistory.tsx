@@ -91,7 +91,7 @@ const WithdrawalHistory = ({
     <div className="fixed inset-0 bg-gray-300 bg-opacity-50 flex justify-center items-center p-4">
       <div className="bg-white rounded-xl shadow-lg overflow-auto md:w-[700px] w-full max-w-[700px] p-6">
         <div className="flex justify-between items-center p-4 border-b">
-          <h2 className="text-lg font-semibold">My Withdrawal History</h2>
+          <h2 className="text-lg font-semibold">My withdrawal history</h2>
           <button
             onClick={() => setOpenWithdrawHistory(false)}
             className="text-gray-600 hover:text-gray-800"

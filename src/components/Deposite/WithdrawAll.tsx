@@ -87,7 +87,7 @@ const WithdrawItem = ({
                   setOpenWithdrawCG8(false);
                   
                 }
-                // window.location.reload();
+                window.location.reload();
                 // navigate("/deposit");
               }}
             >
@@ -219,14 +219,9 @@ const WithdrawModal = ({
                       className="w-full  bg-teal-600 hover:bg-teal-600 text-white py-2 px-3  rounded-2xl md:text-xs"
                       onClick={async () => {
                         let res=await withdraw(poolId);
-                        // console.log("result of withdraw is---->",res);
+                        
                         if (res.status == "success") {
-                          // let data = {
-                          //   walletAddress: address,
-                          //   withdrawAmount: total,
-                          //   poolId: poolId,
-                          //   transactionHash: res?.transactionHash,
-                          // };
+                         
                           let withdraw = await addWithdrawHistory(
                             address,
                             total,
@@ -234,6 +229,8 @@ const WithdrawModal = ({
                             res?.transactionHash
                           );
                           console.log("withdraw all result is", withdraw);
+                           window.location.reload();
+                          
                         }
                       }}
                     >

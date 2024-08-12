@@ -15,7 +15,6 @@ import {
   getUsdcToClaimed,
   userDetails,
   convertToEther,
-  getMinAmountIn,
 } from "../../utils/web3Utils";
 import { loginUser } from "../../utils/apiServices";
 import { USDC_CONTRACT, TOKEN_CONTRACT } from "../../constants/contracts";
@@ -35,6 +34,7 @@ const Frame: FunctionComponent = () => {
   const [cg8Price, setCg8Price] = useState<any>();
   const myContext = useContext<any>(appContext);
   const settingsRef = useRef(null);
+  const [withdrawnTillNow, setWithdrawnTillNow] = useState();
 
   const closeSettings = () => {
     setSetting(false);
@@ -55,6 +55,9 @@ const Frame: FunctionComponent = () => {
           const user: any = await userDetails(address);
           const res: any = convertToEther(Number(user[1]));
           setTotalDeposit(parseFloat(res).toFixed(2));
+           let amnt: any = Number(user[2]);
+           amnt = parseFloat(convertToEther(amnt).toString()).toFixed(2);
+           setWithdrawnTillNow(amnt);
 
           const login = await loginUser(address, cg8Balance, res, amount);
           console.log("login res is", login);
@@ -323,7 +326,7 @@ const Frame: FunctionComponent = () => {
               <div className="self-stretch flex flex-row items-center justify-start gap-[24px] leading-6">
                 <div className="flex-1    mix-blend-normal">Earnings YTD</div>
                 <div className="flex flex-row items-center justify-end text-right text-sub-heading">
-                  <div className="relativ  ">0.00 USDC</div>
+                  <div className="relativ  ">{withdrawnTillNow} USDC</div>
                 </div>
               </div>
               <div className="self-stretch flex flex-row items-center justify-start gap-[20px] leading-6">
