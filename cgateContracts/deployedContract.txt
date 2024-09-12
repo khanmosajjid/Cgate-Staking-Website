@@ -5,3 +5,5 @@ Cgate - https://mumbai.polygonscan.com/address/0xa1321b7e5763BDFb5B056CE2d9DFf44
 BSC Testnet
 Staking - https://testnet.bscscan.com/address/0xAe77E08BcD42ba5545C89f3Cc343208ef4fb2f4e#readProxyContract
 Cgate - https://testnet.bscscan.com/address/0x9D9Bf02ac114725a6845Df21bbA424F3A02a2f9F#readProxyContract    
+
+npx hardhat  run  --network mumbai scripts/deploy.js 

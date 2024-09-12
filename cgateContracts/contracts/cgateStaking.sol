@@ -323,15 +323,13 @@ contract StakingPoolV3 is Initializable, ReentrancyGuardUpgradeable {
     );
 
     // Check if referrer is provided and not already in this specific stake
-    if (referrer != address(0)) {
-        if (poolReferrers[msg.sender][poolId] == address(0)) {
-            poolReferrers[msg.sender][poolId] = referrer;
-        }
-
-        // Always track the referrer for each stake
+   if (referrer != address(0)) {
+    if (poolReferrers[msg.sender][poolId] == address(0)) {
+        poolReferrers[msg.sender][poolId] = referrer;
         referrals[referrer][poolId].push(msg.sender);
         users[referrer].totalReferrers += 1;
     }
+}
 
     // Add the user's stake
     userStakes[msg.sender][poolId].push(

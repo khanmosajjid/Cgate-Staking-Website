@@ -6350,6 +6350,437 @@
         },
         "namespaces": {}
       }
+    },
+    "14bbea4ce88f8d2f57b6d7604cb57fa712d6645aba92169f8ddb1788a4667fd7": {
+      "address": "0x3A08CcfA97c8ffa4f2bEf66F73CC8730Eb87abDa",
+      "txHash": "0x61720a6223750215f54cca62f9179b98deb54415ec210d1ad786f9474457e885",
+      "layout": {
+        "solcVersion": "0.8.19",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:68"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:38"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:88"
+          },
+          {
+            "label": "admin",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "StakingPoolV3",
+            "src": "contracts/cgateStaking.sol:47"
+          },
+          {
+            "label": "poolIdCounter",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_uint256",
+            "contract": "StakingPoolV3",
+            "src": "contracts/cgateStaking.sol:48"
+          },
+          {
+            "label": "oneYear",
+            "offset": 0,
+            "slot": "53",
+            "type": "t_uint256",
+            "contract": "StakingPoolV3",
+            "src": "contracts/cgateStaking.sol:49"
+          },
+          {
+            "label": "price",
+            "offset": 0,
+            "slot": "54",
+            "type": "t_uint256",
+            "contract": "StakingPoolV3",
+            "src": "contracts/cgateStaking.sol:50"
+          },
+          {
+            "label": "proposedOwner",
+            "offset": 0,
+            "slot": "55",
+            "type": "t_address",
+            "contract": "StakingPoolV3",
+            "src": "contracts/cgateStaking.sol:52"
+          },
+          {
+            "label": "voters",
+            "offset": 0,
+            "slot": "56",
+            "type": "t_array(t_address)dyn_storage",
+            "contract": "StakingPoolV3",
+            "src": "contracts/cgateStaking.sol:53"
+          },
+          {
+            "label": "hasVoted",
+            "offset": 0,
+            "slot": "57",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "StakingPoolV3",
+            "src": "contracts/cgateStaking.sol:54"
+          },
+          {
+            "label": "PANCAKE_ROUTER_ADDRESS",
+            "offset": 0,
+            "slot": "58",
+            "type": "t_address",
+            "contract": "StakingPoolV3",
+            "src": "contracts/cgateStaking.sol:56"
+          },
+          {
+            "label": "CG8_TOKEN_ADDRESS",
+            "offset": 0,
+            "slot": "59",
+            "type": "t_address",
+            "contract": "StakingPoolV3",
+            "src": "contracts/cgateStaking.sol:57"
+          },
+          {
+            "label": "USDC_TOKEN_ADDRESS",
+            "offset": 0,
+            "slot": "60",
+            "type": "t_address",
+            "contract": "StakingPoolV3",
+            "src": "contracts/cgateStaking.sol:58"
+          },
+          {
+            "label": "PANCAKE_FACTORY_ADDRESS",
+            "offset": 0,
+            "slot": "61",
+            "type": "t_address",
+            "contract": "StakingPoolV3",
+            "src": "contracts/cgateStaking.sol:59"
+          },
+          {
+            "label": "pools",
+            "offset": 0,
+            "slot": "62",
+            "type": "t_mapping(t_uint256,t_struct(Pool)1511_storage)",
+            "contract": "StakingPoolV3",
+            "src": "contracts/cgateStaking.sol:88"
+          },
+          {
+            "label": "userStakes",
+            "offset": 0,
+            "slot": "63",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_array(t_struct(UserStake)1535_storage)dyn_storage))",
+            "contract": "StakingPoolV3",
+            "src": "contracts/cgateStaking.sol:89"
+          },
+          {
+            "label": "referrers",
+            "offset": 0,
+            "slot": "64",
+            "type": "t_mapping(t_address,t_address)",
+            "contract": "StakingPoolV3",
+            "src": "contracts/cgateStaking.sol:90"
+          },
+          {
+            "label": "specialReferrersPercents",
+            "offset": 0,
+            "slot": "65",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "StakingPoolV3",
+            "src": "contracts/cgateStaking.sol:92"
+          },
+          {
+            "label": "users",
+            "offset": 0,
+            "slot": "66",
+            "type": "t_mapping(t_address,t_struct(UserInfo)1522_storage)",
+            "contract": "StakingPoolV3",
+            "src": "contracts/cgateStaking.sol:93"
+          },
+          {
+            "label": "usersStakesPerPool",
+            "offset": 0,
+            "slot": "67",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_uint256))",
+            "contract": "StakingPoolV3",
+            "src": "contracts/cgateStaking.sol:94"
+          },
+          {
+            "label": "signers",
+            "offset": 0,
+            "slot": "68",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "StakingPoolV3",
+            "src": "contracts/cgateStaking.sol:95"
+          },
+          {
+            "label": "poolAddress",
+            "offset": 0,
+            "slot": "69",
+            "type": "t_address",
+            "contract": "StakingPoolV3",
+            "src": "contracts/cgateStaking.sol:96"
+          },
+          {
+            "label": "referrals",
+            "offset": 0,
+            "slot": "70",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_array(t_address)dyn_storage))",
+            "contract": "StakingPoolV3",
+            "src": "contracts/cgateStaking.sol:97"
+          },
+          {
+            "label": "referrerRewards",
+            "offset": 0,
+            "slot": "71",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_mapping(t_uint256,t_uint256)))",
+            "contract": "StakingPoolV3",
+            "src": "contracts/cgateStaking.sol:98"
+          },
+          {
+            "label": "poolReferrers",
+            "offset": 0,
+            "slot": "72",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_address))",
+            "contract": "StakingPoolV3",
+            "src": "contracts/cgateStaking.sol:99"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_address)dyn_storage": {
+            "label": "address[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_struct(UserStake)1535_storage)dyn_storage": {
+            "label": "struct StakingPoolV3.UserStake[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_address)": {
+            "label": "mapping(address => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_mapping(t_uint256,t_uint256)))": {
+            "label": "mapping(address => mapping(address => mapping(uint256 => uint256)))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_uint256,t_address))": {
+            "label": "mapping(address => mapping(uint256 => address))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_uint256,t_array(t_address)dyn_storage))": {
+            "label": "mapping(address => mapping(uint256 => address[]))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_uint256,t_array(t_struct(UserStake)1535_storage)dyn_storage))": {
+            "label": "mapping(address => mapping(uint256 => struct StakingPoolV3.UserStake[]))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_uint256,t_uint256))": {
+            "label": "mapping(address => mapping(uint256 => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(UserInfo)1522_storage)": {
+            "label": "mapping(address => struct StakingPoolV3.UserInfo)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_array(t_address)dyn_storage)": {
+            "label": "mapping(uint256 => address[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_array(t_struct(UserStake)1535_storage)dyn_storage)": {
+            "label": "mapping(uint256 => struct StakingPoolV3.UserStake[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(Pool)1511_storage)": {
+            "label": "mapping(uint256 => struct StakingPoolV3.Pool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Pool)1511_storage": {
+            "label": "struct StakingPoolV3.Pool",
+            "members": [
+              {
+                "label": "timePeriod",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "stakeToken",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "rewardToken",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "rewardPercentPerStakedTokenPerYear",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "referralRewardPercent",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "isActive",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "totalStakes",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "6"
+              }
+            ],
+            "numberOfBytes": "224"
+          },
+          "t_struct(UserInfo)1522_storage": {
+            "label": "struct StakingPoolV3.UserInfo",
+            "members": [
+              {
+                "label": "totalStaked",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "activeStakes",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "totalRewardWithdrawnTillNow",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "referralIncomeWithdrawnTillNow",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "totalReferrers",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "4"
+              }
+            ],
+            "numberOfBytes": "160"
+          },
+          "t_struct(UserStake)1535_storage": {
+            "label": "struct StakingPoolV3.UserStake",
+            "members": [
+              {
+                "label": "amount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "lastWithdrawTimestamp",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "rewardWithdrawnTillNow",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "stakeTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "referrer",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "depositedValueInDollars",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "5"
+              }
+            ],
+            "numberOfBytes": "192"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        },
+        "namespaces": {}
+      }
     }
   }
 }
