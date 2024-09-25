@@ -237,7 +237,7 @@ const Referral: FunctionComponent = () => {
             <div>
               <h1 className="mt-5 md:mt-0">Total referral rewards</h1>
               <h1 className="text-4xl font-semibold mt-4">
-                ${referrerReward} USDC
+                {referrerReward} USDC
               </h1>
             </div>
           </div>
@@ -288,7 +288,12 @@ const Referral: FunctionComponent = () => {
               </svg>
             </div>
 
-            <button className="md:hidde" onClick={() => setopenRefCard(false)}>
+            <button
+              className="md:hidde"
+              onClick={() => {
+                window.location.reload();
+              }}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="18"
@@ -326,24 +331,57 @@ const Referral: FunctionComponent = () => {
                 </tr>
               </thead>
               <tbody>
-                {referrals.map((referral, index) => (
-                  <tr
-                    key={index}
-                    className="border-b border-greys-blue-gray-200"
-                  >
-                    <td className="p-3">
-                      <div className="leading-[10px]">{referral.referral}</div>
-                    </td>
-                    <td className="p-3">
-                      <div className="font-semibold leading-[24px]">
-                   
-                        <p className="m-0 text-xs leading-[16px]">
-                          ~$ {convertToEther(referral.reward.toString())} USDC
-                        </p>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                {
+                  referrals
+                    .reduce((uniqueReferrals, referral) => {
+                      const existingReferral = uniqueReferrals.find(
+                        (r) => r.referral === referral.referral
+                      );
+                      const rewardValue = Number(referral.reward);
+                      if (rewardValue > 0) {
+                        // Only process non-zero rewards
+                        if (existingReferral) {
+                          existingReferral.reward += rewardValue;
+                        } else {
+                          uniqueReferrals.push({
+                            ...referral,
+                            reward: rewardValue,
+                          });
+                        }
+                      }
+                      return uniqueReferrals;
+                    }, [])
+                    .filter((referral) => referral.reward > 0) // Additional filter to ensure no zero rewards slip through
+                    .map((referral, index) => {
+                      const rewardInEther:any = convertToEther(
+                        referral.reward.toString()
+                      );
+                      if (rewardInEther > 0) {
+                        // Only render if the converted value is greater than zero
+                        return (
+                          <tr
+                            key={index}
+                            className="border-b border-greys-blue-gray-200"
+                          >
+                            <td className="p-3">
+                              <div className="leading-[10px]">
+                                {referral.referral}
+                              </div>
+                            </td>
+                            <td className="p-3">
+                              <div className="font-semibold leading-[24px]">
+                                <p className="m-0 text-xs leading-[16px]">
+                                  ~$ {rewardInEther} USDC
+                                </p>
+                              </div>
+                            </td>
+                          </tr>
+                        );
+                      }
+                      return null; // Return null for zero values, which won't be rendered by React
+                    })
+                    .filter(Boolean) // Remove any null entries from the map operation
+                }
               </tbody>
             </table>
 

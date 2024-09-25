@@ -63,7 +63,7 @@ const HistoricalPrice = ({
 
       setMarketCap(marketCaps);
       let count = await getTotalHoldersCount();
-      count =parseInt(count.toString())+13
+      count =parseInt(count.toString())+15;
       setHoldersCount(count);
       const poolDetails = await getHighestAPR();
       console.log("pool details is----->", poolDetails);
@@ -372,7 +372,7 @@ const HistoricalPrice = ({
             </div>
             <div className="flex flex-row items-start justify-start text-right text-sub-heading">
               <div className="relative leading-[24px]">
-                <p className="m-0 ">~${poolReward} USDC</p>
+                <p className="m-0 ">{poolReward} USDC</p>
               </div>
             </div>
           </div>

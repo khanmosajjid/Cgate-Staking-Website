@@ -175,7 +175,7 @@ const WithdrawalHistory = ({
         </div>
         <button
           onClick={downloadCSV}
-          className="bg-teal-600 hover:bg-teal-700 text-white font-light text-sm py-2 px-4 w-full rounded-3xl mt-5"
+          className="bg-teal-600 hover:bg-blue-700 text-white font-light text-sm md:py-2 p-4 md:w-[224px] w-full py-4 rounded-3xl mt-5"
         >
           Download in CSV
         </button>

@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import X from "../../assets/X.svg";
 
-const exporerURL = "https://testnet.bscscan.com/tx/";
+const exporerURL = "https://bscscan.com/tx/";
 
 interface SuccessCardProps {
   transactionID?: any;
