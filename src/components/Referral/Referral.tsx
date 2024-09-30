@@ -11,6 +11,9 @@ import { useAccount } from "wagmi";
 import { userDetails, convertToEther,getReferralsOfUser } from "../../utils/web3Utils";
 import { useLocation } from "react-router-dom";
 
+
+
+const ITEMS_PER_PAGE = 3;
 const Referral: FunctionComponent = () => {
   const [openRefCard, setopenRefCard] = useState(false);
   const [openRefsetting, setopenRefsetting] = useState(false);
@@ -20,6 +23,7 @@ const Referral: FunctionComponent = () => {
   const settingsRef = useRef(null);
   const [copied, setCopied] = useState(false);
   const [referrals, setReferrals] = useState([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   const referralLink = `${window.location.origin}${window.location.pathname}?ref=${address}`;
   const query = new URLSearchParams(location.search);
@@ -74,6 +78,19 @@ const Referral: FunctionComponent = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+    const handleNextPage = () => {
+      setCurrentPage((prev) => prev + 1);
+    };
+
+    const handlePreviousPage = () => {
+      setCurrentPage((prev) => prev - 1);
+    };
+
+    const paginatedData = referrals.slice(
+      (currentPage - 1) * ITEMS_PER_PAGE,
+      currentPage * ITEMS_PER_PAGE
+    );
   return (
     <>
       <div className="lg:-mt-20  lg:ml-[250px] p-4 pb-0 md:pb-4  lg:p-0 pt-20">
@@ -257,35 +274,9 @@ const Referral: FunctionComponent = () => {
             </div>
 
             <div className="md:flex flex-row items-center justify-start gap-[16px] text-greys-blue-gray-500 hidden">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="7"
-                height="12"
-                viewBox="0 0 7 12"
-                fill="none"
-              >
-                <path
-                  d="M5.9478 11.999C5.67961 11.999 5.41002 11.8953 5.20502 11.6878L0.308903 6.75614C0.110924 6.55574 -2.74695e-07 6.28429 -2.6227e-07 6.00004C-2.49908e-07 5.71722 0.110924 5.44577 0.308903 5.24538L5.20502 0.310893C5.61643 -0.104104 6.28197 -0.104104 6.69338 0.313736C7.10338 0.731575 7.10197 1.40666 6.69057 1.82165L2.54424 6.00005L6.69057 10.1784C7.10197 10.5934 7.10337 11.2671 6.69338 11.6849C6.48838 11.8953 6.21738 11.999 5.9478 11.999Z"
-                  fill="#2563EB"
-                />
-              </svg>
-              <button className="relative leading-[24px] text-teal-600">
-                1
-              </button>
-              <button className="relative leading-[24px]">2</button>
-              <button className="relative leading-[24px]">3</button>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="7"
-                height="12"
-                viewBox="0 0 7 12"
-                fill="none"
-              >
-                <path
-                  d="M1.0522 11.999C1.32039 11.999 1.58998 11.8953 1.79498 11.6878L6.6911 6.75614C6.88908 6.55574 7 6.28429 7 6.00004C7 5.71722 6.88908 5.44577 6.6911 5.24538L1.79498 0.310893C1.38357 -0.104104 0.718027 -0.104104 0.306624 0.313736C-0.103375 0.731575 -0.101971 1.40666 0.309432 1.82165L4.45576 6.00005L0.309432 10.1784C-0.101971 10.5934 -0.103375 11.2671 0.306624 11.6849C0.511624 11.8953 0.782616 11.999 1.0522 11.999Z"
-                  fill="#2563EB"
-                />
-              </svg>
+            
+             
+             
             </div>
 
             <button
@@ -353,7 +344,7 @@ const Referral: FunctionComponent = () => {
                     }, [])
                     .filter((referral) => referral.reward > 0) // Additional filter to ensure no zero rewards slip through
                     .map((referral, index) => {
-                      const rewardInEther:any = convertToEther(
+                      const rewardInEther: any = convertToEther(
                         referral.reward.toString()
                       );
                       if (rewardInEther > 0) {
@@ -371,7 +362,7 @@ const Referral: FunctionComponent = () => {
                             <td className="p-3">
                               <div className="font-semibold leading-[24px]">
                                 <p className="m-0 text-xs leading-[16px]">
-                                  ~$ {rewardInEther} USDC
+                                   {rewardInEther} USDC
                                 </p>
                               </div>
                             </td>
@@ -384,9 +375,31 @@ const Referral: FunctionComponent = () => {
                 }
               </tbody>
             </table>
-
-            <div className="self-stretch relative bg-greys-blue-gray-200 box-border h-px border-[1px] border-solid border-greys-blue-gray-200" />
+            <div className="flex justify-between w-full items-center mt-4">
+              <button
+                onClick={handlePreviousPage}
+                disabled={currentPage === 1}
+                className={`bg-gray-300 text-gray-700 font-light text-sm py-2 px-4 rounded-3xl ${
+                  currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+              >
+                Previous
+              </button>
+              <button
+                onClick={handleNextPage}
+                disabled={currentPage * ITEMS_PER_PAGE >= referrals.length}
+                className={`bg-gray-300 text-gray-700 font-light text-sm py-2 px-4 rounded-3xl ${
+                  currentPage * ITEMS_PER_PAGE >= referrals.length
+                    ? "opacity-50 cursor-not-allowed"
+                    : ""
+                }`}
+              >
+                Next
+              </button>
+            </div>
+            {/* <div className="self-stretch relative bg-greys-blue-gray-200 box-border h-px border-[1px] border-solid border-greys-blue-gray-200" /> */}
           </div>
+
           <div className="self-stretch  text-gray-600 text-sm mt-3">
             Referred by: {address}
           </div>
