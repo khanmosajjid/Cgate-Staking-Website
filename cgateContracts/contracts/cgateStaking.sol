@@ -97,6 +97,7 @@ contract StakingPoolV3 is Initializable, ReentrancyGuardUpgradeable {
     mapping(address => mapping(uint256 => address[])) public referrals; // Update referrals mapping to include pool ID
     mapping(address => mapping(address => mapping(uint256 => uint256))) public referrerRewards; // Update referrer rewards mapping to include pool ID
     mapping(address => mapping(uint256 => address)) public poolReferrers;
+    mapping(address => bool) public isReferrer;
     event OwnershipTransferProposed(address indexed newOwner);
     event VoteCasted(address indexed voter, bool approve);
 
@@ -323,13 +324,16 @@ contract StakingPoolV3 is Initializable, ReentrancyGuardUpgradeable {
     );
 
     // Check if referrer is provided and not already in this specific stake
-   if (referrer != address(0)) {
-    if (poolReferrers[msg.sender][poolId] == address(0)) {
-        poolReferrers[msg.sender][poolId] = referrer;
-        referrals[referrer][poolId].push(msg.sender);
+
+    if (referrer != address(0) && !isReferrer[referrer]) {
+        isReferrer[referrer] = true;
         users[referrer].totalReferrers += 1;
     }
-}
+     if (referrer != address(0)) {
+        poolReferrers[msg.sender][poolId] = referrer;
+        referrals[referrer][poolId].push(msg.sender);
+    }
+ 
 
     // Add the user's stake
     userStakes[msg.sender][poolId].push(
