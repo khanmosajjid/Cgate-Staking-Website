@@ -362,7 +362,7 @@ const Referral: FunctionComponent = () => {
                             <td className="p-3">
                               <div className="font-semibold leading-[24px]">
                                 <p className="m-0 text-xs leading-[16px]">
-                                   {rewardInEther} USDC
+                                   {rewardInEther} USDc
                                 </p>
                               </div>
                             </td>
