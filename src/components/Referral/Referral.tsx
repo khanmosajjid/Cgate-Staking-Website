@@ -273,11 +273,7 @@ const Referral: FunctionComponent = () => {
               </div>
             </div>
 
-            <div className="md:flex flex-row items-center justify-start gap-[16px] text-greys-blue-gray-500 hidden">
-            
-             
-             
-            </div>
+            <div className="md:flex flex-row items-center justify-start gap-[16px] text-greys-blue-gray-500 hidden"></div>
 
             <button
               className="md:hidde"
@@ -362,7 +358,7 @@ const Referral: FunctionComponent = () => {
                             <td className="p-3">
                               <div className="font-semibold leading-[24px]">
                                 <p className="m-0 text-xs leading-[16px]">
-                                   {rewardInEther} USDc
+                                  {rewardInEther} USDc
                                 </p>
                               </div>
                             </td>
@@ -397,11 +393,11 @@ const Referral: FunctionComponent = () => {
                 Next
               </button>
             </div>
-            {/* <div className="self-stretch relative bg-greys-blue-gray-200 box-border h-px border-[1px] border-solid border-greys-blue-gray-200" /> */}
+            <div className="self-stretch relative bg-greys-blue-gray-200 box-border h-px border-[1px] border-solid border-greys-blue-gray-200" />
           </div>
 
           <div className="self-stretch  text-gray-600 text-sm mt-3">
-            Referred by: {address}
+            Referred by: {refAddress?refAddress:"0x"}
           </div>
         </div>
       ) : (
